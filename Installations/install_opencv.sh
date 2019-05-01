@@ -1,10 +1,7 @@
-# USAGE
-# Run to install opencv with CUDA and OPENMP support. Works for python and C.
-# If DOWNLOAD_FROM_SOURCE=0, then needs to be run in a directory containing the downloaded opencv and opencv_contrib directories.
-
 #Flags. For now, manually edit
 INSTALL_PYTHON_PACKAGES=1
-DOWNLOAD_FROM_SOURCE=0
+DOWNLOAD_FROM_SOURCE=1
+OPENCV_VERSION="3.4.4"
 N_THREADS=`nproc` #either let automatically detect, or manually put
 
 #Installation of Python Packages
@@ -35,12 +32,27 @@ then
 	sudo apt-get install python-dev python3-dev -y
 fi
 
+pip install numpy
+pip3 install numpy
+
 #Download from source
 if [ $DOWNLOAD_FROM_SOURCE -eq 1 ] 
 then
 	echo "Downloading opencv and opencv_contrib from github"
 	git clone https://github.com/opencv/opencv.git
+	if [ $OPENCV_VERSION != "latest" ]; then
+		echo "Using OpenCV v$OPENCV_VERSION"
+		cd opencv
+		git checkout $OPENCV_VERSION
+		cd ..
+	fi
+
 	git clone https://github.com/opencv/opencv_contrib.git
+	if [ $OPENCV_VERSION != "latest" ]; then
+		cd opencv_contrib
+		git checkout $OPENCV_VERSION
+		cd ..
+	fi
 fi
 
 echo "Building OpenCV..."
@@ -51,6 +63,7 @@ cd build
 echo "C-Making opencv..."
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D CMAKE_INSTALL_PREFIX=/usr/local \
+      -D BUILD_NEW_PYTHON_SUPPORT=ON \
       -D INSTALL_C_EXAMPLES=ON \
       -D INSTALL_PYTHON_EXAMPLES=ON \
       -D OPENCV_ENABLE_NONFREE=ON \
@@ -87,5 +100,8 @@ sudo ldconfig
 
 #Setting up opencv for python
 echo "Setting up opencv for python..."
-mv /usr/local/lib/python2.7/dist-packages/cv2*.so usr/local/lib/python2.7/dist-packages/cv2.so
-mv /usr/local/lib/python3.6/dist-packages/cv2*.so usr/local/lib/python3.6/dist-packages/cv2.so
+sudo mv /usr/local/lib/python2.7/dist-packages/cv2*.so usr/local/lib/python2.7/dist-packages/cv2.so
+sudo mv /usr/local/lib/python3.6/dist-packages/cv2*.so usr/local/lib/python3.6/dist-packages/cv2.so
+
+sudo mv /usr/local/python/cv2/python-2.7/cv2*.so /usr/local/python/cv2/python-2.7/cv2.so
+sudo mv /usr/local/python/cv2/python-3.6/cv2*.so /usr/local/python/cv2/python-3.6/cv2.so
