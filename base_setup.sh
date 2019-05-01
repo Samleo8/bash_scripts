@@ -17,7 +17,7 @@ INSTALL_MISC=1
 #Disable bluetooth on startup
 if [ $DISABLE_BLUETOOTH_STARTUP -eq 1 ]; then
 	echo "Installing disable bluetooth startup script in /etc/rc.local ..."
-	
+
 	touch rc.local
 	echo -e '#!/bin/sh\nrfkill block bluetooth\nexit 0' > rc.local
 	#sudo mv rc.local /etc/rc.local
@@ -32,7 +32,7 @@ fi
 ## Programmer software
 if [ $INSTALL_PROGRAMMER -eq 1 ]; then
 	echo "Installing programming software..."
-	
+
 	sudo apt install cmake ruby npm -y
 	sudo apt install git git-lfs -y
 	sudo apt install default-jre oracle-java11-installer -y
@@ -45,7 +45,7 @@ fi
 ## Utilities software
 if [ $INSTALL_UTILITIES -eq 1 ]; then
 	echo "Install utilities..."
-	
+
 	sudo apt install htop hardinfo -y
 	sudo apt install xclip -y
 	sudo apt install wmctrl xdotool -y
@@ -55,7 +55,7 @@ if [ $INSTALL_UTILITIES -eq 1 ]; then
 	if [ $INSTALL_PROGRAMMER -eq 1 ]; then
 		sudo apt install npm
 		sudo npm install -g linux-window-session-manager -y
-		sudo npm install -g now -y
+		sudo npm install -g now --unsafe-perm -y
 	fi
 
 	sudo apt install font-manager pdf-tk pdf-shuffler -y
