@@ -129,9 +129,6 @@ gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Contro
 
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Control><Alt>Right', '<Control><Alt>Down', '<Primary><Alt>Right']"
 
-gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ next-tab '<Primary>Tab'
-gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab '<Primary><Shift>Tab'
-
 
 ###=====================SHORTCUT FUNCTIONS=====================###
 #cd and then ls
@@ -192,3 +189,8 @@ export -f echo_err
 export -f echo_ok
 export -f echo_orange
 export -f echo_blue
+
+#OpenCV compile
+compilecv(){
+	g++ "$1.cpp" -o "$1" `pkg-config --cflags --libs opencv`
+}
