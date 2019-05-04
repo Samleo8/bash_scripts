@@ -129,6 +129,10 @@ gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Contro
 
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Control><Alt>Right', '<Control><Alt>Down', '<Primary><Alt>Right']"
 
+gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ next-tab '<Primary>Tab'
+
+gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab '<Primary><Shift>Tab'
+
 
 ###=====================SHORTCUT FUNCTIONS=====================###
 #cd and then ls
