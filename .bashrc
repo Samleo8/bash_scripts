@@ -192,5 +192,7 @@ export -f echo_blue
 
 #OpenCV compile
 compilecv(){
+	echo "Compiling $1.cpp..."
 	g++ "$1.cpp" -o "$1" `pkg-config --cflags --libs opencv`
+	echo "$1.cpp compiled as ./$1"
 }
