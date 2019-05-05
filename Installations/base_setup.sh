@@ -71,7 +71,12 @@ if [ $INSTALL_BROWSERS_EDITORS -eq 1 ]; then
 	sudo apt install gimp -y
 	sudo apt install texstudio -y
 	sudo apt install vlc -y
-	sudo apt install atom -y
+	#sudo apt install atom -y
+	CURR_DIR=`pwd`
+	cd ~/Downloads	
+	wget https://github.com/jliljebl/flowblade/releases/download/v2.0/flowblade-2.0.0-1_all.deb
+ 	sudo apt install ./flowblade-2.0.0-1_all.deb -y
+	cd $CURR_DIR
 
 	echo "Installing extensions..."
 
