@@ -76,6 +76,7 @@ if [ $INSTALL_BROWSERS_EDITORS -eq 1 ]; then
 	cd ~/Downloads	
 	wget https://github.com/jliljebl/flowblade/releases/download/v2.0/flowblade-2.0.0-1_all.deb
  	sudo apt install ./flowblade-2.0.0-1_all.deb -y
+	rm flowblade-2.0.0-1_all.deb	
 	cd $CURR_DIR
 
 	echo "Installing extensions..."
