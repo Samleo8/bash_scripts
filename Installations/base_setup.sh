@@ -17,7 +17,7 @@ INSTALL_MISC=0
 #Disable bluetooth on startup
 if [ $DISABLE_BLUETOOTH_STARTUP -eq 1 ]; then
 	echo "Installing disable bluetooth startup script in /etc/rc.local ..."
-	
+
 	touch rc.local
 	echo -e '#!/bin/sh\nrfkill block bluetooth\nexit 0' > rc.local
 	#sudo mv rc.local /etc/rc.local
@@ -32,7 +32,7 @@ fi
 ## Programmer software
 if [ $INSTALL_PROGRAMMER -eq 1 ]; then
 	echo "Installing programming software..."
-	
+
 	sudo apt install cmake ruby npm -y
 	sudo apt install git git-lfs -y
 	sudo apt install default-jre oracle-java11-installer -y
@@ -45,7 +45,7 @@ fi
 ## Utilities software
 if [ $INSTALL_UTILITIES -eq 1 ]; then
 	echo "Install utilities..."
-	
+
 	sudo apt install htop hardinfo -y
 	sudo apt install wmctrl xdotool -y
 	sudo apt install gnome-tweaks -y
@@ -57,7 +57,7 @@ if [ $INSTALL_UTILITIES -eq 1 ]; then
 		sudo npm install -g now -y
 	fi
 
-	sudo apt install font-manager pdf-tk pdf-shuffler -y
+	sudo apt install font-manager pdftk pdfshuffler -y
 	sudo apt install tlp tlp-rdw -y
 
 	echo "Utilities installed!"
@@ -73,10 +73,10 @@ if [ $INSTALL_BROWSERS_EDITORS -eq 1 ]; then
 	sudo apt install vlc -y
 	#sudo apt install atom -y
 	CURR_DIR=`pwd`
-	cd ~/Downloads	
+	cd ~/Downloads
 	wget https://github.com/jliljebl/flowblade/releases/download/v2.0/flowblade-2.0.0-1_all.deb
  	sudo apt install ./flowblade-2.0.0-1_all.deb -y
-	rm flowblade-2.0.0-1_all.deb	
+	rm flowblade-2.0.0-1_all.deb
 	cd $CURR_DIR
 
 	echo "Installing extensions..."
@@ -100,18 +100,19 @@ if [ $INSTALL_MISC -eq 1 ]; then
 	if [ $INSTALL_PROGRAMMER -eq 1 ]; then
 		sudo gem install fusuma
 		mkdir -p ~/.config/fusuma
-	fi	
+	fi
 
 fi
 
 # Config git ssh: Requires manual entry 
-if [ $CONFIG_GIT_SSH -eq 1 ] && [ $INSTALL_PROGRAMMER -eq 1 ]; then
+if [[ $CONFIG_GIT_SSH -eq 1 && $INSTALL_PROGRAMMER -eq 1 ]]
+then
 	ssh-keygen -t rsa -b 4096 -C "leowhiz@yahoo.com.sg"
 	eval "$(ssh-agent -s)"
 	ssh-add ~/.ssh/id_rsa
 
 	cat ~/.ssh/id_rsa.pub | xclip -selection c
-	
+
 	echo "SSH Public key has been copied to clipboard. Add it to github at https://github.com/settings/keys"
 fi
 
