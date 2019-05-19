@@ -120,6 +120,8 @@ fi
 PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}$ 
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
+export PYTHONPATH=${PYTHONPATH}:/usr/local/python
+
 ###=====================WEIRD KEYBOARD SETTINGS=====================###
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
 
@@ -199,4 +201,9 @@ compilecv(){
 	echo "Compiling $1.cpp..."
 	g++ "$1.cpp" -o "$1" `pkg-config --cflags --libs opencv`
 	echo "$1.cpp compiled as ./$1"
+}
+
+#Youtube DL
+youtube-dl-mp4(){
+        youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' '$1'
 }
