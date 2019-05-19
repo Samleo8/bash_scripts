@@ -203,7 +203,12 @@ compilecv(){
 	echo "$1.cpp compiled as ./$1"
 }
 
-#Youtube DL
+#Youtube DL MP4
 youtube-dl-mp4(){
-        youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' '$1'
+        youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' "$1"
+}
+
+#Youtube DL MP3
+youtube-dl-mp3(){
+	youtube-dl --extract-audio --audio-format mp3 "$1"
 }
