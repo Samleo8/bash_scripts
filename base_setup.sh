@@ -49,7 +49,8 @@ if [ $INSTALL_UTILITIES -eq 1 ]; then
 	sudo apt install htop hardinfo -y
 	sudo apt install wmctrl xdotool -y
 	sudo apt install gnome-tweaks-tool -y
-	sudo apt-get install libinput-tools -y
+	sudo apt install libinput-tools -y
+	sudo apt install youtube-dl -y
 
 	if [ $INSTALL_PROGRAMMER -eq 1 ]; then
 		sudo apt install npm
