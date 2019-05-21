@@ -110,6 +110,7 @@ fi
 # Config git ssh: Requires manual entry 
 if [[ $CONFIG_GIT_SSH -eq 1 && $INSTALL_PROGRAMMER -eq 1 ]]
 then
+	mkdir -p ~/.ssh
 	ssh-keygen -t rsa -b 4096 -C "leowhiz@yahoo.com.sg"
 	eval "$(ssh-agent -s)"
 	ssh-add ~/.ssh/id_rsa
