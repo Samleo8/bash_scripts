@@ -7,7 +7,7 @@
 DISABLE_BLUETOOTH_STARTUP=1
 
 INSTALL_PROGRAMMER=1
-CONFIG_GIT_SSH=0
+CONFIG_GIT_SSH=1
 INSTALL_UTILITIES=1
 INSTALL_BROWSERS_EDITORS=1
 INSTALL_EXTENSIONS=1
@@ -37,7 +37,7 @@ if [ $INSTALL_PROGRAMMER -eq 1 ]; then
 	yes | sudo pacman -S curl cmake
 	yes | sudo pacman -S ruby npm
 	yes | sudo pacman -S git git-lfs
-	yes | sudo pacman -S python-pip python3-pip
+	yes | sudo pacman -S python2-pip python-pip
 	yes | sudo pacman -S openmp
 
 	echo "Programming software installed!"
@@ -52,6 +52,7 @@ if [ $INSTALL_UTILITIES -eq 1 ]; then
 	yes | sudo pacman -S youtube-dl
 
 	if [ $INSTALL_PROGRAMMER -eq 1 ]; then
+		yes | sudo pacman -S xorg-xprop
 		yes | sudo npm install -g linux-window-session-manager
 		yes | sudo npm install -g now --unsafe-perm
 		
@@ -65,9 +66,9 @@ if [ $INSTALL_UTILITIES -eq 1 ]; then
 	git clone https://gitlab.com/pdfgrep/pdfgrep.git _pdfgrep
 	cd _pdfgrep
 	yes | sudo pacman -S poppler libgcrypt
-    ./configure
-    make
-    sudo make install
+	./configure
+	make clean && make
+	sudo make install
 	cd ..
 	rm -rf _pdfgrep
 	
