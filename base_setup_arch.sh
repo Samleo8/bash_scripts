@@ -7,9 +7,9 @@
 DISABLE_BLUETOOTH_STARTUP=1
 
 INSTALL_PROGRAMMER=1
-CONFIG_GIT_SSH=1
+CONFIG_GIT_SSH=0
 INSTALL_UTILITIES=1
-INSTALL_BROWSER_EDITORS=1
+INSTALL_BROWSERS_EDITORS=1
 INSTALL_EXTENSIONS=1
 
 INSTALL_MISC=0
@@ -110,8 +110,9 @@ if [ $INSTALL_MISC -eq 1 ]; then
 fi
 
 # Config git ssh: Requires manual entry 
-if [[ $CONFIG_GIT_SSH -eq 1 && $INSTALL_PROGRAMMER -eq 1 ]]
+if [ $CONFIG_GIT_SSH -eq 1 ] && [ $INSTALL_PROGRAMMER -eq 1 ]
 then
+	mkdir -p ~/.ssh
 	ssh-keygen -t rsa -b 4096 -C "leowhiz@yahoo.com.sg"
 	eval "$(ssh-agent -s)"
 	ssh-add ~/.ssh/id_rsa
