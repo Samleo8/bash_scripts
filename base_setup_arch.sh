@@ -14,6 +14,8 @@ INSTALL_EXTENSIONS=1
 
 INSTALL_MISC=0
 
+CLONE_GIT_REPOS=1
+
 #Disable bluetooth on startup
 if [ $DISABLE_BLUETOOTH_STARTUP -eq 1 ]; then
 	echo "Installing disable bluetooth startup script in /etc/rc.local ..."
@@ -121,6 +123,10 @@ then
 	cat ~/.ssh/id_rsa.pub | xclip -selection c
 
 	echo "SSH Public key has been copied to clipboard. Add it to github at https://github.com/settings/keys"
+fi
+
+if [ $CLONE_GIT_REPOS ]; then
+	./git_repo_clones.sh
 fi
 
 echo "You might also want to install cuda, cudnn and opencv."
