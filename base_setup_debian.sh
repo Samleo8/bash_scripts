@@ -9,10 +9,12 @@ DISABLE_BLUETOOTH_STARTUP=1
 INSTALL_PROGRAMMER=1
 CONFIG_GIT_SSH=1
 INSTALL_UTILITIES=1
-INSTALL_BROWSER_EDITORS=1
+INSTALL_BROWSERS_EDITORS=1
 INSTALL_EXTENSIONS=1
 
 INSTALL_MISC=0
+
+CLONE_GIT_REPOS=1
 
 #Disable bluetooth on startup
 if [ $DISABLE_BLUETOOTH_STARTUP -eq 1 ]; then
@@ -115,6 +117,10 @@ then
 	cat ~/.ssh/id_rsa.pub | xclip -selection c
 
 	echo "SSH Public key has been copied to clipboard. Add it to github at https://github.com/settings/keys"
+fi
+
+if [ $CLONE_GIT_REPOS ]; then
+	./git_repo_clones.sh
 fi
 
 echo "You might also want to install cuda, cudnn and opencv. Also install atom via snap/Ubuntu software"
