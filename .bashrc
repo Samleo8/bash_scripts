@@ -160,9 +160,7 @@ echo_colour(){
 	echo -e "$(tput setaf $2)$1$(tput sgr0)"
 }
 
-echo_color(){
-	echo_colour $1 $2
-}
+alias echo_color=echo_colour
 
 echo_err(){
 	echo_colour "$1" 1 #red
