@@ -144,6 +144,13 @@ cdls(){
 
 alias cdl=cdls
 
+#Git
+gitpush(){
+	git add .
+	git commit -m "$1"
+	git push
+}
+
 #Process handling
 alias showproc=htop
 
