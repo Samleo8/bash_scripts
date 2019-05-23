@@ -122,7 +122,7 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRAR
 
 export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
-###=====================WEIRD KEYBOARD SETTINGS=====================###
+###=====================KEYBOARD SETTINGS=====================###
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
 
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Control><Alt>Left', '<Control><Alt>Up', '<Primary><Alt>Left']"
@@ -142,15 +142,10 @@ cdls(){
 	cd "$1" && l -a
 }
 
-cdl(){
-	cdls $1
-}
-export -f cdls
+alias cdl=cdls
 
 #Process handling
-showproc(){
-	htop
-}
+alias showproc=htop
 
 findproc(){
 	ps -e | grep -i "$1"
@@ -159,10 +154,6 @@ findproc(){
 killproc(){
 	kill `ps -e -o pid,cmd | grep -i '$1' | grep -Po '^[0-9]+|^.*?\K[0-9]+'`
 }
-
-export -f showproc
-export -f findproc
-export -f killproc
 
 #Echo functions with fancy colours
 echo_colour(){
@@ -189,13 +180,6 @@ echo_blue(){
 	echo_colour "$1" 81
 }
 
-export -f echo_colour
-export -f echo_color
-export -f echo_err
-export -f echo_ok
-export -f echo_orange
-export -f echo_blue
-
 #OpenCV compile
 compilecv(){
 	echo "Compiling $1.cpp..."
@@ -204,11 +188,11 @@ compilecv(){
 }
 
 #Youtube DL MP4
-youtube-dl-mp4(){
-        youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' "$1"
-}
+alias ydl=youtube-dl
+
+alias youtube-dl-mp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+alias ydl-mp4=youtube-dl-mp4
 
 #Youtube DL MP3
-youtube-dl-mp3(){
-	youtube-dl --extract-audio --audio-format mp3 "$1"
-}
+alias youtube-dl-mp3='youtube-dl --extract-audio --audio-format mp3'
+alias ydl-mp3=youtube-dl-mp3
