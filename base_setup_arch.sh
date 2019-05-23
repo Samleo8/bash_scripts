@@ -52,6 +52,7 @@ if [ $INSTALL_UTILITIES -eq 1 ]; then
 	yes | sudo pacman -S htop hardinfo
 	yes | sudo pacman -S wmctrl xdotool
 	yes | sudo pacman -S youtube-dl
+	yay -S --noconfirm rename mmv
 
 	if [ $INSTALL_PROGRAMMER -eq 1 ]; then
 		yes | sudo pacman -S xorg-xprop
