@@ -122,6 +122,8 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRAR
 
 export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
+source /etc/profile.d/vte.sh
+
 ###=====================KEYBOARD SETTINGS=====================###
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
 
@@ -201,3 +203,6 @@ alias ydl-mp4=youtube-dl-mp4
 #Youtube DL MP3
 alias youtube-dl-mp3='youtube-dl --extract-audio --audio-format mp3'
 alias ydl-mp3=youtube-dl-mp3
+
+#IBM Cloud Private
+source /usr/local/ibmcloud/autocomplete/bash_autocomplete
