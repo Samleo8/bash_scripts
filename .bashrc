@@ -137,6 +137,7 @@ gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/k
 
 gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab '<Primary><Shift>Tab'
 
+alias ibmdev='ibmcloud dev'
 
 ###=====================SHORTCUT FUNCTIONS=====================###
 #cd and then ls
@@ -190,8 +191,23 @@ echo_blue(){
 #OpenCV compile
 compilecv(){
 	echo "Compiling $1.cpp..."
-	g++ "$1.cpp" -o "$1" `pkg-config --cflags --libs opencv`
-	echo "$1.cpp compiled as ./$1"
+	g++ "$1.cpp" -o "$1" `pkg-config --cflags --libs opencv` && {
+		echo "$1.cpp succesfully compiled as ./$1"
+	} || {
+
+		echo "Compilation failed."
+	}
+}
+
+#Java Compile and Run
+javar(){
+	echo "Compiling $1.java..."
+	javac Hello.java && {
+		echo "Compilation Successful! Running $1"
+		java $1
+	} || {
+		"Compilation failed."
+	}
 }
 
 #Youtube DL MP4
