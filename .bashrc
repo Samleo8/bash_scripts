@@ -222,3 +222,6 @@ alias ydl-mp3=youtube-dl-mp3
 
 #IBM Cloud Private
 source /usr/local/ibmcloud/autocomplete/bash_autocomplete
+
+#Manjaro Firefox Problems
+alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr/lib/firefox/distribution/distribution.ini'
