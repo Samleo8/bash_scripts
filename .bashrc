@@ -237,10 +237,8 @@ export SDKMAN_DIR="/home/sam/.sdkman"
 #Special goto function (cd to special directories)
 goto(){
 	if [[ $1 -eq "study" ]]; then
-		echo "Goto study"
 		cd ~/CMU/Study
 	elif [[ $1 -eq "sisyphus" ]]; then
-		echo "Goto sisyphus"
 		cd ~/Documents/MobileApps/SisyphusSheep
 	else
 		cd $1
