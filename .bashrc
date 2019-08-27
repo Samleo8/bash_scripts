@@ -118,6 +118,10 @@ fi
 
 # Path settings
 PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}$ 
+
+export ANDROID_HOME=/home/sam/Android/Sdk
+export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}
+
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 export PYTHONPATH=${PYTHONPATH}:/usr/local/python
@@ -225,3 +229,20 @@ source /usr/local/ibmcloud/autocomplete/bash_autocomplete
 
 #Manjaro Firefox Problems
 alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr/lib/firefox/distribution/distribution.ini'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/sam/.sdkman"
+[[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
+
+#Special goto function (cd to special directories)
+goto(){
+	if [[ $1 -eq "study" ]]; then
+		echo "Goto study"
+		cd ~/CMU/Study
+	elif [[ $1 -eq "sisyphus" ]]; then
+		echo "Goto sisyphus"
+		cd ~/Documents/MobileApps/SisyphusSheep
+	else
+		cd $1
+	fi
+}
