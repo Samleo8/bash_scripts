@@ -236,11 +236,17 @@ export SDKMAN_DIR="/home/sam/.sdkman"
 
 #Special goto function (cd to special directories)
 goto(){
-	if [[ $1 -eq "study" ]]; then
-		cd ~/CMU/Study
-	elif [[ $1 -eq "sisyphus" ]]; then
-		cd ~/Documents/MobileApps/SisyphusSheep
+	if [[ -z "$1" ]]; then
+		cd ./;
+	elif [[ "$1" == "study" ]]; then
+		cd ~/CMU/Study;
+	elif [[ "$1" == "15112" ]]; then
+		cd "/home/sam/CMU/Study/15112 (Intro to Programming)";
+	elif [[ "$1" == "sisyphus"* ]]; then
+		cd ~/Documents/MobileApps/SisyphusSheep;
+	elif [[ "$1" == "telegram" ]]; then
+		cd ~/Documents/Telegram\ Bots/;
 	else
-		cd $1
+		cd "$1"
 	fi
 }
