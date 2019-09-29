@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Map caps lock to esc key for Vim
+setxkbmap -option caps:escape
+

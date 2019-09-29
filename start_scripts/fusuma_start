@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Start the fusuma program
+sudo fusuma -c ~/.config/fusuma/config.yml &
+
+
