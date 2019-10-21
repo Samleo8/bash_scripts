@@ -145,6 +145,7 @@ alias ibmdev='ibmcloud dev'
 
 ###=====================SHORTCUT FUNCTIONS=====================###
 #cd and then ls
+#cd and then ls
 cdls(){
 	cd "$1" && l -a
 }
@@ -233,6 +234,9 @@ alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr
 #VS Code
 alias vscode=code
 
+#Yay update
+alias yayay="yay -Syu --noconfirm"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"
 [[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
@@ -245,6 +249,8 @@ goto(){
 		cd ~/CMU/Study;
 	elif [[ "$1" == "15112" ]]; then
 		cd "/home/sam/CMU/Study/15112 (Intro to Programming)";
+	elif [[ "$1" == "writing" ]]; then 
+		cd "/home/sam/CMU/Study/76106 (Writing about data)/AntConc/micusp_ds";
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
