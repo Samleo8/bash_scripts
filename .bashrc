@@ -234,6 +234,10 @@ alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr
 #VS Code
 alias vscode=code
 
+#Keybindings
+alias bind-esc='setxkbmap -option caps:escape'
+alias unbind-esc='setxkbmap -option'
+
 #Yay update
 alias yayay="yay -Syu --noconfirm"
 
