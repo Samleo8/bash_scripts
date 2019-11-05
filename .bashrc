@@ -145,7 +145,6 @@ alias ibmdev='ibmcloud dev'
 
 ###=====================SHORTCUT FUNCTIONS=====================###
 #cd and then ls
-#cd and then ls
 cdls(){
 	cd "$1" && l -a
 }
@@ -239,7 +238,7 @@ alias bind-esc='setxkbmap -option caps:escape'
 alias unbind-esc='setxkbmap -option'
 
 #Yay update
-alias yayay="yay -Syu --noconfirm"
+alias yayay="yay -Syu --noconfirm && firefox-home-reset"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"
