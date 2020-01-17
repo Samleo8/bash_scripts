@@ -120,13 +120,20 @@ fi
 PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}$ 
 
 export ANDROID_HOME=/home/sam/Android/Sdk
-export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}
+export JAVA_HOME=/usr/bin/java
+
+export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
 
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
 source /etc/profile.d/vte.sh
+
+#Python Virtual Environment
+export PATH="/home/sam/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 ###=====================KEYBOARD SETTINGS=====================###
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
@@ -240,6 +247,9 @@ alias unbind-esc='setxkbmap -option'
 #Yay update
 alias yayay="yay -Syu --noconfirm && firefox-home-reset"
 
+#Save windows and poweroff
+alias poweroff="lwsm save; poweroff"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"
 [[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
@@ -250,15 +260,56 @@ goto(){
 		cd ./;
 	elif [[ "$1" == "study" ]]; then
 		cd ~/CMU/Study;
-	elif [[ "$1" == "15112" ]]; then
-		cd "/home/sam/CMU/Study/15112 (Intro to Programming)";
-	elif [[ "$1" == "writing" ]]; then 
-		cd "/home/sam/CMU/Study/76106 (Writing about data)/AntConc/micusp_ds";
+	elif [[ "$1" == "research" ]]; then
+		cd "/home/sam/CMU/Research/3D Pose HARP";
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
 		cd ~/Documents/Telegram\ Bots/;
+	elif [[ "$1" == "15122" || $1 == "122" ]]; then 
+		cd "/home/sam/CMU/Study/15122";
+	elif [[ "$1" == "21241" || $1 == "241" ]]; then
+                cd "/home/sam/CMU/Study/21241 Linear Algebra"
+	elif [[ "$1" == "concepts" || $1 == "127" || $1 == "21127" ]]; then
+                cd "/home/sam/CMU/Study/21127 Concepts/homework"		
 	else
 		cd "$1"
 	fi
+}
+
+# PDF TO JPG
+pdf2jpg(){
+	PDF=$1
+
+	echo "Processing $PDF"
+	DIR=`basename "$1" .pdf`
+
+	mkdir "$DIR"
+
+	echo '  Splitting PDF file to pages...'
+	pdftk "$PDF" burst output "$DIR"/%04d.pdf
+	pdftk "$PDF" dump_data output "$DIR"/metadata.txt
+
+	echo '  Converting pages to JPEG files...'
+	for i in "$DIR"/*.pdf; do
+		convert -colorspace RGB -interlace none -density 300x300 -quality 100 "$i" "$DIR"/`basename "$i" .pdf`.jpg
+	done
+
+	echo 'All done'
+}
+
+alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
+alias bigfoot=harp
+
+# Programming handin function
+handin(){
+	FOLDER_NAME=${PWD##*/}
+	REMOTE_URL=andrew #scleong@linux.andrew.cmu.edu
+	BASE_DIRECTORY="~/private/15122"
+	COPY_TO="scleong@linux.andrew.cmu.edu:$BASE_DIRECTORY/$FOLDER_NAME"
+
+	ssh $REMOTE_URL 'cd '$BASE_DIRECTORY' && mkdir '$FOLDER_NAME
+	tar -czvf handin.tgz ${@:2}
+	scp -o GSSAPIAuthentication=yes ./handin.tgz $COPY_TO \
+	&& ssh $REMOTE_URL 'cd '$BASE_DIRECTORY'/'$FOLDER_NAME' && tar -xzvf handin.tgz && yes yes | /afs/andrew/course/15/122/bin/handin '$@
 }
