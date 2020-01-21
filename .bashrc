@@ -298,18 +298,27 @@ pdf2jpg(){
 	echo 'All done'
 }
 
+export BIGFOOT_SERVER="scleong@bigfoot.apt.ri.cmu.edu -p 2002"
 alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
 alias bigfoot=harp
+
+export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
+alias sshandrew="gpg -d -q ~/.ssh/andrewpwd.gpg > .fifo_temp && sshpass -f .fifo_temp ssh $ANDREW_LINUX && rm .fifo_temp"
 
 # Programming handin function
 handin(){
 	FOLDER_NAME=${PWD##*/}
-	REMOTE_URL=andrew #scleong@linux.andrew.cmu.edu
 	BASE_DIRECTORY="~/private/15122"
-	COPY_TO="scleong@linux.andrew.cmu.edu:$BASE_DIRECTORY/$FOLDER_NAME"
+	COPY_TO="$ANDREW_LINUX:$BASE_DIRECTORY/$FOLDER_NAME"
 
-	ssh $REMOTE_URL 'cd '$BASE_DIRECTORY' && mkdir '$FOLDER_NAME
-	tar -czvf handin.tgz ${@:2}
-	scp -o GSSAPIAuthentication=yes ./handin.tgz $COPY_TO \
-	&& ssh $REMOTE_URL 'cd '$BASE_DIRECTORY'/'$FOLDER_NAME' && tar -xzvf handin.tgz && yes yes | /afs/andrew/course/15/122/bin/handin '$@
+	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
+
+	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY' && mkdir -p '$FOLDER_NAME
+
+	tar -czvf handin.tgz ${@:2} && \
+	sshpass -f .fifo_temp scp ./handin.tgz $COPY_TO && \
+	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'/'$FOLDER_NAME' && tar -xzvf handin.tgz && yes yes | /afs/andrew/course/15/122/bin/handin '$@' && echo "Complete"'
+
+	rm ./.fifo_temp
+	rm ./handin.tgz
 }
