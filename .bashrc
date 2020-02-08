@@ -151,8 +151,6 @@ gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/k
 
 gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab '<Primary><Shift>Tab'
 
-alias ibmdev='ibmcloud dev'
-
 ###=====================SHORTCUT FUNCTIONS=====================###
 #cd and then ls
 cdls(){
@@ -224,38 +222,8 @@ javar(){
 	}
 }
 
-#Youtube DL MP4
-alias ydl=youtube-dl
-
-alias youtube-dl-mp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
-alias ydl-mp4=youtube-dl-mp4
-
-#Youtube DL MP3
-alias youtube-dl-mp3='youtube-dl --extract-audio --audio-format mp3'
-alias ydl-mp3=youtube-dl-mp3
-
 #IBM Cloud Private
 source /usr/local/ibmcloud/autocomplete/bash_autocomplete
-
-#Manjaro Firefox Problems
-alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr/lib/firefox/distribution/distribution.ini'
-
-#VS Code
-alias vscode=code
-
-#Keybindings
-alias bind-esc='setxkbmap -option caps:escape'
-alias unbind-esc='setxkbmap -option'
-
-#Yay update
-alias yayay="yay -Syu --noconfirm && firefox-home-reset"
-
-#Save windows and poweroff
-alias poweroff="lwsm save; poweroff"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/sam/.sdkman"
-[[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
 
 #Special goto function (cd to special directories)
 goto(){
@@ -264,13 +232,17 @@ goto(){
 	elif [[ "$1" == "study" ]]; then
 		cd ~/CMU/Study;
 	elif [[ "$1" == "research" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP";
+		cd "/home/sam/CMU/Research/3D Pose HARP" && harptensor
+	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
+		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch" && harptensor
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
 		cd ~/Documents/Telegram\ Bots/;
 	elif [[ "$1" == "15122" || $1 == "122" ]]; then 
 		cd "/home/sam/CMU/Study/15122";
+	elif [[ "$1" == "122 code" || "$1" == "122code" || "$1" == "122Code" ]]; then
+		cd `cat //home/sam/CMU/Study/15122/.active_code_122`
 	elif [[ "$1" == "21241" || $1 == "241" ]]; then
                 cd "/home/sam/CMU/Study/21241 Linear Algebra"
 	elif [[ "$1" == "concepts" || $1 == "127" || $1 == "21127" ]]; then
@@ -312,14 +284,6 @@ img2pdf(){
 	echo "Done!"
 }
 
-export BIGFOOT_SERVER="scleong@bigfoot.apt.ri.cmu.edu -p 2002"
-#alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
-alias harp="ssh bigfoot"
-alias harptensor="ssh -NfL 6006:localhost:6006 bigfoot"
-
-export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
-alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX"
-
 # Programming handin function
 handin(){
 	FOLDER_NAME=${PWD##*/}
@@ -354,5 +318,6 @@ imagediff(){
 	display ./images/diff.png
 }
 
-alias cleanup="sudo pacman -Sc --noconfirm"
-alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/sam/.sdkman"
+[[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
