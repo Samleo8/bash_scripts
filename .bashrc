@@ -126,14 +126,17 @@ export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools
 
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
-export PYTHONPATH=${PYTHONPATH}:/usr/local/python
+#export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
 source /etc/profile.d/vte.sh
 
 #Python Virtual Environment
-export PATH="/home/sam/.pyenv/bin:$PATH"
+PATH="/home/sam/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+export RUBY_PATH="/root/.gem/ruby/2.7.0/bin"
+PATH="$RUBY_PATH:$PATH"
 
 ###=====================KEYBOARD SETTINGS=====================###
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
@@ -298,12 +301,24 @@ pdf2jpg(){
 	echo 'All done'
 }
 
+img2pdf(){
+	IMAGES=${@:1:$#-1}
+	OUTPUT="${!#}" # get last element
+	
+	echo "Combining $IMAGES into $OUTPUT..."
+
+	convert "$IMAGES" -quality 100 "$OUTPUT"
+
+	echo "Done!"
+}
+
 export BIGFOOT_SERVER="scleong@bigfoot.apt.ri.cmu.edu -p 2002"
-alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
-alias bigfoot=harp
+#alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
+alias harp="ssh bigfoot"
+alias harptensor="ssh -NfL 6006:localhost:6006 bigfoot"
 
 export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
-alias sshandrew="gpg -d -q ~/.ssh/andrewpwd.gpg > .fifo_temp && sshpass -f .fifo_temp ssh $ANDREW_LINUX && rm .fifo_temp"
+alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX"
 
 # Programming handin function
 handin(){
@@ -322,3 +337,22 @@ handin(){
 	rm ./.fifo_temp
 	rm ./handin.tgz
 }
+
+imagediff(){
+	BASE_DIRECTORY="~/private/15122/3/imagediff"
+	COPY_TO="$ANDREW_LINUX:$BASE_DIRECTORY"
+
+	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
+
+	sshpass -f .fifo_temp scp $1 $2 $COPY_TO/images
+	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'; /afs/andrew/course/15/122/bin/imagediff -i '$1' -j '$2' -o diff.png'
+	sshpass -f .fifo_temp scp "$COPY_TO/diff.png" ./images
+	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'; rm '$1' '$2' diff.png'
+
+	rm ./.fifo_temp
+
+	display ./images/diff.png
+}
+
+alias cleanup="sudo pacman -Sc --noconfirm"
+alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
