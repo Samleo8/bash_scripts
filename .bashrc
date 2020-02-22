@@ -166,6 +166,11 @@ gitpush(){
 	git push
 }
 
+gitadd(){
+	git add $1;
+	git commit -m "$2"
+}
+
 #Process handling
 alias showproc=htop
 
@@ -232,9 +237,11 @@ goto(){
 	elif [[ "$1" == "study" ]]; then
 		cd ~/CMU/Study;
 	elif [[ "$1" == "research" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP" && harptensor
+		cd "/home/sam/CMU/Research/3D Pose HARP";
+		ssh -NfL 6006:localhost:6006 bigfoot;
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch" && harptensor
+		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
+		harptensor;
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
@@ -244,9 +251,9 @@ goto(){
 	elif [[ "$1" == "122 code" || "$1" == "122code" || "$1" == "122Code" ]]; then
 		cd `cat //home/sam/CMU/Study/15122/.active_code_122`
 	elif [[ "$1" == "21241" || $1 == "241" ]]; then
-                cd "/home/sam/CMU/Study/21241 Linear Algebra"
+        cd "/home/sam/CMU/Study/21241 Linear Algebra"
 	elif [[ "$1" == "concepts" || $1 == "127" || $1 == "21127" ]]; then
-                cd "/home/sam/CMU/Study/21127 Concepts/homework"		
+        cd "/home/sam/CMU/Study/21127 Concepts/homework"		
 	else
 		cd "$1"
 	fi
