@@ -167,8 +167,11 @@ gitpush(){
 }
 
 gitadd(){
-	git add $1;
-	git commit -m "$2"
+	TOADD="${@:1:$#-1}"
+        TOCOMMIT="${!#}" # get last element
+
+	git add $TOADD;
+	git commit -m "$TOCOMMIT"
 }
 
 #Process handling
@@ -205,6 +208,12 @@ echo_blue(){
 	echo_colour "$1" 81
 }
 
+export -f echo_err
+export -f echo_colour
+export -f echo_ok
+export -f echo_orange
+export -f echo_blue
+
 #OpenCV compile
 compilecv(){
 	echo "Compiling $1.cpp..."
@@ -215,6 +224,8 @@ compilecv(){
 		echo "Compilation failed."
 	}
 }
+
+export -f compilecv
 
 #Java Compile and Run
 javar(){
@@ -239,6 +250,9 @@ goto(){
 	elif [[ "$1" == "research" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP";
 		ssh -NfL 6006:localhost:6006 bigfoot;
+	elif [[ "$1" == "surf" || "$1" == "proposal" ]]; then
+		cd "/home/sam/CMU/Research/3D Pose HARP/SURF Proposal";
+		ssh -NfL 6006:localhost:6006 bigfoot;
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
 		harptensor;
@@ -250,14 +264,18 @@ goto(){
 		cd "/home/sam/CMU/Study/15122";
 	elif [[ "$1" == "122 code" || "$1" == "122code" || "$1" == "122Code" ]]; then
 		cd `cat //home/sam/CMU/Study/15122/.active_code_122`
-	elif [[ "$1" == "21241" || $1 == "241" ]]; then
+	elif [[ "$1" == "21241" || $1 == "241" || $1 == "matrices" ]]; then
         cd "/home/sam/CMU/Study/21241 Linear Algebra"
 	elif [[ "$1" == "concepts" || $1 == "127" || $1 == "21127" ]]; then
         cd "/home/sam/CMU/Study/21127 Concepts/homework"		
+	elif [[ "$1" == "mecheng" || "$1" == "24101" ]]; then
+		cd "/home/sam/CMU/Study/24101 Mech Eng/homework"
 	else
 		cd "$1"
 	fi
 }
+
+export -f goto
 
 # PDF TO JPG
 pdf2jpg(){
@@ -280,8 +298,10 @@ pdf2jpg(){
 	echo 'All done'
 }
 
+export -f pdf2jpg
+
 img2pdf(){
-	IMAGES=${@:1:$#-1}
+	IMAGES="${@:1:$#-1}"
 	OUTPUT="${!#}" # get last element
 	
 	echo "Combining $IMAGES into $OUTPUT..."
@@ -291,7 +311,14 @@ img2pdf(){
 	echo "Done!"
 }
 
+export -f img2pdf
+
 # Programming handin function
+122lab(){
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX '/afs/andrew/course/15/122/bin/122lab';
+	exit;
+}
+
 handin(){
 	FOLDER_NAME=${PWD##*/}
 	BASE_DIRECTORY="~/private/15122"
@@ -307,6 +334,14 @@ handin(){
 
 	rm ./.fifo_temp
 	rm ./handin.tgz
+}
+
+scpandrew(){
+	COPY_TO="$ANDREW_LINUX:$2"
+
+	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
+	sshpass -f .fifo_temp scp $1 $COPY_TO
+	rm ./.fifo_temp
 }
 
 imagediff(){
