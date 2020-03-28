@@ -12,6 +12,9 @@ alias ydl-mp3=youtube-dl-mp3
 #Manjaro Firefox Problems
 alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr/lib/firefox/distribution/distribution.ini'
 
+# Get weather
+alias weather="curl wttr.in"
+
 #VS Code
 alias vscode=code
 
@@ -31,7 +34,7 @@ alias xclip="xclip -selection clipboard"
 export BIGFOOT_SERVER="scleong@bigfoot.apt.ri.cmu.edu -p 2002"
 #alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
 alias harp="ssh bigfoot"
-alias harptensor="ssh -NfL 6006:localhost:6006 bigfoot"
+alias harptensor="ssh -NfL 6006:localhost:6006 bigfoot; firefox localhost:6006"
 
 export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
 alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX"
