@@ -263,7 +263,8 @@ goto(){
 	elif [[ "$1" == "15122" || $1 == "122" ]]; then 
 		cd "/home/sam/CMU/Study/15122";
 	elif [[ "$1" == "122 code" || "$1" == "122code" || "$1" == "122Code" ]]; then
-		cd `cat //home/sam/CMU/Study/15122/.active_code_122`
+		cd `cat /home/sam/CMU/Study/15122/.active_code_122`
+		code .
 	elif [[ "$1" == "21241" || $1 == "241" || $1 == "matrices" ]]; then
         cd "/home/sam/CMU/Study/21241 Linear Algebra"
 	elif [[ "$1" == "concepts" || $1 == "127" || $1 == "21127" ]]; then
@@ -276,6 +277,15 @@ goto(){
 }
 
 export -f goto
+
+# Save scripts in bash_scripts folder
+savescripts(){
+	FOLDER_DIR=/home/sam/bash_scripts/
+	cp $1 $FOLDER_DIR
+	cd $FOLDER_DIR
+	gitpush "$2"
+	cd -
+}
 
 # PDF TO JPG
 pdf2jpg(){
