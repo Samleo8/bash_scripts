@@ -255,6 +255,7 @@ goto(){
 		#ssh -NfL 6006:localhost:6006 bigfoot;
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
+		pyenv activate vol;
 		#harptensor;
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
