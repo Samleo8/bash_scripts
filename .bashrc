@@ -238,9 +238,6 @@ javar(){
 	}
 }
 
-#IBM Cloud Private
-source /usr/local/ibmcloud/autocomplete/bash_autocomplete
-
 #Special goto function (cd to special directories)
 goto(){
 	if [[ -z "$1" ]]; then
