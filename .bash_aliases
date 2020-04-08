@@ -23,7 +23,7 @@ alias bind-esc='setxkbmap -option caps:escape'
 alias unbind-esc='setxkbmap -option'
 
 #Yay update
-alias yayay="yay -Syu --noconfirm && firefox-home-reset"
+alias yayay="yay -Syu --noconfirm && firefox-home-reset && cleanup"
 
 #Save windows and poweroff
 alias poweroff="lwsm save; poweroff"
