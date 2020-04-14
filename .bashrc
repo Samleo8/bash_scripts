@@ -344,11 +344,19 @@ handin(){
 	rm ./handin.tgz
 }
 
-scpandrew(){
+scptoandrew(){
 	COPY_TO="$ANDREW_LINUX:$2"
 
 	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
 	sshpass -f .fifo_temp scp $1 $COPY_TO
+	rm ./.fifo_temp
+}
+
+scpfromandrew(){
+	COPY_FROM="$ANDREW_LINUX:$2"
+
+	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
+	sshpass -f .fifo_temp scp $COPY_FROM $1
 	rm ./.fifo_temp
 }
 
