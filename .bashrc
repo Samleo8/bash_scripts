@@ -353,10 +353,10 @@ scptoandrew(){
 }
 
 scpfromandrew(){
-	COPY_FROM="$ANDREW_LINUX:$2"
+	COPY_FROM="$ANDREW_LINUX:$1"
 
 	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
-	sshpass -f .fifo_temp scp $COPY_FROM $1
+	sshpass -f .fifo_temp scp $COPY_FROM $2
 	rm ./.fifo_temp
 }
 
