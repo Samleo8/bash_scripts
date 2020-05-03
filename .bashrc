@@ -122,9 +122,9 @@ PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}$
 export ANDROID_HOME=/home/sam/Android/Sdk
 export JAVA_HOME=/usr/bin/java
 
-export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
-
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+export ANDROID_PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
 
 #export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
@@ -136,7 +136,7 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 export RUBY_PATH="/root/.gem/ruby/2.7.0/bin"
-PATH="$RUBY_PATH:$PATH"
+export PATH="$RUBY_PATH:$PATH"
 
 ###=====================KEYBOARD SETTINGS=====================###
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
@@ -251,7 +251,8 @@ goto(){
 		cd "/home/sam/CMU/Research/3D Pose HARP/SURF Proposal";
 		#ssh -NfL 6006:localhost:6006 bigfoot;
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
+		# cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
+		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 		pyenv activate vol;
 		#harptensor;
 	elif [[ "$1" == "sisyphus"* ]]; then
@@ -285,6 +286,14 @@ savescripts(){
 	cd -
 }
 
+# Split PDFs into individual pages
+splitpdf(){
+	filename="$1"
+	filename=${filename%.*}
+	mkdir $filename
+	pdftk "$filename.pdf" burst output "$filename/$filename-%d.pdf"
+}
+
 # PDF TO JPG
 pdf2jpg(){
 	PDF=$1
@@ -303,8 +312,13 @@ pdf2jpg(){
 		convert -colorspace RGB -interlace none -density 300x300 -quality 100 "$i" "$DIR"/`basename "$i" .pdf`.jpg
 	done
 
+	rm "$DIR/*.pdf"
+	rm "$DIR/*.txt"	
+
 	echo 'All done'
 }
+
+alias pdf2img=pdf2jpg
 
 export -f pdf2jpg
 
@@ -359,6 +373,9 @@ scpfromandrew(){
 	sshpass -f .fifo_temp scp $COPY_FROM $2
 	rm ./.fifo_temp
 }
+
+export -f scptoandrew
+export -f scpfromandrew
 
 imagediff(){
 	BASE_DIRECTORY="~/private/15122/3/imagediff"
