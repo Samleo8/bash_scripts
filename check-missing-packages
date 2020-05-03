@@ -1,0 +1,23 @@
+missing_packages=() # insert list of missing packages, space-separated here
+
+echo "Packages missing from AUR (likely orphaned, or unused):"
+for item in ${missing_packages[*]}
+do
+    echo "$item `pacman -Qi $item | grep "Required"`"
+done
+
+echo ""
+
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+read -p "${bold}Do you wish to remove all the above packages? [y|N] " yn
+case $yn in
+    [Yy]* ) echo "Removing packages...${normal}";;
+    * ) exit;;
+esac
+
+for item in ${missing_packages[*]}
+do
+    sudo pacman -R $item --noconfirm
+done
