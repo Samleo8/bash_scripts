@@ -259,17 +259,10 @@ goto(){
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
 		cd ~/Documents/Telegram\ Bots/;
-	elif [[ "$1" == "15122" || $1 == "122" ]]; then 
-		cd "/home/sam/CMU/Study/15122";
-	elif [[ "$1" == "122 code" || "$1" == "122code" || "$1" == "122Code" ]]; then
-		cd `cat /home/sam/CMU/Study/15122/.active_code_122`
-		code .
 	elif [[ "$1" == "21241" || $1 == "241" || $1 == "matrices" ]]; then
-        cd "/home/sam/CMU/Study/21241 Linear Algebra"
+        	cd "/home/sam/CMU/Study/21241 Linear Algebra"
 	elif [[ "$1" == "concepts" || $1 == "127" || $1 == "21127" ]]; then
-        cd "/home/sam/CMU/Study/21127 Concepts/homework"		
-	elif [[ "$1" == "mecheng" || "$1" == "24101" ]]; then
-		cd "/home/sam/CMU/Study/24101 Mech Eng/homework"
+        	cd "/home/sam/CMU/Study/21127 Concepts/homework"
 	else
 		cd "$1"
 	fi
