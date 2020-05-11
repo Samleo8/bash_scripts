@@ -251,20 +251,21 @@ goto(){
 		cd "/home/sam/CMU/Research/3D Pose HARP/SURF Proposal";
 		#ssh -NfL 6006:localhost:6006 bigfoot;
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
-		# cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
-		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
+		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
+		# cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 		pyenv activate vol;
 		#harptensor;
+	elif [[ "$1" == "213" || "$1" == "18213" ]]; then
+		cd "/home/sam/CMU/Study/18213"
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
 		cd ~/Documents/Telegram\ Bots/;
-	elif [[ "$1" == "21241" || $1 == "241" || $1 == "matrices" ]]; then
-        	cd "/home/sam/CMU/Study/21241 Linear Algebra"
-	elif [[ "$1" == "concepts" || $1 == "127" || $1 == "21127" ]]; then
-        	cd "/home/sam/CMU/Study/21127 Concepts/homework"
+	elif [[ "$1" == "unreal" || "$1" == "ut" || "$1" == "ut2004" ]]; then
+		cd ~/Downloads/ut2004
+		./runGame
 	else
-		cd "$1"
+		cd "$1" || cd ~/"$1";
 	fi
 }
 
