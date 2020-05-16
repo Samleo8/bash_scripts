@@ -33,8 +33,7 @@ alias xclip="xclip -selection clipboard"
 
 export BIGFOOT_SERVER="scleong@bigfoot.apt.ri.cmu.edu -p 2002"
 #alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
-alias harp="ssh bigfoot"
-alias harptensor="ssh -NfL 6006:localhost:6006 bigfoot; firefox localhost:6006"
+alias harp="ssh -X bigfoot"
 alias researchcode="goto researchcode && code ."
 
 export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
