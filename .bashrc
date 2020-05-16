@@ -252,9 +252,10 @@ goto(){
 		#ssh -NfL 6006:localhost:6006 bigfoot;
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
-		# cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 		pyenv activate vol;
 		#harptensor;
+	elif [[ "$1" == "processing" || "$1" == "process" || "$1" == "preprocessing" ]]; then
+		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 	elif [[ "$1" == "213" || "$1" == "18213" ]]; then
 		cd "/home/sam/CMU/Study/18213"
 	elif [[ "$1" == "sisyphus"* ]]; then
@@ -270,6 +271,20 @@ goto(){
 }
 
 export -f goto
+
+# Research stuff
+harptensor(){
+	if [ -z "$1" ]; then 
+		TENSORBOARD_PORT=6006
+	else 
+		TENSORBOARD_PORT=$1
+	fi
+	
+	ssh -NfL $TENSORBOARD_PORT:localhost:$TENSORBOARD_PORT bigfoot
+	firefox localhost:$TENSORBOARD_PORT
+}
+
+export -f harptensor
 
 # Save scripts in bash_scripts folder
 savescripts(){
