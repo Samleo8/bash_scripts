@@ -41,3 +41,6 @@ alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LI
 
 alias cleanup="sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
 alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
+
+alias joindisplays="xrandr --output eDP1 --left-of HDMI1"
+alias dispalysrest=joindisplays
