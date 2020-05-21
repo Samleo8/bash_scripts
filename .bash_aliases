@@ -39,8 +39,13 @@ export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
 alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX"
 
 export ANDREW_SHARK=scleong@bambooshark.ics.cs.cmu.edu
+export ANDREW_SHARK_2=scleong@angelshark.ics.cs.cmu.edu
+
 alias sshshark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
 alias shark="sshshark"
+alias shark2="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK_2"
+
+alias 213code="goto 213code && code ."
 
 alias cleanup="sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
 alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
