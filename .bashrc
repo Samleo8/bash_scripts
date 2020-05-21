@@ -258,6 +258,8 @@ goto(){
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 	elif [[ "$1" == "213" || "$1" == "18213" ]]; then
 		cd "/home/sam/CMU/Study/18213"
+	elif [[ "$1" == "213lab" || "$1" == "213code" ]]; then
+		cd `cat /home/sam/CMU/Study/18213/.active_code_213`
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
@@ -353,19 +355,19 @@ export -f img2pdf
 
 handin(){
 	FOLDER_NAME=${PWD##*/}
-	BASE_DIRECTORY="~/private/15122"
+	BASE_DIRECTORY="~/private/18213"
 	COPY_TO="$ANDREW_LINUX:$BASE_DIRECTORY/$FOLDER_NAME"
 
 	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
 
 	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY' && mkdir -p '$FOLDER_NAME
 
-	tar -czvf handin.tgz ${@:2} && \
-	sshpass -f .fifo_temp scp ./handin.tgz $COPY_TO && \
-	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'/'$FOLDER_NAME' && tar -xzvf handin.tgz && yes yes | /afs/andrew/course/15/122/bin/handin '$@' && echo "Complete"'
+	tar -czvf handin.tar ${@:2} && \
+	sshpass -f .fifo_temp scp ./handin.tar $COPY_TO && \
+	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'/'$FOLDER_NAME' && tar -xzvf handin.tgz && yes yes | /afs/andrew/course/15/213/bin/handin '$@' && echo "Complete"'
 
 	rm ./.fifo_temp
-	rm ./handin.tgz
+	rm ./handin.tar
 }
 
 scptoandrew(){
