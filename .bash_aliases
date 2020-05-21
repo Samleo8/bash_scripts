@@ -32,7 +32,6 @@ alias poweroff="lwsm save; poweroff"
 alias xclip="xclip -selection clipboard"
 
 export BIGFOOT_SERVER="scleong@bigfoot.apt.ri.cmu.edu -p 2002"
-#alias harp="ssh scleong@bigfoot.apt.ri.cmu.edu -p 2002"
 alias harp="ssh -X bigfoot"
 alias researchcode="goto researchcode && code ."
 
@@ -41,6 +40,7 @@ alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LI
 
 export ANDREW_SHARK=scleong@bambooshark.ics.cs.cmu.edu
 alias sshshark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
+alias shark="sshshark"
 
 alias cleanup="sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
 alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
