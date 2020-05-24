@@ -46,9 +46,10 @@ alias shark="sshshark"
 alias shark2="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK_2"
 
 alias 213code="goto 213code && code ."
+alias format="make format && gitpush 'Format'"
 
 alias cleanup="sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
 alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
 
 alias joindisplays="xrandr --output eDP1 --left-of HDMI1"
-alias dispalysrest=joindisplays
+alias displayreset=joindisplays
