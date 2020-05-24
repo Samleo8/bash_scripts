@@ -39,7 +39,7 @@ export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
 alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX"
 
 export ANDREW_SHARK=scleong@bambooshark.ics.cs.cmu.edu
-export ANDREW_SHARK_2=scleong@angelshark.ics.cs.cmu.edu
+export ANDREW_SHARK_2=scleong@hammerheadshark.ics.cs.cmu.edu
 
 alias sshshark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
 alias shark="sshshark"
