@@ -249,7 +249,7 @@ compilec(){
 	fi
 }
 
-export -f ccompile
+export -f compilec
 
 alias ccompile=compilec
 alias gcccompile=compilec
