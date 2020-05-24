@@ -238,6 +238,22 @@ javar(){
 	}
 }
 
+# C compile and run
+compilec(){
+	if [ -f "$1.c" ]; then
+		gcc "$1.c" -o "$1.out" && ./"$1.out"
+	elif [ -f "$1" ]; then
+		gcc "$1" -o "$1.out" && ./"$1.out"
+	else
+		echo_err "Cannot compile and run $1: Does not exist"
+	fi
+}
+
+export -f ccompile
+
+alias ccompile=compilec
+alias gcccompile=compilec
+
 #Special goto function (cd to special directories)
 goto(){
 	if [[ -z "$1" ]]; then
@@ -259,6 +275,7 @@ goto(){
 	elif [[ "$1" == "213" || "$1" == "18213" ]]; then
 		cd "/home/sam/CMU/Study/18213"
 	elif [[ "$1" == "213lab" || "$1" == "213code" ]]; then
+		cd "/home/sam/CMU/Study/18213"
 		cd `cat /home/sam/CMU/Study/18213/.active_code_213`
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
