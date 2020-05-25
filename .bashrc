@@ -367,9 +367,9 @@ export -f img2pdf
 # Programming handin function
 sshshark(){
     if [ -z $1 ]; then
-        SHARK_URL="scleong@$1shark.ics.cs.cmu.edu"
-    else
         SHARK_URL=$ANDREW_SHARK
+	else 
+		SHARK_URL="scleong@$1shark.ics.cs.cmu.edu"
     fi
 
     sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $SHARK_URL;
