@@ -41,8 +41,8 @@ alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LI
 export ANDREW_SHARK=scleong@bambooshark.ics.cs.cmu.edu
 export ANDREW_SHARK_2=scleong@hammerheadshark.ics.cs.cmu.edu
 
-alias sshshark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
-alias shark="sshshark"
+alias sshshark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X scleong@$1shark.ics.cs.cmu"
+alias shark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
 alias shark2="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK_2"
 
 alias 213code="goto 213code && code ."
