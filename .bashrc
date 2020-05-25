@@ -1,5 +1,5 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# see /usr/dee/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
 # If not running interactively, don't do anything
@@ -365,6 +365,16 @@ img2pdf(){
 export -f img2pdf
 
 # Programming handin function
+sshshark(){
+    if [ -z $1 ]; then
+        SHARK_URL="scleong@$1shark.ics.cs.cmu.edu"
+    else
+        SHARK_URL=$ANDREW_SHARK
+    fi
+
+    sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $SHARK_URL;
+}
+
 122lab(){
 	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX '/afs/andrew/course/15/122/bin/122lab';
 	exit;
