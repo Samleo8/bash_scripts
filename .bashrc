@@ -242,11 +242,11 @@ javar(){
 compilec(){
 	# In case wanna add flags
 	FLAGS="-Wall -g"
-	FILENAME=${@:$#}
+	FILENAME=$1 # ${@:$#}
 	if [ -f "$FILENAME.c" ]; then
-		gcc $FLAGS $1.c -o "$FILENAME.out" && ./"$FILENAME.out"
+		gcc $FLAGS $@.c -o "$FILENAME.out" && ./"$FILENAME.out"
 	elif [ -f "$FILENAME" ]; then
-		gcc $FLAGS $1 -o "$FILENAME.out" && ./"$FILENAME.out"
+		gcc $FLAGS $@ -o "$FILENAME.out" && ./"$FILENAME.out"
 	else
 		echo_err "Cannot compile and run $FILENAME: Does not exist"
 	fi
