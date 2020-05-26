@@ -312,9 +312,13 @@ export -f harptensor
 # Save scripts in bash_scripts folder
 savescripts(){
 	FOLDER_DIR=/home/sam/bash_scripts/
-	cp $1 $FOLDER_DIR
+
+	MESSAGE=${@:$#} # last parameter 
+	FILES=${*%${!#}} # all parameters except the last
+
+	cp $FILES $FOLDER_DIR
 	cd $FOLDER_DIR
-	gitpush "$2"
+	gitpush "$MESSAGE"
 	cd -
 }
 
