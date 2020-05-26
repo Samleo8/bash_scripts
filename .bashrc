@@ -240,12 +240,14 @@ javar(){
 
 # C compile and run
 compilec(){
-	if [ -f "$1.c" ]; then
-		gcc "$1.c" -o "$1.out" && ./"$1.out"
-	elif [ -f "$1" ]; then
-		gcc "$1" -o "$1.out" && ./"$1.out"
+	# In case wanna add flags
+	FILENAME=${@:$#}
+	if [ -f "$FILENAME.c" ]; then
+		gcc $1.c -o "$FILENAME.out" && ./"$FILENAME.out"
+	elif [ -f "$FILENAME" ]; then
+		gcc $1 -o "$FILENAME.out" && ./"$FILENAME.out"
 	else
-		echo_err "Cannot compile and run $1: Does not exist"
+		echo_err "Cannot compile and run $FILENAME: Does not exist"
 	fi
 }
 
