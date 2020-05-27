@@ -287,7 +287,10 @@ goto(){
 	elif [[ "$1" == "unreal" || "$1" == "ut" || "$1" == "ut2004" ]]; then
 		cd ~/Downloads/ut2004
 		./runGame
+		cd -
 		xrandr --output eDP1 --left-of HDMI1
+	elif [[ "$1" == "website" ]]; then
+		cd ~/Documents/Github\ Website
 	else
 		cd "$1" || cd ~/"$1";
 	fi
