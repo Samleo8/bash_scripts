@@ -306,7 +306,7 @@ harptensor(){
 		TENSORBOARD_PORT=$1
 	fi
 	
-	ssh -NfL $TENSORBOARD_PORT:localhost:$TENSORBOARD_PORT bigfoot
+	ssh -NfL $TENSORBOARD_PORT:localhost:$TENSORBOARD_PORT bigfootvisual
 	firefox localhost:$TENSORBOARD_PORT
 }
 
