@@ -383,9 +383,9 @@ compress-video(){
 	fi
 	
 	FILENAME=$1
-	if [ -f $FILENAME ];
+	if [ -f $FILENAME ]; then
 		FILENAME="${FILENAME%.*}"
-	elif [ -f $FILENAME.mp4 ] 
+	elif [ -f $FILENAME.mp4 ]; then 
 		FILENAME=$1
 	else
 		echo "File $FILENAME does not exist"
