@@ -383,16 +383,16 @@ compress-video(){
 	fi
 	
 	FILENAME=$1
-	if [ -f $FILENAME ]; then
+	if [ -f "$FILENAME" ]; then
 		FILENAME="${FILENAME%.*}"
-	elif [ -f $FILENAME.mp4 ]; then 
-		FILENAME=$1
+	elif [ -f "$FILENAME.mp4" ]; then 
+		FILENAME="$1"
 	else
 		echo "File $FILENAME does not exist"
-		exit 1
+		return 1
 	fi
 
-	ffmpeg -i $FILENAME.mp4 -vcodec libx265 -crf $COMPRESS_RATE $FILENAME-compressed.mp4
+	ffmpeg -i "$1" -vcodec libx265 -crf $COMPRESS_RATE "$FILENAME-compressed.mp4"
 }
 
 # Programming handin function
