@@ -9,9 +9,6 @@ alias ydl-mp4=youtube-dl-mp4
 alias youtube-dl-mp3='youtube-dl --extract-audio --audio-format mp3'
 alias ydl-mp3=youtube-dl-mp3
 
-# Compress using ffmpeg
-alias compress-video="ffmpeg -i $1 -c:v libx265 -crf $2 $1-compressed.mp4"
-
 #Manjaro Firefox Problems
 alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr/lib/firefox/distribution/distribution.ini'
 

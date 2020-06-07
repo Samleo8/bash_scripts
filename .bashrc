@@ -374,6 +374,27 @@ img2pdf(){
 
 export -f img2pdf
 
+# Compress video using ffmpeg
+compress-video(){
+	if [ -z $2 ]; then 
+		COMPRESS_RATE=24;
+	else
+		COMPRESS_RATE=$2;
+	fi
+	
+	FILENAME=$1
+	if [ -f $FILENAME ];
+		FILENAME="${FILENAME%.*}"
+	elif [ -f $FILENAME.mp4 ] 
+		FILENAME=$1
+	else
+		echo "File $FILENAME does not exist"
+		exit 1
+	fi
+
+	ffmpeg -i $FILENAME.mp4 -vcodec libx265 -crf $COMPRESS_RATE $FILENAME-compressed.mp4
+}
+
 # Programming handin function
 sshshark(){
     if [ -z $1 ]; then
