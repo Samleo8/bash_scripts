@@ -263,18 +263,26 @@ goto(){
 		cd ./;
 	elif [[ "$1" == "study" ]]; then
 		cd ~/CMU/Study;
+	elif [[ "$1" == "dso" || "$1" == "radar" ]]; then
+		cd "/home/sam/CMU/Research/Radar Odometry";
 	elif [[ "$1" == "research" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP";
 		#ssh -NfL 6006:localhost:6006 bigfoot;
 	elif [[ "$1" == "surf" || "$1" == "proposal" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/SURF Proposal";
-		#ssh -NfL 6006:localhost:6006 bigfoot;
+		#ssh -NfL 6006:localhost:6006 bigfoot
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
 		pyenv activate vol;
-		#harptensor;
+	elif [[ "$1" == "detectron2" || "$1" == "detectron" ]]; then
+		cd "/home/sam/CMU/Research/3D Pose HARP/Code/detectron2";
+		pyenv activate vol;	
 	elif [[ "$1" == "processing" || "$1" == "process" || "$1" == "preprocessing" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
+	elif [[ "$1" == "shopee" ]]; then
+		cd "/home/sam/Documents/WeMissSGFood"
+		pyenv activate data
+		cd `cat .active_project`
 	elif [[ "$1" == "213" || "$1" == "18213" ]]; then
 		cd "/home/sam/CMU/Study/18213"
 	elif [[ "$1" == "213lab" || "$1" == "213code" ]]; then
@@ -306,7 +314,7 @@ harptensor(){
 		TENSORBOARD_PORT=$1
 	fi
 	
-	ssh -NfL $TENSORBOARD_PORT:localhost:$TENSORBOARD_PORT bigfootvisual
+	ssh -NfL $TENSORBOARD_PORT:localhost:$TENSORBOARD_PORT bigfoot
 	firefox localhost:$TENSORBOARD_PORT
 }
 
