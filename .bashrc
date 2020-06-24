@@ -297,7 +297,10 @@ goto(){
 		./runGame
 		cd -
 		xrandr --output eDP1 --left-of HDMI1
-	elif [[ "$1" == "website" ]]; then
+	elif [[ "$1" == "pinball" ]]; then
+		cd ~/Downloads/pinball
+		wine pinball.exe
+	elif [[ "$1" == "website" || "$1" == "github" ]]; then
 		cd ~/Documents/Github\ Website
 	else
 		cd "$1" || cd ~/"$1";
