@@ -272,8 +272,8 @@ goto(){
 		cd "/home/sam/CMU/Research/3D Pose HARP/SURF Proposal";
 		#ssh -NfL 6006:localhost:6006 bigfoot
 	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch";
-		pyenv activate vol;
+		cd "/home/sam/CMU/Research/Radar Odometry/pharao";
+		# pyenv activate vol;
 	elif [[ "$1" == "detectron2" || "$1" == "detectron" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/detectron2";
 		pyenv activate vol;	
