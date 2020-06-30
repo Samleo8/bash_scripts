@@ -35,7 +35,7 @@ export BIGFOOT_SERVER="scleong@bigfoot.apt.ri.cmu.edu -p 2002"
 alias harp="ssh bigfoot"
 alias harpvisual="ssh -X bigfootvisual"
 alias harpvis=harpvisual
-alias researchcode="goto researchcode && code ."
+alias researchcode="goto researchcode && git pull && code ."
 
 export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
 alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX"
