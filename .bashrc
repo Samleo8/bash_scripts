@@ -350,7 +350,7 @@ splitpdf(){
 	pdftk "$filename.pdf" burst output "$filename/$filename-%d.pdf"
 }
 
-# PDF TO BOOK
+# PDF TO BOOKLET
 pdf2book(){
 	USAGE_STR="Usage: pdf2book <filename[.pdf]> [-c:crop] [-l:US letter size] [-h:help]"
 	CROP_OPT=""
@@ -396,6 +396,9 @@ pdf2book(){
 	echo "Booklet saved: $FILE-$FILE_SUFFIX.pdf"
 }
 
+alias pdf2booklet=pdf2book
+export -f pdf2book
+
 # PDF TO JPG
 pdf2jpg(){
 	PDF=$1
@@ -421,7 +424,6 @@ pdf2jpg(){
 }
 
 alias pdf2img=pdf2jpg
-
 export -f pdf2jpg
 
 img2pdf(){
@@ -529,6 +531,3 @@ imagediff(){
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"
 [[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
-
-# Telegram desktop settings
-# export QT_QPA_PLATFORMTHEME=gtk3
