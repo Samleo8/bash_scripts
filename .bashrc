@@ -381,7 +381,6 @@ pdf2book(){
 		echo -e $USAGE_STR
 		return
 	fi
-	
 
 	FILE=$(echo $1 | sed 's/.pdf//')
 
