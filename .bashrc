@@ -380,13 +380,16 @@ pdf2book(){
 	if [[ -z "$1" ]]; then
 		echo -e $USAGE_STR
 		return
-	elif [ -f "$1" ]; then
-		echo "File $1 not found."
+	fi
+	
+
+	FILE=$(echo $1 | sed 's/.pdf//')
+
+	if [ ! -f $FILE.pdf ]; then
+		echo "File $FILE.pdf not found."
 		echo -e "$USAGE_STR"
 		return
 	fi
-
-	FILE=$(echo $1 | sed 's/.pdf//')
 
 	CMD="pdfjam --booklet 'true' --landscape --suffix book --signature '4' --suffix '$FILE_SUFFIX' --paper '$PAPER_TYPE' $CROP_OPT --quiet '$FILE.pdf'"
 	
