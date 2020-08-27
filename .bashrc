@@ -126,6 +126,11 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRAR
 
 export ANDROID_PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
 
+export NODE_PATH=/usr/local/lib/node_modules/node/bin/
+
+export EIGEN_INCLUDE_DIRS=/usr/include/eigen3
+PATH="$NODE_PATH:$PATH:$EIGEN_INCLUDE_DIRS"
+
 #export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
 source /etc/profile.d/vte.sh
@@ -241,7 +246,8 @@ javar(){
 # C compile and run
 compilec(){
 	# In case wanna add flags
-	FLAGS="-Wall -g"
+	FLAGS="-g"
+	# FLAGS="-Wall -g"
 	FILENAME=$1 # ${@:$#}
 	if [ -f "$FILENAME.c" ]; then
 		gcc $FLAGS $@.c -o "$FILENAME.out" && ./"$FILENAME.out"
@@ -342,6 +348,52 @@ splitpdf(){
 	filename=${filename%.*}
 	mkdir $filename
 	pdftk "$filename.pdf" burst output "$filename/$filename-%d.pdf"
+}
+
+# PDF TO BOOK
+pdf2book(){
+	USAGE_STR="Usage: pdf2book <filename[.pdf]> [-c:crop] [-l:US letter size] [-h:help]"
+	CROP_OPT=""
+	FILE_SUFFIX="booklet"
+	PAPER_TYPE="a4paper"
+
+	while getopts ":hcl" opt; do
+		case $opt in
+			c)
+				CROP_OPT="--trim '1cm 1cm 1cm 1cm' --clip 'true'"
+				FILE_SUFFIX="cropped-$FILE_SUFFIX"
+			;;
+			l)
+				PAPER_TYPE="letter"
+				FILE_SUFFIX="$FILE_SUFFIX-letter"
+			;;
+			\?)
+				echo "Invalid option: -$OPTARG" >&2
+			;&
+			h)
+				echo $USAGE_STR
+				return
+			;;
+		esac
+	done
+
+	if [[ -z "$1" ]]; then
+		echo -e $USAGE_STR
+		return
+	elif [ -f "$1" ]; then
+		echo "File $1 not found."
+		echo -e "$USAGE_STR"
+		return
+	fi
+
+	FILE=$(echo $1 | sed 's/.pdf//')
+
+	CMD="pdfjam --booklet 'true' --landscape --suffix book --signature '4' --suffix '$FILE_SUFFIX' --paper '$PAPER_TYPE' $CROP_OPT --quiet '$FILE.pdf'"
+	
+	echo "$ $CMD"
+	eval $CMD
+
+	echo "Booklet saved: $FILE-$FILE_SUFFIX.pdf"
 }
 
 # PDF TO JPG
@@ -477,3 +529,6 @@ imagediff(){
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"
 [[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
+
+# Telegram desktop settings
+# export QT_QPA_PLATFORMTHEME=gtk3
