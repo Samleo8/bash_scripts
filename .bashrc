@@ -350,6 +350,27 @@ splitpdf(){
 	pdftk "$filename.pdf" burst output "$filename/$filename-%d.pdf"
 }
 
+# Create blank page
+createBlankPDF(){
+	numberOfPages=${1:-1}
+	echo '\documentclass{article}' > blank.tex
+	echo '\usepackage{pdfpages}' >> blank.tex
+	echo '\begin{document}' >> blank.tex
+	for((i=1;i<=$numberOfPages;i++)); do 
+		echo '\newpage\null\thispagestyle{empty}\newpage'
+	done >> blank.tex
+	echo '\end{document}' >> blank.tex
+
+	: | pdflatex -halt-on-error blank.tex | grep '^!.*' -A200 --color=always
+
+	# Keep only the pdf
+	rm blank.{tex,out,log,aux,bbl,blg,dvi,toc,synctex.gz} > /dev/null 2>&1
+
+	echo "blank.pdf created with $numberOfPages blank page(s)"
+}
+
+export -f createBlankPDF
+
 # PDF TO BOOKLET
 pdf2book(){
 	USAGE_STR="Usage: pdf2book <filename[.pdf]> [-c:crop] [-l:US letter size] [-h:help]"
@@ -384,15 +405,18 @@ pdf2book(){
 
 	FILE=$(echo $1 | sed 's/.pdf//')
 
-	if [ ! -f $FILE.pdf ]; then
+	if [ ! -f "$FILE.pdf" ]; then
 		echo "File $FILE.pdf not found."
 		echo -e "$USAGE_STR"
 		return
 	fi
 
-	CMD="pdfjam --booklet 'true' --landscape --suffix book --signature '4' --suffix '$FILE_SUFFIX' --paper '$PAPER_TYPE' $CROP_OPT --quiet '$FILE.pdf'"
+	PAGES=$(pdftk "$FILE.pdf" dump_data | grep NumberOfPages | awk '{print $2}')
+	echo -e "Converting '$FILE.pdf' of $PAGES page(s)...\n"
+
+	CMD="pdfjam --booklet 'true' --signature $PAGES --landscape --suffix '$FILE_SUFFIX' --paper '$PAPER_TYPE' $CROP_OPT --quiet -- '$FILE.pdf'"
 	
-	echo "$ $CMD"
+	echo -e "$ $CMD\n"
 	eval $CMD
 
 	echo "Booklet saved: $FILE-$FILE_SUFFIX.pdf"
