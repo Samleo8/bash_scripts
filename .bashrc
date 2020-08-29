@@ -285,15 +285,14 @@ goto(){
 		pyenv activate vol;	
 	elif [[ "$1" == "processing" || "$1" == "process" || "$1" == "preprocessing" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
-	elif [[ "$1" == "shopee" ]]; then
-		cd "/home/sam/Documents/WeMissSGFood"
-		pyenv activate data
-		cd `cat .active_project`
-	elif [[ "$1" == "213" || "$1" == "18213" ]]; then
-		cd "/home/sam/CMU/Study/18213"
-	elif [[ "$1" == "213lab" || "$1" == "213code" ]]; then
-		cd "/home/sam/CMU/Study/18213"
-		cd `cat /home/sam/CMU/Study/18213/.active_code_213`
+	elif [[ "$1" == "36225" || "$1" == "probability" ]]; then
+		cd "/home/sam/CMU/Study/36225"
+	elif [[ "$1" == "18240" || "$1" == "240" ]]; then
+		cd "/home/sam/CMU/Study/18240"
+	elif [[ "$1" == "16385" || "$1" == "computervision" || "$1" == "cv" || "$1" == "CV" ]]; then
+		cd "/home/sam/CMU/Study/16385 Computer Vision"
+	elif [[ "$1" == "21260" || "$1" == "diffeq" ]]; then
+		cd "/home/sam/CMU/Study/21260 Diff Eq"
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
