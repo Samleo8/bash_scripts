@@ -291,6 +291,8 @@ goto(){
 		cd "/home/sam/CMU/Study/18240"
 	elif [[ "$1" == "16385" || "$1" == "computervision" || "$1" == "cv" || "$1" == "CV" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision"
+	elif [[ "$1" == "cvcode" ]]; then
+		cd "/home/sam/CMU/Study/16385 Computer Vision/programming"
 	elif [[ "$1" == "21260" || "$1" == "diffeq" ]]; then
 		cd "/home/sam/CMU/Study/21260 Diff Eq"
 	elif [[ "$1" == "sisyphus"* ]]; then

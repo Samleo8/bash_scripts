@@ -5,12 +5,15 @@ alias ydl=youtube-dl
 alias youtube-dl-mp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
 alias ydl-mp4=youtube-dl-mp4
 
-#Youtube DL MP3
+# Youtube DL MP3
 alias youtube-dl-mp3='youtube-dl --extract-audio --audio-format mp3'
 alias ydl-mp3=youtube-dl-mp3
 
-#Manjaro Firefox Problems
+# Manjaro Firefox Problems
 alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr/lib/firefox/distribution/distribution.ini'
+
+# Opening folder
+alias explorer=xdg-open
 
 # Get weather
 alias weather="curl wttr.in"
@@ -46,8 +49,7 @@ export ANDREW_SHARK_2=scleong@catshark.ics.cs.cmu.edu
 alias shark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
 alias shark2="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK_2"
 
-alias 213code="goto 213code && code ."
-alias format="make format && gitpush 'Format'"
+alias cvcode="goto cvcode"
 
 alias cleanup="sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
 alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
