@@ -267,6 +267,8 @@ alias gcccompile=compilec
 goto(){
 	if [[ -z "$1" ]]; then
 		cd ./;
+	elif [[ "$1" == "cmu" ]]; then
+		cd ~/CMU;
 	elif [[ "$1" == "study" ]]; then
 		cd ~/CMU/Study;
 	elif [[ "$1" == "dso" || "$1" == "radar" ]]; then
@@ -309,6 +311,8 @@ goto(){
 		wine pinball.exe
 	elif [[ "$1" == "website" || "$1" == "github" ]]; then
 		cd ~/Documents/Github\ Website
+	elif [[ "$1" == "resume" ]]; then
+		cd ~/CMU/Resume
 	else
 		cd "$1" || cd ~/"$1";
 	fi
