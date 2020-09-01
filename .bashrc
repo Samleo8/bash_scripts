@@ -295,12 +295,14 @@ goto(){
 		cd "/home/sam/CMU/Study/16385 Computer Vision"
 	elif [[ "$1" == "cvcode" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision/programming"
-	elif [[ "$1" == "21260" || "$1" == "diffeq" ]]; then
-		cd "/home/sam/CMU/Study/21260 Diff Eq"
+	elif [[ "$1" == "21260" || "$1" == "diffeq" || "$1" == "260" ]]; then
+		cd "/home/sam/CMU/Study/21260 Diff Eq/homework"
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
 		cd ~/Documents/Telegram\ Bots/;
+	elif [[ "$1" == "biblequizzle" || "$1" == "quizzle" ]]; then
+		cd ~/Documents/Telegram\ Bots/BibleQuizzle;
 	elif [[ "$1" == "unreal" || "$1" == "ut" || "$1" == "ut2004" ]]; then
 		cd ~/Downloads/ut2004
 		./runGame
@@ -312,7 +314,7 @@ goto(){
 	elif [[ "$1" == "website" || "$1" == "github" ]]; then
 		cd ~/Documents/Github\ Website
 	elif [[ "$1" == "resume" ]]; then
-		cd ~/CMU/Resume
+		cd "/home/sam/Documents/Github Website/resumecv"
 	else
 		cd "$1" || cd ~/"$1";
 	fi
