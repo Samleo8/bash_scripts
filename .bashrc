@@ -287,8 +287,8 @@ goto(){
 		pyenv activate vol;	
 	elif [[ "$1" == "processing" || "$1" == "process" || "$1" == "preprocessing" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
-	elif [[ "$1" == "36225" || "$1" == "probability" ]]; then
-		cd "/home/sam/CMU/Study/36225"
+	elif [[ "$1" == "225" || "$1" == "36225" || "$1" == "probability" ]]; then
+		cd "/home/sam/CMU/Study/36225/homework"
 	elif [[ "$1" == "18240" || "$1" == "240" ]]; then
 		cd "/home/sam/CMU/Study/18240"
 	elif [[ "$1" == "16385" || "$1" == "computervision" || "$1" == "cv" || "$1" == "CV" ]]; then
@@ -321,6 +321,24 @@ goto(){
 }
 
 export -f goto
+
+# Update all instances of sammath
+updatesammath(){
+	MSG=${1:-("Update sammath")}
+
+	find ~/CMU/Study -inum 3300840 -print0 | 
+	while IFS= read -r -d '' file; do
+		DIR=$(dirname "$file")
+		cd "$DIR"
+		LOCALFILE=$(basename "$file")
+
+		echo $DIR
+		git add $LOCALFILE
+		git commit -m "$MSG"
+		git push
+		echo -e "Done.\n"
+	done
+}
 
 # Research stuff
 harptensor(){
@@ -564,3 +582,4 @@ imagediff(){
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"
 [[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
+export QSYS_ROOTDIR="/home/sam/intelFPGA_lite/20.1/quartus/sopc_builder/bin"
