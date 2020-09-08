@@ -289,14 +289,25 @@ goto(){
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 	elif [[ "$1" == "225" || "$1" == "36225" || "$1" == "probability" ]]; then
 		cd "/home/sam/CMU/Study/36225/homework"
+	elif [[ "$1" == "225hw" || "$1" == "36225hw" || "$1" == "225hmwk" || "$1" == "36225hmwk" ]]; then
+		cd "/home/sam/CMU/Study/36225/homework"	
+		cd `cat .active_hw_dir`
 	elif [[ "$1" == "18240" || "$1" == "240" ]]; then
 		cd "/home/sam/CMU/Study/18240"
+	elif [[ "$1" == "240hw" || "$1" == "240hwmk" ]]; then
+		cd "/home/sam/CMU/Study/18240/homework"
+		cd `cat .active_hw_dir`
+	elif [[ "$1" == "240lab" || "$1" == "240labs" ]]; then
+		cd "/home/sam/CMU/Study/18240/labs"
 	elif [[ "$1" == "16385" || "$1" == "computervision" || "$1" == "cv" || "$1" == "CV" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision"
 	elif [[ "$1" == "cvcode" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision/programming"
 	elif [[ "$1" == "21260" || "$1" == "diffeq" || "$1" == "260" ]]; then
 		cd "/home/sam/CMU/Study/21260 Diff Eq/homework"
+	elif [[ "$1" == "260hw" || "$1" == "diffeqhw" || "$1" == "260hmwk" ]]; then
+		cd "/home/sam/CMU/Study/21260 Diff Eq/homework"
+		cd `cat .active_hw_dir`
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
@@ -321,6 +332,13 @@ goto(){
 }
 
 export -f goto
+
+# Sync 240 folder with Github (because ECE servers no Internet connection)
+240sync(){
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && exit' \
+	&& echo "Successfully synced 240 Github folder on Andrew servers!" \
+	|| echo "Failed to sync 240 Github folder on Andrew servers!"
+}
 
 # Update all instances of sammath
 updatesammath(){
