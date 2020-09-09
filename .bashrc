@@ -335,6 +335,10 @@ export -f goto
 
 # Sync 240 folder with Github (because ECE servers no Internet connection)
 240sync(){
+	if [[ ! -z "$1" ]]; then
+		gitpush "$1"
+	fi
+
 	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && exit' \
 	&& echo "Successfully synced 240 Github folder on Andrew servers!" \
 	|| echo "Failed to sync 240 Github folder on Andrew servers!"
