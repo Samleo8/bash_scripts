@@ -303,6 +303,7 @@ goto(){
 		cd "/home/sam/CMU/Study/16385 Computer Vision"
 	elif [[ "$1" == "cvcode" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision/programming"
+		cd `cat ./.active_code_dir`
 	elif [[ "$1" == "21260" || "$1" == "diffeq" || "$1" == "260" ]]; then
 		cd "/home/sam/CMU/Study/21260 Diff Eq/homework"
 	elif [[ "$1" == "260hw" || "$1" == "diffeqhw" || "$1" == "260hmwk" ]]; then
