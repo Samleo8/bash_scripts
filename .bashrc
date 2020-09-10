@@ -339,11 +339,15 @@ export -f goto
 		goto 240
 		gitpush "$1"
 		cd -
+		echo ""
 	fi
 
-	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && exit' \
-	&& echo "Successfully synced 240 Github folder on Andrew servers!" \
-	|| echo "Failed to sync 240 Github folder on Andrew servers!"
+	echo "Syncing with Andrew servers... "
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add . && git commit -m"Update from server" && git push && exit'
+
+	# Sync locally
+	echo -e "\nSyncing locally... "
+	goto 240 && git pull && cd - && echo "Success!" || echo "Failure!"
 }
 
 # Update all instances of sammath
@@ -606,4 +610,12 @@ imagediff(){
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"
 [[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
-export QSYS_ROOTDIR="/home/sam/intelFPGA_lite/20.1/quartus/sopc_builder/bin"
+
+# Quartus Paths
+export ALTERAPATH="/home/sam/intelFPGA_lite/20.1"
+export ALTERAOCLSDKROOT="${ALTERAPATH}/hld"
+export QUARTUS_ROOTDIR=${ALTERAPATH}/quartus
+export QUARTUS_ROOTDIR_OVERRIDE="$QUARTUS_ROOTDIR"
+export QSYS_ROOTDIR="${ALTERAPATH}/quartus/sopc_builder/bin"
+export PATH=$PATH:${ALTERAPATH}/quartus/bin
+export PATH=$PATH:${ALTERAPATH}/nios2eds/bin
