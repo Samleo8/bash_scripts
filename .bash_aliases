@@ -12,8 +12,9 @@ alias ydl-mp3=youtube-dl-mp3
 # Manjaro Firefox Problems
 alias firefox-home-reset='sudo sed -i "s|https://manjaro.org/|about:home|1" /usr/lib/firefox/distribution/distribution.ini'
 
-# Opening folder
+# Opening folder/files
 alias explorer=xdg-open
+alias open=xdg-open
 
 # Get weather
 alias weather="curl wttr.in"
