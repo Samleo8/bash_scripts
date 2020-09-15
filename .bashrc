@@ -304,6 +304,9 @@ goto(){
 	elif [[ "$1" == "cvcode" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision/programming"
 		cd `cat ./.active_code_dir`
+	elif [[ "$1" == "cvhw" || "$1" == "cvquiz" ]]; then
+		cd "/home/sam/CMU/Study/16385 Computer Vision/quizzes"
+		cd `cat .active_hw_dir`
 	elif [[ "$1" == "21260" || "$1" == "diffeq" || "$1" == "260" ]]; then
 		cd "/home/sam/CMU/Study/21260 Diff Eq/homework"
 	elif [[ "$1" == "260hw" || "$1" == "diffeqhw" || "$1" == "260hmwk" ]]; then
@@ -344,7 +347,7 @@ export -f goto
 	fi
 
 	echo "Syncing with Andrew servers... "
-	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add . && git commit -m"Update from server" && git push && exit'
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server" && git push && exit'
 
 	# Sync locally
 	echo -e "\nSyncing locally... "
