@@ -304,6 +304,7 @@ goto(){
 	elif [[ "$1" == "cvcode" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision/programming"
 		cd `cat ./.active_code_dir`
+		pyenv activate cv
 	elif [[ "$1" == "cvhw" || "$1" == "cvquiz" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision/quizzes"
 		cd `cat .active_hw_dir`
