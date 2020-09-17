@@ -299,6 +299,7 @@ goto(){
 		cd `cat .active_hw_dir`
 	elif [[ "$1" == "240lab" || "$1" == "240labs" ]]; then
 		cd "/home/sam/CMU/Study/18240/labs"
+		cd `cat .active_lab_dir`
 	elif [[ "$1" == "16385" || "$1" == "computervision" || "$1" == "cv" || "$1" == "CV" ]]; then
 		cd "/home/sam/CMU/Study/16385 Computer Vision"
 	elif [[ "$1" == "cvcode" ]]; then
