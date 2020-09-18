@@ -341,14 +341,21 @@ export -f goto
 # Sync 240 folder with Github (because ECE servers no Internet connection)
 240sync(){
 	if [[ ! -z "$1" ]]; then
+		goto 240lab
+		gitpush "$1"
+		echo -e "Synced shared lab side\n"
+		
 		goto 240
 		gitpush "$1"
 		cd -
-		echo ""
+		echo -e "Synced global side\n"
 	fi
 
-	echo "Syncing with Andrew servers... "
+	echo "Syncing with Andrew servers (global)... "
 	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server" && git push && exit'
+
+	echo -e "\nSyncing with Andrew servers (shared lab)... "
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240/labs && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server" && git push && exit'
 
 	# Sync locally
 	echo -e "\nSyncing locally... "
