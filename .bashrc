@@ -341,21 +341,20 @@ export -f goto
 # Sync 240 folder with Github (because ECE servers no Internet connection)
 240sync(){
 	if [[ ! -z "$1" ]]; then
-		goto 240lab
+		goto 240; cd labs
 		gitpush "$1"
 		echo -e "Synced shared lab side\n"
 		
 		goto 240
+		git add ./labs
+		git commit -m"Update labs $1"
 		gitpush "$1"
 		cd -
 		echo -e "Synced global side\n"
 	fi
 
-	echo "Syncing with Andrew servers (global)... "
-	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server" && git push && exit'
-
-	echo -e "\nSyncing with Andrew servers (shared lab)... "
-	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240/labs && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server" && git push && exit'
+	echo -e "\nSyncing with Andrew servers... "
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && cd ~/private/18240/labs && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server (labs)" && git push; cd ~/private/18240 && git add --all . && git commit -m"Update from server (global)" && git push && exit'
 
 	# Sync locally
 	echo -e "\nSyncing locally... "
@@ -549,6 +548,20 @@ compress-video(){
 	fi
 
 	ffmpeg -i "$1" -vcodec libx265 -crf $COMPRESS_RATE "$FILENAME-compressed.mp4"
+}
+
+export -f compress-video
+
+sermon-dl(){
+	COMPRESS_RATE=${2:-32}
+
+	cd ~/Videos
+
+	youtube-dl-mp4 -f http-360p -o BRMCsermon.mp4 "$1"
+	compress-video BRMCsermon.mp4 $COMPRESS_RATE
+	zip BRMCsermon-compressed.zip BRMCsermon-compressed.mp4 && rm BRMCsermon*.mp4
+
+	cd -
 }
 
 # Programming handin function
