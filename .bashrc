@@ -359,6 +359,9 @@ export -f goto
 	# Sync locally
 	echo -e "\nSyncing locally... "
 	goto 240 && git pull && cd - && echo "Success!" || echo "Failure!"
+
+	echo "Syncing labs..."
+	goto 240 && cd labs && git pull && cd - && echo "Success!" || echo "Failure!"
 }
 
 # Update all instances of sammath
