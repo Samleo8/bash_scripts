@@ -1,0 +1,345 @@
+\ProvidesPackage{sammath}
+
+\usepackage{epsfig}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage{centernot}
+\usepackage{mathtools}
+\usepackage{xcolor,colortbl}
+\usepackage{units}
+
+% Figures and Tables
+\usepackage[center]{caption}
+\usepackage{subfig}
+\usepackage{longtable}
+			
+\newcommand{\tabvpad}[1]{\def\arraystretch{#1}}
+\newcommand{\tabhpad}[1]{\setlength{\tabcolsep}{#1}}
+
+% Enumerators
+\usepackage[shortlabels]{enumitem}
+
+% Symbols
+\usepackage{wasysym}
+\usepackage{marvosym}
+
+% For tables
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+% ECE
+\usepackage{karnaugh-map}
+\usepackage{svg}
+
+% Venn Diagrams
+\newcommand{\vertex}{\node[vertex]}
+\tikzstyle{vertex}=[circle,fill=black!20]
+
+% This is the stuff for normal spacing
+\makeatletter
+\setlength{\textwidth}{6in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0.5in}
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8.5in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\marginparwidth}{59pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+
+% Proof Environment
+\newcommand{\proofbox}{\hfill$\square$}
+\newenvironment{proof}{{ \bf Proof:  }}{\proofbox}
+
+\newenvironment{proofby}[1]{{\bf Proof (by #1):  }}{\proofbox}
+\newenvironment{proofbynobrackets}[1]{{\bf Proof by #1:  }}{\proofbox}
+\newenvironment{proofbyMI}[1]{{\bf Proof (by induction):  }}{\proofbox}
+\newenvironment{proofbyinduction}{{\bf Proof (by induction):  }}{\proofbox}
+\newenvironment{proofbystronginduction}{{\bf Proof (by strong induction):  }}{\proofbox}
+\newenvironment{proofbycontradiction}{{\bf Proof (by contradiction):  }}{\proofbox}
+\newenvironment{proofbycontrapositive}{{\bf Proof (by contrapositive):  }}{\proofbox}
+
+\newenvironment{proofof}[1]{{\bf Proof of #1:  }}{\proofbox}
+\newenvironment{proofofnobox}[1]{{\bf#1:  }}{}
+
+\newenvironment{example}{{\bf Example:  }}{\proofbox}
+
+% Math Notation
+\newcommand{\R}{\ensuremath{\mathbb R}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\N}{\ensuremath{\mathbb N}}
+\newcommand{\Q}{\ensuremath{\mathbb Q}}
+\newcommand{\B}{\ensuremath{\mathbb B}}
+
+%% True False
+\newcommand{\T}{$\checkmark$}
+% \newcommand{\F}{$\times$}
+\newcommand{\contradiction}{\Rightarrow\Leftarrow}
+
+%% Text Formatting
+\newcommand{\suchthat}{\text{\ \ s.t. }}
+\newcommand{\st}{\suchthat}
+\newcommand{\textand}{\text{ and }}
+
+\newcommand{\LHS}{\text{LHS}}
+\newcommand{\RHS}{\text{RHS}}
+
+\newcommand{\simpleheader}[1]{\underline{\textit{#1:}}\quad\ \vspace{0.1in} }
+\newcommand{\simpleheaderln}[1]{\simpleheader{#1} \\ }
+\newcommand{\littleheader}[2]{\underline{\textit{#1: #2}} \vspace{0.1in} \\ }
+\newcommand{\WTS}[1]{\littleheader{WTS}{#1}}
+\newcommand{\WTF}[1]{\littleheader{WTF}{#1}}
+\newcommand{\case}[2]{\littleheader{Case #1}{#2}}
+
+\newcommand{\venntitle}[1]{$\underline{#1}$ \\ \\}
+
+\newcommand{\bezoutslemma}{\text{B\'ezout's Lemma}}
+\newcommand{\annotate}[1]{&& \text{(#1)}}
+\newcommand{\annotateln}[1]{\annotate{#1} \\}
+\newcommand{\annotatefracln}[1]{\annotate{#1} \fracln}
+
+%% Other formating
+\newcommand{\notimplies}{\ensuremath{\centernot \implies}}
+\newcommand{\notimpliedby}{\ensuremath{\centernot \impliedby}}
+\newcommand{\forwarddirection}{($ \implies $)\qquad}
+\newcommand{\reversedirection}{($ \impliedby $)\qquad}
+\newcommand{\fracln}{\\[1.5ex]}
+
+\DeclarePairedDelimiter\ceil{\ensuremath{\lceil}}{\ensuremath{\rceil}}
+\DeclarePairedDelimiter\floor{\ensuremath{\lfloor}}{\ensuremath{\rfloor}}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+%% Sets
+\newcommand{\powerset}[1]{\ensuremath{\mathcal{P}(#1)}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\union}{\ensuremath{\cup}}
+\newcommand{\intersect}{\ensuremath{\cap}}
+\newcommand{\setst}{\ \middle|\ }
+\newcommand{\plainsetst}{\ |\ }
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+%% Functions 
+\newcommand{\id}[2]{\text{id}_{#1}(#2)}
+\newcommand{\inverse}[1]{\ensuremath{#1^{-1}}}
+\newcommand{\composite}{\ensuremath{\circ}}
+
+%% Divisibility and GCD Stuff
+\newcommand{\coprime}{\ensuremath{\ \perp\ }}
+\newcommand{\notcoprime}{\ensuremath{\ \not\perp\ }}
+\newcommand{\divides}{\ensuremath{\ \mid\ }}
+\newcommand{\notdivides}{\ensuremath{\nmid}}
+\newcommand{\congruent}{\ensuremath{\equiv}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\totient}[1]{\ensuremath{\varphi(#1)}}
+
+%% Induction
+\newcommand{\IH}{\text{I.H.}}
+\newcommand{\SIH}{\text{S.I.H.}}
+\newcommand{\basecase}{\simpleheader{Base Case}}
+\newcommand{\basecases}{\simpleheader{Base Cases}}
+\newcommand{\inductivestep}{\simpleheader{Inductive Step}}
+\newcommand{\inductivecase}{\inductivestep}
+\newcommand{\propP}[1]{P$(#1)$}
+\newcommand{\ptrue}[1]{\propP{#1} \text{is true}}
+\newcommand{\inductionconclusion}[3]{Therefore, since \ptrue{#1}, and #3, \ptrue{#2} $ \implies $ \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
+%\newcommand{\stronginductionconclusion}[4]{Therefore, since \ptrue{#1}, and for all $n\geq #1$ #2, [,$ \forall #1 \leq $ \ptrue{#3}$ ] \implies $ \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
+
+%% Diff Eq
+\newcommand{\ddp}[2]{\ensuremath{\dfrac{\partial#1}{\partial#2}}} % partial derv
+\newcommand{\ddf}[2]{\ensuremath{\dfrac{d#1}{d#2}}}
+\newcommand{\dydx}{\ensuremath{\ddf{y}{x}}}
+\newcommand{\dydt}{\ensuremath{\ddf{y}{t}}}
+\newcommand{\wrt}[1]{\text{with respect to} $#1$}
+\newcommand{\diffeq}{\text{differential equation}}
+\newcommand{\derv}[1]{\ensuremath{\cdot d#1}}
+\newcommand{\dx}{\derv{x}}
+\newcommand{\dy}{\derv{y}}
+\newcommand{\dt}{\derv{t}}
+\newcommand{\dv}{\derv{v}}
+
+\newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
+\newcommand{\junk}[1]{}
+
+\newenvironment{sol}{
+	\textbf{Solution:}
+}
+
+%% ECE Stuffs
+\newcommand{\xor}{\ensuremath{\oplus}}
+\newcommand{\enot}[1]{\ensuremath{\overline{#1\strut}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BOLD ALIGN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{etoolbox}
+\usepackage{environ}
+
+\makeatletter
+\NewEnviron{balign*}{%
+	\appto\@lign{\balign@row}%
+	\gdef\balign@row{\mathversion{normal}}%
+	\begin{align*}
+		\BODY
+	\end{align*}
+}
+\newcommand{\normalrow}{%
+	\noalign{\gdef\balign@row{\mathversion{normal}}}%
+}
+\newcommand{\boldrow}{
+	\noalign{\gdef\balign@row{\mathversion{bold}}}%
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CENTER FLOAT (CENTERING OVERFLOW IMAGES)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\newcommand*{\centerfloat}{%
+	\parindent \z@
+	\leftskip \z@ \@plus 1fil \@minus \textwidth
+	\rightskip\leftskip
+	\parfillskip \z@skip}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Big dot
+\makeatletter
+\newcommand*{\bigcdot}{}% Check if undefined
+\DeclareRobustCommand*{\bigcdot}{%
+  \mathbin{\mathpalette\bigcdot@{}}%
+}
+\newcommand*{\bigcdot@scalefactor}{.6}
+\newcommand*{\bigcdot@widthfactor}{1.15}
+\newcommand*{\bigcdot@}[2]{%
+  % #1: math style
+  % #2: unused
+  \sbox0{$#1\vcenter{}$}% math axis
+  \sbox2{$#1\cdot\m@th$}%
+  \hbox to \bigcdot@widthfactor\wd2{%
+    \hfil
+    \raise\ht0\hbox{%
+      \scalebox{\bigcdot@scalefactor}{%
+        \lower\ht0\hbox{$#1\bullet\m@th$}%
+      }%
+    }%
+    \hfil
+  }%
+}
+\makeatother
+
+%% Probability
+\newcommand{\prob}[1]{\ensuremath{P\left(#1\right)}}
+\newcommand{\given}{\plainsetst}
+\newcommand{\tallgiven}{\setst}
+
+%% Computer Vision
+\newcommand{\F}[1]{\ensuremath{\mathcal{F}\left\{#1\right\}}} % fourier transform
+\newcommand{\norm}[1]{\ensuremath{\left|\left|#1\right|\right|}}
+
+% For equation counters
+\newcommand{\stepeqn}{\stepcounter{equation}}
+\newcommand{\stepequation}{\stepeqn}
+\newcommand{\tageqn}{\tag{\theequation}}
+\newcommand{\tagequation}{\tageqn}
+\newcommand{\steptageqn}[1]{\stepeqn\tageqn\label{#1}}
+\newcommand{\steptagequation}[1]{\steptageqn{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heading Information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\myname}{Samuel Leong Chee Weng}
+\newcommand{\myandrew}{\textit{scleong}}
+
+\newcommand{\assignmenttype}{Homework} % homework by default
+\newcommand{\headings}{
+	\large{\textbf{\mycourse \hfill \assignmenttype\ \myhwnum} \\
+		\textbf{\myname \hfill \myandrew}}
+	\rule[0.1in]{\textwidth}{0.01in}
+}
+
+\newcommand{\headingbreak}{\pagebreak\headings}
+
+\newcommand{\partnername}{My Partner}
+\newcommand{\partnerandrew}{\textit{My Partner}}
+
+\newcommand{\headingsshared}{
+	\large{\textbf{\mycourse \hfill \assignmenttype\ \myhwnum} \\
+		\textbf{\myname \hfill \myandrew} \\ 
+		\textbf{\partnername \hfill \partnerandrew }}
+	\rule[0.1in]{\textwidth}{0.01in}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New question environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{questioncounter}
+\setcounter{questioncounter}{1}
+
+% For skipping questions
+\newcommand{\skipquestion}{\stepcounter{questioncounter}}
+
+% Problem by default; Use \renewcommand to change to something like "Question" or "Task"
+\newcommand{\questiontype}{Problem} 
+\newcommand{\questionhdr}[2][]{\vspace{0.7em} \hrule\vspace{0.5em}
+	\noindent{\bf \questiontype\ #2: #1} \vspace{0.5em}
+	\hrule}
+
+% For resuming counter for question part
+\newcounter{questionpartcounter}
+\newcommand{\resumequestionpart}{\setcounter{enumi}{\value{questionpartcounter}}}
+
+\newcommand{\questionparttype}{\alph*} % \alph*, \roman*, \arabic* 
+
+\newenvironment{questionnobreak}[1][]{
+	\questionhdr[#1]{\thequestioncounter\stepcounter{questioncounter}}
+	\begin{enumerate}[label={\bfseries(\questionparttype})]
+	}
+	{\setcounter{questionpartcounter}{\value{enumi}}\end{enumerate}}
+
+\newenvironment{questionalonenobreak}[1][]{
+	\questionhdr[#1]{\thequestioncounter\stepcounter{questioncounter}} \vspace{1em}
+}
+{}
+
+\newenvironment{question}[1][]{\begin{questionnobreak}[#1]}{\end{questionnobreak}\pagebreak}
+
+\newenvironment{questionalone}[1][]{\begin{questionalonenobreak}[#1]}{\end{questionalonenobreak}\pagebreak}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End question environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\mywatermark}{
+	\begin{center}
+		\myname
+		\\ \myandrew \\
+		Section \secnum
+	\end{center}
+}
+
+\newcommand{\proofspace}{ \medskip ~\\ }
