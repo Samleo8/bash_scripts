@@ -4,6 +4,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amstext}
+\let\oldvec\vec
 \usepackage{amsmath}
 \usepackage{xspace}
 \usepackage{graphicx}
@@ -107,6 +108,9 @@
 \newcommand{\case}[2]{\littleheader{Case #1}{#2}}
 
 \newcommand{\venntitle}[1]{$\underline{#1}$ \\ \\}
+
+\newcommand{\quador}{\quad\text{or}\quad}
+\newcommand{\quadand}{\quad\text{and}\quad}
 
 \newcommand{\bezoutslemma}{\text{B\'ezout's Lemma}}
 \newcommand{\annotate}[1]{&& \text{(#1)}}
@@ -255,6 +259,50 @@
 \newcommand{\tallgiven}{\setst}
 
 %% Computer Vision
+%%% Matrices stuff and formatting
+\def\dash{\text{ --- }}
+
+\newcommand{\transpose}[1]{\ensuremath{{#1}^{\top}}}
+\newcommand{\trans}[1]{\tranpose{#1}}
+
+\def\vO{{\mathbf{0}}}
+\def\zerovec{\vec{\mathbf{0}}}
+
+\def\vp{{\bf p}}
+\def\vx{{\bf x}}
+\def\vxa{\ensuremath{\vx_\mathbf{1}}}
+\def\vxb{\ensuremath{\vx_\mathbf{2}}}
+\def\vt{{\bf t}}
+\def\vl{{\bf \ell}}
+\def\vm{{\bf m}}
+\def\vc{{\bf c}}
+\def\vX{{\bf X}}
+\def\mH{{\bf H}}
+\def\mA{{\bf A}}
+\def\mM{{\bf M}}
+\def\mR{{\bf R}}
+
+\def\mP{{\bf P}}
+\def\mPa{\ensuremath{\mP_\mathbf{1}}}
+\def\mPb{\ensuremath{\mP_\mathbf{2}}}
+
+\def\mK{{\bf K}}
+\def\mKa{\ensuremath{\mK_\mathbf{1}}}
+\def\mKb{\ensuremath{\mK_\mathbf{2}}}
+
+\def\mI{{\bf I}}
+
+\def\tx{{\tilde{\bf x}}}
+\def\ta{{\tilde{\bf a}}}
+\def\tb{{\tilde{\bf b}}}
+\def\tc{{\tilde{\bf c}}}
+\def\hn{{\bf \hat{n}}}
+\def\hv{{\bf \hat{v}}}
+\def\hh{{\bf \hat{h}}}
+\def\vh{{\bf h}}
+\def\vs{{\bf s}}
+\def\hs{{\bf \hat{s}}}
+
 \newcommand{\F}[1]{\ensuremath{\mathcal{F}\left\{#1\right\}}} % fourier transform
 \newcommand{\norm}[1]{\ensuremath{\left|\left|#1\right|\right|}}
 
@@ -263,8 +311,8 @@
 \newcommand{\stepequation}{\stepeqn}
 \newcommand{\tageqn}{\tag{\theequation}}
 \newcommand{\tagequation}{\tageqn}
-\newcommand{\steptageqn}[1]{\stepeqn\tageqn\label{#1}}
-\newcommand{\steptagequation}[1]{\steptageqn{#1}}
+\newcommand{\steptageqn}{\stepeqn\tageqn}
+\newcommand{\steptagequation}{\steptageqn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Heading Information

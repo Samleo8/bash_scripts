@@ -289,7 +289,7 @@ goto(){
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 	elif [[ "$1" == "225" || "$1" == "36225" || "$1" == "probability" ]]; then
 		cd "/home/sam/CMU/Study/36225/homework"
-	elif [[ "$1" == "225hw" || "$1" == "36225hw" || "$1" == "225hmwk" || "$1" == "36225hmwk" ]]; then
+	elif [[ "$1" == "225hw" || "$1" == "36225hw" || "$1" == "225hmwk" || "$1" == "36225hmwk" || "$1" == "probhw"]]; then
 		cd "/home/sam/CMU/Study/36225/homework"	
 		cd `cat .active_hw_dir`
 	elif [[ "$1" == "18240" || "$1" == "240" ]]; then
@@ -354,7 +354,7 @@ export -f goto
 	fi
 
 	echo -e "\nSyncing with Andrew servers... "
-	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && cd ~/private/18240/labs && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server (labs)" && git push; cd ~/private/18240 && git add --all . && git commit -m"Update from server (global)" && git push && exit'
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && cd ~/private/18240/labs && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add . && git commit -m"Update from server (labs)" && git push; cd ~/private/18240 && git add . && git commit -m"Update from server (global)" && git push && exit'
 
 	# Sync locally
 	echo -e "\nSyncing locally... "
