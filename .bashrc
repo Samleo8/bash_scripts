@@ -289,7 +289,7 @@ goto(){
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
 	elif [[ "$1" == "225" || "$1" == "36225" || "$1" == "probability" ]]; then
 		cd "/home/sam/CMU/Study/36225/homework"
-	elif [[ "$1" == "225hw" || "$1" == "36225hw" || "$1" == "225hmwk" || "$1" == "36225hmwk" || "$1" == "probhw"]]; then
+	elif [[ "$1" == "225hw" || "$1" == "36225hw" || "$1" == "225hmwk" || "$1" == "36225hmwk" || "$1" == "probhw" ]]; then
 		cd "/home/sam/CMU/Study/36225/homework"	
 		cd `cat .active_hw_dir`
 	elif [[ "$1" == "18240" || "$1" == "240" ]]; then
@@ -400,6 +400,11 @@ export -f harptensor
 savescripts(){
 	FOLDER_DIR=/home/sam/bash_scripts/
 
+	if (( $# < 2 )); then
+		echo "USAGE: savescripts <scripts_to_save ..> <commit_message>"
+		return
+	fi
+
 	MESSAGE=${@:$#} # last parameter 
 	FILES=${*%${!#}} # all parameters except the last
 
@@ -411,6 +416,12 @@ savescripts(){
 
 # Split PDFs into individual pages
 splitpdf(){
+	if [[ -z "$1" ]]; then
+		echo "USAGE: splitpdf <file.pdf>"
+		echo "NOTE: Creates new folder called <file>"
+		return
+	fi
+
 	filename="$1"
 	filename=${filename%.*}
 	mkdir $filename
@@ -494,6 +505,11 @@ export -f pdf2book
 
 # PDF TO JPG
 pdf2jpg(){
+	if [[ -z "$1" ]]; then
+		echo "USAGE: pdf2jpg <file.pdf>"
+		return
+	fi
+
 	PDF=$1
 
 	echo "Processing $PDF"
@@ -520,9 +536,14 @@ alias pdf2img=pdf2jpg
 export -f pdf2jpg
 
 img2pdf(){
+	if (( $# < 2 )); then
+		echo "USAGE: img2pdf <images ..> <output>"
+		return
+	fi
+
 	IMAGES="${@:1:$#-1}"
 	OUTPUT="${!#}" # get last element
-	
+
 	echo "Combining $IMAGES into $OUTPUT..."
 
 	convert "$IMAGES" -quality 100 "$OUTPUT"
@@ -618,22 +639,6 @@ scpfromandrew(){
 
 export -f scptoandrew
 export -f scpfromandrew
-
-imagediff(){
-	BASE_DIRECTORY="~/private/15122/3/imagediff"
-	COPY_TO="$ANDREW_LINUX:$BASE_DIRECTORY"
-
-	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
-
-	sshpass -f .fifo_temp scp $1 $2 $COPY_TO/images
-	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'; /afs/andrew/course/15/122/bin/imagediff -i '$1' -j '$2' -o diff.png'
-	sshpass -f .fifo_temp scp "$COPY_TO/diff.png" ./images
-	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'; rm '$1' '$2' diff.png'
-
-	rm ./.fifo_temp
-
-	display ./images/diff.png
-}
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/sam/.sdkman"

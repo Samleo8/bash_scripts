@@ -1,19 +1,33 @@
 \ProvidesPackage{sammath}
 
+% Math stuff
 \usepackage{epsfig}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amstext}
-\let\oldvec\vec
 \usepackage{amsmath}
-\usepackage{xspace}
-\usepackage{graphicx}
-\usepackage{tikz}
 \usepackage{bm}
 \usepackage{centernot}
 \usepackage{mathtools}
 \usepackage{xcolor,colortbl}
 \usepackage{units}
+
+% Graphics
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+% Symbols (must be before math stuff) to no override math symbols
+\let\oldint\int
+\let\oldiint\iint
+\let\oldiiint\iiint
+
+\usepackage{wasysym}
+\usepackage{marvosym}
+
+\let\int\oldint
+\let\iint\oldiint
+\let\iiint\oldiiint
 
 % Figures and Tables
 \usepackage[center]{caption}
@@ -25,10 +39,6 @@
 
 % Enumerators
 \usepackage[shortlabels]{enumitem}
-
-% Symbols
-\usepackage{wasysym}
-\usepackage{marvosym}
 
 % For tables
 \usepackage{tabularx}
@@ -51,7 +61,9 @@
 \setlength{\textheight}{8.5in}
 \setlength{\headheight}{0pt}
 \setlength{\headsep}{0pt}
-\setlength{\marginparwidth}{59pt}
+% \setlength{\marginparwidth}{59pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\marginparsep}{0pt}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt plus 1pt}
@@ -130,10 +142,10 @@
 
 %% Sets
 \newcommand{\powerset}[1]{\ensuremath{\mathcal{P}(#1)}}
-\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\set}[1]{\ensuremath{\left\{#1\right\}}}
 \newcommand{\union}{\ensuremath{\cup}}
 \newcommand{\intersect}{\ensuremath{\cap}}
-\newcommand{\setst}{\ \middle|\ }
+\newcommand{\setst}{\ensuremath{\ \middle|\ }}
 \newcommand{\plainsetst}{\ |\ }
 
 \let\oldemptyset\emptyset
@@ -177,6 +189,10 @@
 \newcommand{\dy}{\derv{y}}
 \newcommand{\dt}{\derv{t}}
 \newcommand{\dv}{\derv{v}}
+
+\usepackage[scr]{rsfso}
+\newcommand{\Laplace}[1]{\ensuremath{\mathscr{L}\left\{#1\right\}}}
+\newcommand{\Lapl}[1]{\ensuremath{\Laplace{#1}}}
 
 \newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
 \newcommand{\junk}[1]{}
@@ -257,13 +273,14 @@
 \newcommand{\prob}[1]{\ensuremath{P\left(#1\right)}}
 \newcommand{\given}{\plainsetst}
 \newcommand{\tallgiven}{\setst}
+\newcommand{\otherwise}{0 & \text{otherwise}}
 
 %% Computer Vision
 %%% Matrices stuff and formatting
 \def\dash{\text{ --- }}
 
 \newcommand{\transpose}[1]{\ensuremath{{#1}^{\top}}}
-\newcommand{\trans}[1]{\tranpose{#1}}
+\newcommand{\trans}[1]{\transpose{#1}}
 
 \def\vO{{\mathbf{0}}}
 \def\zerovec{\vec{\mathbf{0}}}
@@ -273,7 +290,13 @@
 \def\vxa{\ensuremath{\vx_\mathbf{1}}}
 \def\vxb{\ensuremath{\vx_\mathbf{2}}}
 \def\vt{{\bf t}}
-\def\vl{{\bf \ell}}
+\def\vl{{\bm{\ell}}}
+\def\ve{{\bf e}}
+\def\vea{{\ve_\mathbf{1}}}
+\def\veb{{\ve_\mathbf{2}}}
+\def\vh{{\bf h}}
+\def\vs{{\bf s}}
+
 \def\vm{{\bf m}}
 \def\vc{{\bf c}}
 \def\vX{{\bf X}}
@@ -281,6 +304,8 @@
 \def\mA{{\bf A}}
 \def\mM{{\bf M}}
 \def\mR{{\bf R}}
+\def\mE{{\bf E}}
+\def\mF{{\bf F}}
 
 \def\mP{{\bf P}}
 \def\mPa{\ensuremath{\mP_\mathbf{1}}}
@@ -292,19 +317,17 @@
 
 \def\mI{{\bf I}}
 
-\def\tx{{\tilde{\bf x}}}
-\def\ta{{\tilde{\bf a}}}
-\def\tb{{\tilde{\bf b}}}
-\def\tc{{\tilde{\bf c}}}
-\def\hn{{\bf \hat{n}}}
-\def\hv{{\bf \hat{v}}}
-\def\hh{{\bf \hat{h}}}
-\def\vh{{\bf h}}
-\def\vs{{\bf s}}
-\def\hs{{\bf \hat{s}}}
+\def\tx{\ensuremath{\tilde{\bf x}}}
+\def\ta{\ensuremath{\tilde{\bf a}}}
+\def\tb{\ensuremath{\tilde{\bf b}}}
+\def\tc{\ensuremath{\tilde{\bf c}}}
+\def\hn{\ensuremath{\bf \hat{n}}}
+\def\hv{\ensuremath{\bf \hat{v}}}
+\def\hh{\ensuremath{\bf \hat{h}}}
+\def\hs{\ensuremath{\bf \hat{s}}}
 
 \newcommand{\F}[1]{\ensuremath{\mathcal{F}\left\{#1\right\}}} % fourier transform
-\newcommand{\norm}[1]{\ensuremath{\left|\left|#1\right|\right|}}
+\newcommand{\norm}[1]{\ensuremath{\left\lVert#1\right\rVert}}
 
 % For equation counters
 \newcommand{\stepeqn}{\stepcounter{equation}}
@@ -363,7 +386,7 @@
 
 \newenvironment{questionnobreak}[1][]{
 	\questionhdr[#1]{\thequestioncounter\stepcounter{questioncounter}}
-	\begin{enumerate}[label={\bfseries(\questionparttype})]
+	\begin{enumerate}[label={\bfseries(\questionparttype)}]
 	}
 	{\setcounter{questionpartcounter}{\value{enumi}}\end{enumerate}}
 
