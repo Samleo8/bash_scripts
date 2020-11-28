@@ -354,7 +354,7 @@ export -f goto
 	fi
 
 	echo -e "\nSyncing with Andrew servers... "
-	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && cd ~/private/18240/labs && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add . && git commit -m"Update from server (labs)" && git push; cd ~/private/18240 && git add . && git commit -m"Update from server (global)" && git push && exit'
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh $ANDREW_LINUX 'cd ~/private/18240 && git pull && cd ~/private/18240/labs && git pull && echo -e "Success!\n" || echo -e  "Failure!\n"; git add --all . && git commit -m"Update from server (labs)" && git push; cd ~/private/18240 && git add --all . && git commit -m"Update from server (global)" && git push && exit'
 
 	# Sync locally
 	echo -e "\nSyncing locally... "
@@ -380,6 +380,18 @@ updatesammath(){
 		git push
 		echo -e "Done.\n"
 	done
+}
+
+# Update BibleQuizzle leaderboard
+updatequizzle(){
+	MSG=${1:-("Update leaderboard")}
+
+	goto quizzle
+	
+	gedit leaderboard.json && \
+	git add leaderboard.json && \
+	git commit -m "$MSG" && \
+	git push
 }
 
 # Research stuff

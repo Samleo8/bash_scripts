@@ -136,8 +136,8 @@
 \newcommand{\reversedirection}{($ \impliedby $)\qquad}
 \newcommand{\fracln}{\\[1.5ex]}
 
-\DeclarePairedDelimiter\ceil{\ensuremath{\lceil}}{\ensuremath{\rceil}}
-\DeclarePairedDelimiter\floor{\ensuremath{\lfloor}}{\ensuremath{\rfloor}}
+\newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
+\newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
 \newcommand{\abs}[1]{\left|#1\right|}
 
 %% Sets
@@ -179,7 +179,7 @@
 
 %% Diff Eq
 \newcommand{\ddp}[2]{\ensuremath{\dfrac{\partial#1}{\partial#2}}} % partial derv
-\newcommand{\ddf}[2]{\ensuremath{\dfrac{d#1}{d#2}}}
+\newcommand{\ddf}[2]{\ensuremath{\dfrac{{d}#1}{{d}#2}}}
 \newcommand{\dydx}{\ensuremath{\ddf{y}{x}}}
 \newcommand{\dydt}{\ensuremath{\ddf{y}{t}}}
 \newcommand{\wrt}[1]{\text{with respect to} $#1$}
@@ -191,8 +191,14 @@
 \newcommand{\dv}{\derv{v}}
 
 \usepackage[scr]{rsfso}
-\newcommand{\Laplace}[1]{\ensuremath{\mathscr{L}\left\{#1\right\}}}
+\newcommand{\Laplacesymbol}{\mathscr{L}}
+\newcommand{\Laplace}[1]{\ensuremath{\Laplacesymbol\left\{#1\right\}}}
+\newcommand{\LaplaceInv}[1]{\ensuremath{\Laplacesymbol^{-1}\left\{#1\right\}}}
 \newcommand{\Lapl}[1]{\ensuremath{\Laplace{#1}}}
+\newcommand{\LaplInv}[1]{\ensuremath{\LaplaceInv{#1}}}
+\newcommand{\LaplaceInverse}[1]{\ensuremath{\LaplaceInv{#1}}}
+
+\newcommand{\stepfn}[1]{\mathscr{U}\left(#1\right)}
 
 \newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
 \newcommand{\junk}[1]{}
@@ -289,6 +295,7 @@
 \def\vx{{\bf x}}
 \def\vxa{\ensuremath{\vx_\mathbf{1}}}
 \def\vxb{\ensuremath{\vx_\mathbf{2}}}
+\def\vy{{\bf y}}
 \def\vt{{\bf t}}
 \def\vl{{\bm{\ell}}}
 \def\ve{{\bf e}}
@@ -299,6 +306,7 @@
 
 \def\vm{{\bf m}}
 \def\vc{{\bf c}}
+\def\vb{{\bf b}}
 \def\vX{{\bf X}}
 \def\mH{{\bf H}}
 \def\mA{{\bf A}}
@@ -367,7 +375,6 @@
 % New question environment
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcounter{questioncounter}
-\setcounter{questioncounter}{1}
 
 % For skipping questions
 \newcommand{\skipquestion}{\stepcounter{questioncounter}}
@@ -385,13 +392,15 @@
 \newcommand{\questionparttype}{\alph*} % \alph*, \roman*, \arabic* 
 
 \newenvironment{questionnobreak}[1][]{
-	\questionhdr[#1]{\thequestioncounter\stepcounter{questioncounter}}
+	\refstepcounter{questioncounter}
+	\questionhdr[#1]{\thequestioncounter}
 	\begin{enumerate}[label={\bfseries(\questionparttype)}]
 	}
 	{\setcounter{questionpartcounter}{\value{enumi}}\end{enumerate}}
 
 \newenvironment{questionalonenobreak}[1][]{
-	\questionhdr[#1]{\thequestioncounter\stepcounter{questioncounter}} \vspace{1em}
+	\refstepcounter{questioncounter}
+	\questionhdr[#1]{\thequestioncounter} \vspace{1em}
 }
 {}
 
