@@ -117,19 +117,23 @@ if ! shopt -oq posix; then
 fi
 
 # Path settings
-PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}$ 
+# PATH=${PATH:+:${PATH}}$ 
+
+export CUDA_HOME=/opt/cuda
+export CUDA_PATH=$CUDA_HOME:$CUDA_HOME/bin
 
 export ANDROID_HOME=/home/sam/Android/Sdk
 export JAVA_HOME=/usr/bin/java
 
-export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export LD_LIBRARY_PATH=$CUDA_HOME/lib64 # :${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export CUDA_VISIBLE_DEVICES=0
 
 export ANDROID_PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
 
 export NODE_PATH=/usr/local/lib/node_modules/node/bin/
 
 export EIGEN_INCLUDE_DIRS=/usr/include/eigen3
-PATH="$NODE_PATH:$PATH:$EIGEN_INCLUDE_DIRS"
+PATH="$NODE_PATH:$PATH:$EIGEN_INCLUDE_DIRS:$CUDA_PATH"
 
 #export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
@@ -171,6 +175,8 @@ gitpush(){
 	git push
 }
 
+export -f gitpush
+
 gitadd(){
 	TOADD="${@:1:$#-1}"
         TOCOMMIT="${!#}" # get last element
@@ -178,6 +184,8 @@ gitadd(){
 	git add $TOADD;
 	git commit -m "$TOCOMMIT"
 }
+
+export -f gitadd
 
 #Process handling
 alias showproc=htop
@@ -271,48 +279,13 @@ goto(){
 		cd ~/CMU;
 	elif [[ "$1" == "study" ]]; then
 		cd ~/CMU/Study;
+	elif [[ "$1" == "cv" ]]; then
+		cd "/home/sam/CMU/Study/16385 Computer Vision";
+	elif [[ "$1" == "cvcode" ]]; then
+		cd "/home/sam/CMU/Study/16385 Computer Vision/programming";
+		cd `cat .active_code_dir`;
 	elif [[ "$1" == "dso" || "$1" == "radar" ]]; then
 		cd "/home/sam/CMU/Research/Radar Odometry";
-	elif [[ "$1" == "research" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP";
-		#ssh -NfL 6006:localhost:6006 bigfoot;
-	elif [[ "$1" == "surf" || "$1" == "proposal" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP/SURF Proposal";
-		#ssh -NfL 6006:localhost:6006 bigfoot
-	elif [[ "$1" == "researchcode" || "$1" == "research code" ]]; then
-		cd "/home/sam/CMU/Research/Radar Odometry/pharao";
-		# pyenv activate vol;
-	elif [[ "$1" == "detectron2" || "$1" == "detectron" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP/Code/detectron2";
-		pyenv activate vol;	
-	elif [[ "$1" == "processing" || "$1" == "process" || "$1" == "preprocessing" ]]; then
-		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch/mvn/datasets/cmu_preprocessing";
-	elif [[ "$1" == "225" || "$1" == "36225" || "$1" == "probability" ]]; then
-		cd "/home/sam/CMU/Study/36225/homework"
-	elif [[ "$1" == "225hw" || "$1" == "36225hw" || "$1" == "225hmwk" || "$1" == "36225hmwk" || "$1" == "probhw" ]]; then
-		cd "/home/sam/CMU/Study/36225/homework"	
-		cd `cat .active_hw_dir`
-	elif [[ "$1" == "18240" || "$1" == "240" ]]; then
-		cd "/home/sam/CMU/Study/18240"
-	elif [[ "$1" == "240hw" || "$1" == "240hwmk" ]]; then
-		cd "/home/sam/CMU/Study/18240/homework"
-		cd `cat .active_hw_dir`
-	elif [[ "$1" == "240lab" || "$1" == "240labs" ]]; then
-		cd "/home/sam/CMU/Study/18240/labs"
-		cd `cat .active_lab_dir`
-	elif [[ "$1" == "16385" || "$1" == "computervision" || "$1" == "cv" || "$1" == "CV" ]]; then
-		cd "/home/sam/CMU/Study/16385 Computer Vision"
-	elif [[ "$1" == "cvcode" ]]; then
-		cd "/home/sam/CMU/Study/16385 Computer Vision/programming"
-		cd `cat ./.active_code_dir`
-	elif [[ "$1" == "cvhw" || "$1" == "cvquiz" ]]; then
-		cd "/home/sam/CMU/Study/16385 Computer Vision/quizzes"
-		cd `cat .active_hw_dir`
-	elif [[ "$1" == "21260" || "$1" == "diffeq" || "$1" == "260" ]]; then
-		cd "/home/sam/CMU/Study/21260 Diff Eq/homework"
-	elif [[ "$1" == "260hw" || "$1" == "diffeqhw" || "$1" == "260hmwk" ]]; then
-		cd "/home/sam/CMU/Study/21260 Diff Eq/homework"
-		cd `cat .active_hw_dir`
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
 	elif [[ "$1" == "telegram" ]]; then
@@ -323,7 +296,6 @@ goto(){
 		cd ~/Downloads/ut2004
 		./runGame
 		cd -
-		xrandr --output eDP1 --left-of HDMI1
 	elif [[ "$1" == "pinball" ]]; then
 		cd ~/Downloads/pinball
 		wine pinball.exe
@@ -657,6 +629,7 @@ export SDKMAN_DIR="/home/sam/.sdkman"
 [[ -s "/home/sam/.sdkman/bin/sdkman-init.sh" ]] && source "/home/sam/.sdkman/bin/sdkman-init.sh"
 
 # Quartus Paths
+# TODO: Remove quartus eventually
 export ALTERAPATH="/home/sam/intelFPGA_lite/20.1"
 export ALTERAOCLSDKROOT="${ALTERAPATH}/hld"
 export QUARTUS_ROOTDIR=${ALTERAPATH}/quartus

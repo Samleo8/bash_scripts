@@ -41,6 +41,8 @@ alias harpvisual="ssh -X bigfootvisual"
 alias harpvis=harpvisual
 alias researchcode="goto researchcode && git pull && code ."
 
+alias cvcode="goto cvcode && code ."
+
 export ANDREW_LINUX=scleong@linux.andrew.cmu.edu
 alias sshandrew="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX"
 
@@ -51,12 +53,13 @@ alias shark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
 alias shark2="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK_2"
 
 export ECE_SERVER=scleong@ece007.ece.local.cmu.edu
-alias sshece="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ECE_SERVER"
-
-alias cvcode="goto cvcode && code ."
+alias sshece="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X -C $ECE_SERVER"
 
 alias cleanup="yay -Sc --noconfirm; sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
 alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
 
-alias joindisplays="xrandr --output eDP1 --left-of HDMI1"
-alias displayreset=joindisplays
+# Quartus Stuff
+alias fixjtag="killall jtagd; jtagd; jtagconfig"
+
+# Alias
+alias gpureload="sudo rmmod nvidia_uvm ; sudo modprobe nvidia_uvm"

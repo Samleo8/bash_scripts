@@ -185,10 +185,15 @@
 \newcommand{\wrt}[1]{\text{with respect to} $#1$}
 \newcommand{\diffeq}{\text{differential equation}}
 \newcommand{\derv}[1]{\ensuremath{\cdot d#1}}
+\newcommand{\du}{\derv{u}}
 \newcommand{\dx}{\derv{x}}
 \newcommand{\dy}{\derv{y}}
 \newcommand{\dt}{\derv{t}}
 \newcommand{\dv}{\derv{v}}
+
+\def\vv{\ensuremath{\vec{\bf v}}}
+\def\vva{\ensuremath{\vv_1}}
+\def\vvb{\ensuremath{\vv_2}}
 
 \usepackage[scr]{rsfso}
 \newcommand{\Laplacesymbol}{\mathscr{L}}
@@ -288,8 +293,8 @@
 \newcommand{\transpose}[1]{\ensuremath{{#1}^{\top}}}
 \newcommand{\trans}[1]{\transpose{#1}}
 
-\def\vO{{\mathbf{0}}}
-\def\zerovec{\vec{\mathbf{0}}}
+\def\vO{{\bf 0}}
+\def\zerovec{\ensuremath{\vec{\vO}}}
 
 \def\vp{{\bf p}}
 \def\vx{{\bf x}}
@@ -324,6 +329,10 @@
 \def\mKb{\ensuremath{\mK_\mathbf{2}}}
 
 \def\mI{{\bf I}}
+
+\def\bW{{\bf W}}
+\def\mJ{{\bf J}}
+\def\del{\ensuremath{\vec{\nabla}}}
 
 \def\tx{\ensuremath{\tilde{\bf x}}}
 \def\ta{\ensuremath{\tilde{\bf a}}}
