@@ -61,5 +61,8 @@ alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
 # Quartus Stuff
 alias fixjtag="killall jtagd; jtagd; jtagconfig"
 
-# Alias
+# NVIDIA Fixes
+alias nvidia-fix="sudo rm /etc/X11/xorg.conf; echo 'Removed xorg config'"
 alias gpureload="sudo rmmod nvidia_uvm ; sudo modprobe nvidia_uvm"
+
+alias cups="sudo systemctl restart cups.service"
