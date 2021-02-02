@@ -135,6 +135,8 @@ export NODE_PATH=/usr/local/lib/node_modules/node/bin/
 export EIGEN_INCLUDE_DIRS=/usr/include/eigen3
 PATH="$NODE_PATH:$PATH:$EIGEN_INCLUDE_DIRS:$CUDA_PATH"
 
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig
+
 #export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
 source /etc/profile.d/vte.sh
@@ -227,6 +229,31 @@ export -f echo_ok
 export -f echo_orange
 export -f echo_blue
 
+# Extractor
+# # usage: ex <file>
+ex(){
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+alias extract=ex
+
 #OpenCV compile
 compilecv(){
 	echo "Compiling $1.cpp..."
@@ -279,12 +306,21 @@ goto(){
 		cd ~/CMU;
 	elif [[ "$1" == "study" ]]; then
 		cd ~/CMU/Study;
+	elif [[ "$1" == "cmuresearch" ]]; then
+		cd ~/CMU/Research/;
 	elif [[ "$1" == "cv" ]]; then
-		cd "/home/sam/CMU/Study/16385 Computer Vision";
+		cd "/home/sam/CVPlayground";
 	elif [[ "$1" == "cvcode" ]]; then
-		cd "/home/sam/CMU/Study/16385 Computer Vision/programming";
+		cd "/home/sam/CVPlayground";
 		cd `cat .active_code_dir`;
-	elif [[ "$1" == "dso" || "$1" == "radar" ]]; then
+	elif [[ "$1" == "learnable" || "$1" == "3dpose" ]]; then
+		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch"
+	elif [[ "$1" == "klt" ]]; then
+		cd "/home/sam/CVPlayground/KLTCpp";
+		cd `cat .active_code_dir`;
+	elif [[ "$1" == "radar" || "$1" == "cvradar" ]]; then
+		cd "/home/sam/CMU/Research/CMU CV Radar";
+	elif [[ "$1" == "dso" || "$1" == "pharao" ]]; then
 		cd "/home/sam/CMU/Research/Radar Odometry";
 	elif [[ "$1" == "sisyphus"* ]]; then
 		cd ~/Documents/MobileApps/SisyphusSheep;
@@ -292,6 +328,8 @@ goto(){
 		cd ~/Documents/Telegram\ Bots/;
 	elif [[ "$1" == "biblequizzle" || "$1" == "quizzle" ]]; then
 		cd ~/Documents/Telegram\ Bots/BibleQuizzle;
+	elif [[ "$1" == "quizzlediscord" ]]; then
+		cd ~/Documents/Discord\ Bots/BibleQuizzleDiscord;
 	elif [[ "$1" == "unreal" || "$1" == "ut" || "$1" == "ut2004" ]]; then
 		cd ~/Downloads/ut2004
 		./runGame
@@ -303,6 +341,29 @@ goto(){
 		cd ~/Documents/Github\ Website
 	elif [[ "$1" == "resume" ]]; then
 		cd "/home/sam/Documents/Github Website/resumecv"
+	elif [[ "$1" == "robo" || "$1" == "robotics" || "$1" == "robot" ]]; then
+		cd "/home/sam/CMU/Study/16311 Intro to Robotics"
+	elif [[ "$1" == "robolab" ]]; then
+		goto robo
+		cd labs
+		cd `cat .active_lab_dir`
+	elif [[ "$1" == "robohw" ]]; then
+		goto robo
+		cd homework
+		cd `cat .active_hw_dir`
+	elif [[ "$1" == "290" || "$1" == "18290" ]]; then
+		cd "/home/sam/CMU/Study/18290"
+	elif [[ "$1" == "290hw" ]]; then
+		goto 290
+		cd homework
+	elif [[ "$1" == "220" || "$1" == "18220" ]]; then
+		cd "/home/sam/CMU/Study/18220"
+	elif [[ "$1" == "220lab" ]]; then
+		goto 220
+		cd labs
+	elif [[ "$1" == "220hw" ]]; then
+		goto robo
+		cd homework
 	else
 		cd "$1" || cd ~/"$1";
 	fi
@@ -637,3 +698,9 @@ export QUARTUS_ROOTDIR_OVERRIDE="$QUARTUS_ROOTDIR"
 export QSYS_ROOTDIR="${ALTERAPATH}/quartus/sopc_builder/bin"
 export PATH=$PATH:${ALTERAPATH}/quartus/bin
 export PATH=$PATH:${ALTERAPATH}/nios2eds/bin
+
+# Nvidia Fixes
+graphicx(){
+	sudo xgraphic $1
+	nvidia-fix
+}
