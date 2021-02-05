@@ -740,3 +740,6 @@ matcmd(){
 
 	matlab -nodesktop -r "$MAT_STR"
 }
+
+alias matfn=matcmd
+alias matlabcmd="matlab -nodesktop"
