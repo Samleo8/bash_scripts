@@ -356,14 +356,16 @@ goto(){
 	elif [[ "$1" == "290hw" ]]; then
 		goto 290
 		cd homework
+		cd `cat .active_hw_dir`
 	elif [[ "$1" == "220" || "$1" == "18220" ]]; then
 		cd "/home/sam/CMU/Study/18220"
 	elif [[ "$1" == "220lab" ]]; then
 		goto 220
 		cd labs
 	elif [[ "$1" == "220hw" ]]; then
-		goto robo
+		goto 220
 		cd homework
+		cd `cat .active_hw_dir`
 	else
 		cd "$1" || cd ~/"$1";
 	fi
@@ -703,4 +705,38 @@ export PATH=$PATH:${ALTERAPATH}/nios2eds/bin
 graphicx(){
 	sudo xgraphic $1
 	nvidia-fix
+}
+
+# MatLab cmd
+matcmd(){
+	# "functionname(argument1, argument2, argumentN);exit"
+	if [[ -z "$1" ]]; then
+		echo "USAGE: matcmd <functionname> [argument1 [argument2 ... [argumentN]]"
+		return
+	fi
+
+	MAT_STR=""
+	PREPEND=""
+	APPEND=""
+	i=0
+	for ARG in "$@"
+	do	
+		if [[ $i == 0 ]]; then
+			PREPEND=""
+			APPEND="("
+		elif [[ $i == 1 ]]; then
+			PREPEND=""
+		else
+			PREPEND=", "
+		fi
+					
+		MAT_STR="$MAT_STR$PREPEND$ARG$APPEND"
+
+		((i++))
+	done
+
+	MAT_STR="$MAT_STR)"
+	echo "\$ $MAT_STR"
+
+	matlab -nodesktop -r "$MAT_STR"
 }
