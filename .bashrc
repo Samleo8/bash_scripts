@@ -726,6 +726,7 @@ matcmd(){
 			APPEND="("
 		elif [[ $i == 1 ]]; then
 			PREPEND=""
+			APPEND=""
 		else
 			PREPEND=", "
 		fi
