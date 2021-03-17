@@ -1,4 +1,3 @@
-
 #Youtube DL MP4
 alias ydl=youtube-dl
 
@@ -66,3 +65,8 @@ alias nvidia-fix="sudo rm /etc/X11/xorg.conf; echo 'Removed xorg config'"
 alias gpureload="sudo rmmod nvidia_uvm ; sudo modprobe nvidia_uvm"
 
 alias cups="sudo systemctl restart cups.service"
+
+# School stuff
+alias robohw="goto robohw; code ./code; xdg-open ./writeup/*.tex; firefox hw*.pdf"
+alias robolab="goto robolab; code ./code; firefox Lab*.pdf"
+alias 290hw="goto 290hw; code ./code; xdg-open ./writeup/*.tex; firefox hw*.pdf"

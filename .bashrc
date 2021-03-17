@@ -128,6 +128,9 @@ export JAVA_HOME=/usr/bin/java
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64 # :${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 export CUDA_VISIBLE_DEVICES=0
 
+export WEBOTS_HOME=/usr/local/webots
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${WEBOTS_HOME}/lib/controller
+
 export ANDROID_PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
 
 export NODE_PATH=/usr/local/lib/node_modules/node/bin/
@@ -320,6 +323,9 @@ goto(){
 		cd `cat .active_code_dir`;
 	elif [[ "$1" == "radar" || "$1" == "cvradar" ]]; then
 		cd "/home/sam/CMU/Research/CMU CV Radar";
+	elif [[ "$1" == "surf" ]]; then
+		cd "/home/sam/CMU/Research/CMU CV Radar/SURFProposalRadar";
+		git pull;
 	elif [[ "$1" == "dso" || "$1" == "pharao" ]]; then
 		cd "/home/sam/CMU/Research/Radar Odometry";
 	elif [[ "$1" == "sisyphus"* ]]; then
@@ -341,12 +347,16 @@ goto(){
 		cd ~/Documents/Github\ Website
 	elif [[ "$1" == "resume" ]]; then
 		cd "/home/sam/Documents/Github Website/resumecv"
-	elif [[ "$1" == "robo" || "$1" == "robotics" || "$1" == "robot" ]]; then
+	elif [[ "$1" == "robo" || "$1" == "robotics" || "$1" == "robot" || "$1" == "16311" ]]; then
 		cd "/home/sam/CMU/Study/16311 Intro to Robotics"
 	elif [[ "$1" == "robolab" ]]; then
 		goto robo
 		cd labs
+		git pull
 		cd `cat .active_lab_dir`
+	elif [[ "$1" == "robolabcode" ]]; then
+		goto robolab 
+		cd code
 	elif [[ "$1" == "robohw" ]]; then
 		goto robo
 		cd homework
@@ -362,6 +372,7 @@ goto(){
 	elif [[ "$1" == "220lab" ]]; then
 		goto 220
 		cd labs
+		cd `cat .active_lab_dir`
 	elif [[ "$1" == "220hw" ]]; then
 		goto 220
 		cd homework
@@ -422,6 +433,18 @@ updatequizzle(){
 	MSG=${1:-("Update leaderboard")}
 
 	goto quizzle
+	
+	gedit leaderboard.json && \
+	git add leaderboard.json && \
+	git commit -m "$MSG" && \
+	git push
+}
+
+# Update BibleQuizzle leaderboard
+updatequizzlediscord(){
+	MSG=${1:-("Update leaderboard")}
+
+	goto quizzlediscord
 	
 	gedit leaderboard.json && \
 	git add leaderboard.json && \
@@ -744,3 +767,16 @@ matcmd(){
 
 alias matfn=matcmd
 alias matlabcmd="matlab -nodesktop"
+
+sshrobot(){
+	HOST=$1
+	PASSWORD=$2
+
+	if [ -z "$1" ]; then
+		echo "Please key in last 2 digits of host IP"
+		return
+	fi
+
+	HOST="pi@172.26.229.$HOST"
+	sshpass -p $PASSWORD ssh $HOST
+}

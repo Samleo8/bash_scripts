@@ -29,6 +29,9 @@
 \let\iint\oldiint
 \let\iiint\oldiiint
 
+% Replace all astericks with \cdot
+\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+
 % Figures and Tables
 \usepackage[center]{caption}
 \usepackage{subfig}
@@ -125,7 +128,7 @@
 \newcommand{\quadand}{\quad\text{and}\quad}
 
 \newcommand{\bezoutslemma}{\text{B\'ezout's Lemma}}
-\newcommand{\annotate}[1]{&& \text{(#1)}}
+\newcommand{\annotate}[1]{&& \left(\text{#1}\right)}
 \newcommand{\annotateln}[1]{\annotate{#1} \\}
 \newcommand{\annotatefracln}[1]{\annotate{#1} \fracln}
 
@@ -138,7 +141,9 @@
 
 \newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
 \newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
-\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\abs}[1]{\ensuremath{\left|#1\right|}}
+\newcommand{\abss}[1]{\abs{#1 \strut}}
+\newcommand{\absstrut}[1]{\abss{#1}}
 
 %% Sets
 \newcommand{\powerset}[1]{\ensuremath{\mathcal{P}(#1)}}
@@ -190,6 +195,13 @@
 \newcommand{\dy}{\derv{y}}
 \newcommand{\dt}{\derv{t}}
 \newcommand{\dv}{\derv{v}}
+\newcommand{\dtau}{\derv{\tau}}
+\newcommand{\domega}{\derv{\omega}}
+
+\newcommand{\intinfty}{\int_{-\infty}^{\infty}}
+\newcommand{\intzeroinfty}{\int_{0}^{\infty}}
+\newcommand{\suminfty}[1]{\sum_{#1 = -\infty}^{\infty}}
+\newcommand{\sumzeroinfty}[1]{\sum_{#1 = 0}^{\infty}}
 
 \def\vv{\ensuremath{\vec{\bf v}}}
 \def\vva{\ensuremath{\vv_1}}
@@ -202,6 +214,15 @@
 \newcommand{\Lapl}[1]{\ensuremath{\Laplace{#1}}}
 \newcommand{\LaplInv}[1]{\ensuremath{\LaplaceInv{#1}}}
 \newcommand{\LaplaceInverse}[1]{\ensuremath{\LaplaceInv{#1}}}
+
+% 18-290 stuff
+\newcommand{\system}[1]{\ensuremath{\mathcal{H}\set{#1}}}
+\newcommand{\conv}{\ensuremath{\ast}}
+
+\def\jomega{\ensuremath{j \omega}}
+\def\jw{\jomega}
+\def\Xjw{\ensuremath{X(\jomega)}}
+\def\Xjomega{\Xjw}
 
 \newcommand{\stepfn}[1]{\mathscr{U}\left(#1\right)}
 
@@ -399,6 +420,8 @@
 
 % For resuming counter for question part
 \newcounter{questionpartcounter}
+\newcommand{\setquestioncount}[1]{\setcounter{questioncounter}{#1}}
+\newcommand{\setquestionpartcount}[1]{\setcounter{questionpartcounter}{#1}}
 \newcommand{\resumequestionpart}{\setcounter{enumi}{\value{questionpartcounter}}}
 
 \newcommand{\questionparttype}{\alph*} % \alph*, \roman*, \arabic* 
