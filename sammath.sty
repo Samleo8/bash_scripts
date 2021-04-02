@@ -37,8 +37,8 @@
 \usepackage{subfig}
 \usepackage{longtable}
 			
-\newcommand{\tabvpad}[1]{\def\arraystretch{#1}}
-\newcommand{\tabhpad}[1]{\setlength{\tabcolsep}{#1}}
+\newcommand*{\tabvpad}[1]{\def\arraystretch{#1}}
+\newcommand*{\tabhpad}[1]{\setlength{\tabcolsep}{#1}}
 
 % Enumerators
 \usepackage[shortlabels]{enumitem}
@@ -96,24 +96,24 @@
 \newenvironment{example}{{\bf Example:  }}{\proofbox}
 
 % Math Notation
-\newcommand{\R}{\ensuremath{\mathbb R}}
-\newcommand{\Z}{\ensuremath{\mathbb Z}}
-\newcommand{\N}{\ensuremath{\mathbb N}}
-\newcommand{\Q}{\ensuremath{\mathbb Q}}
-\newcommand{\B}{\ensuremath{\mathbb B}}
+\newcommand*{\R}{\ensuremath{\mathbb R}}
+\newcommand*{\Z}{\ensuremath{\mathbb Z}}
+\newcommand*{\N}{\ensuremath{\mathbb N}}
+\newcommand*{\Q}{\ensuremath{\mathbb Q}}
+\newcommand*{\B}{\ensuremath{\mathbb B}}
 
 %% True False
-\newcommand{\T}{$\checkmark$}
-% \newcommand{\F}{$\times$}
-\newcommand{\contradiction}{\Rightarrow\Leftarrow}
+\newcommand*{\T}{$\checkmark$}
+% \newcommand*{\F}{$\times$}
+\newcommand*{\contradiction}{\Rightarrow\Leftarrow}
 
 %% Text Formatting
-\newcommand{\suchthat}{\text{\ \ s.t. }}
-\newcommand{\st}{\suchthat}
-\newcommand{\textand}{\text{ and }}
+\newcommand*{\suchthat}{\text{\ \ s.t. }}
+\newcommand*{\st}{\suchthat}
+\newcommand*{\textand}{\text{ and }}
 
-\newcommand{\LHS}{\text{LHS}}
-\newcommand{\RHS}{\text{RHS}}
+\newcommand*{\LHS}{\text{LHS}}
+\newcommand*{\RHS}{\text{RHS}}
 
 \newcommand{\simpleheader}[1]{\underline{\textit{#1:}}\quad\ \vspace{0.1in} }
 \newcommand{\simpleheaderln}[1]{\simpleheader{#1} \\ }
@@ -124,107 +124,180 @@
 
 \newcommand{\venntitle}[1]{$\underline{#1}$ \\ \\}
 
-\newcommand{\quador}{\quad\text{or}\quad}
-\newcommand{\quadand}{\quad\text{and}\quad}
+\newcommand*{\quador}{\quad\text{or}\quad}
+\newcommand*{\quadand}{\quad\text{and}\quad}
 
-\newcommand{\bezoutslemma}{\text{B\'ezout's Lemma}}
+\newcommand*{\bezoutslemma}{\text{B\'ezout's Lemma}}
 \newcommand{\annotate}[1]{&& \left(\text{#1}\right)}
 \newcommand{\annotateln}[1]{\annotate{#1} \\}
 \newcommand{\annotatefracln}[1]{\annotate{#1} \fracln}
 
 %% Other formating
-\newcommand{\notimplies}{\ensuremath{\centernot \implies}}
-\newcommand{\notimpliedby}{\ensuremath{\centernot \impliedby}}
-\newcommand{\forwarddirection}{($ \implies $)\qquad}
-\newcommand{\reversedirection}{($ \impliedby $)\qquad}
+\newcommand*{\notimplies}{\ensuremath{\centernot \implies}}
+\newcommand*{\notimpliedby}{\ensuremath{\centernot \impliedby}}
+\newcommand*{\forwarddirection}{($ \implies $)\qquad}
+\newcommand*{\reversedirection}{($ \impliedby $)\qquad}
 \newcommand{\fracln}{\\[1.5ex]}
 
-\newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
-\newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
-\newcommand{\abs}[1]{\ensuremath{\left|#1\right|}}
-\newcommand{\abss}[1]{\abs{#1 \strut}}
-\newcommand{\absstrut}[1]{\abss{#1}}
+\newcommand*{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
+\newcommand*{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
+\newcommand*{\abs}[1]{\ensuremath{\left|#1\right|}}
+\newcommand*{\abss}[1]{\abs{#1 \strut}}
+\newcommand*{\absstrut}[1]{\abss{#1}}
 
 %% Sets
-\newcommand{\powerset}[1]{\ensuremath{\mathcal{P}(#1)}}
-\newcommand{\set}[1]{\ensuremath{\left\{#1\right\}}}
-\newcommand{\union}{\ensuremath{\cup}}
-\newcommand{\intersect}{\ensuremath{\cap}}
-\newcommand{\setst}{\ensuremath{\ \middle|\ }}
-\newcommand{\plainsetst}{\ |\ }
+\newcommand*{\powerset}[1]{\ensuremath{\mathcal{P}(#1)}}
+\newcommand*{\set}[1]{\ensuremath{\left\{#1\right\}}}
+\newcommand*{\union}{\ensuremath{\cup}}
+\newcommand*{\intersect}{\ensuremath{\cap}}
+\newcommand*{\setst}{\ensuremath{\ \middle|\ }}
+\newcommand*{\plainsetst}{\ |\ }
 
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
 
 %% Functions 
 \newcommand{\id}[2]{\text{id}_{#1}(#2)}
-\newcommand{\inverse}[1]{\ensuremath{#1^{-1}}}
-\newcommand{\composite}{\ensuremath{\circ}}
+\newcommand*{\inverse}[1]{\ensuremath{#1^{-1}}}
+\newcommand*{\composite}{\ensuremath{\circ}}
 
 %% Divisibility and GCD Stuff
-\newcommand{\coprime}{\ensuremath{\ \perp\ }}
-\newcommand{\notcoprime}{\ensuremath{\ \not\perp\ }}
-\newcommand{\divides}{\ensuremath{\ \mid\ }}
-\newcommand{\notdivides}{\ensuremath{\nmid}}
-\newcommand{\congruent}{\ensuremath{\equiv}}
-\newcommand{\lcm}{\text{lcm}}
-\newcommand{\totient}[1]{\ensuremath{\varphi(#1)}}
+\newcommand*{\coprime}{\ensuremath{\ \perp\ }}
+\newcommand*{\notcoprime}{\ensuremath{\ \not\perp\ }}
+\newcommand*{\divides}{\ensuremath{\ \mid\ }}
+\newcommand*{\notdivides}{\ensuremath{\nmid}}
+\newcommand*{\congruent}{\ensuremath{\equiv}}
+\newcommand*{\lcm}{\text{lcm}}
+\newcommand*{\totient}[1]{\ensuremath{\varphi(#1)}}
 
 %% Induction
-\newcommand{\IH}{\text{I.H.}}
-\newcommand{\SIH}{\text{S.I.H.}}
-\newcommand{\basecase}{\simpleheader{Base Case}}
-\newcommand{\basecases}{\simpleheader{Base Cases}}
-\newcommand{\inductivestep}{\simpleheader{Inductive Step}}
-\newcommand{\inductivecase}{\inductivestep}
-\newcommand{\propP}[1]{P$(#1)$}
+\newcommand*{\IH}{\text{I.H.}}
+\newcommand*{\SIH}{\text{S.I.H.}}
+\newcommand*{\basecase}{\simpleheader{Base Case}}
+\newcommand*{\basecases}{\simpleheader{Base Cases}}
+\newcommand*{\inductivestep}{\simpleheader{Inductive Step}}
+\newcommand*{\inductivecase}{\inductivestep}
+\newcommand*{\propP}[1]{P$(#1)$}
 \newcommand{\ptrue}[1]{\propP{#1} \text{is true}}
 \newcommand{\inductionconclusion}[3]{Therefore, since \ptrue{#1}, and #3, \ptrue{#2} $ \implies $ \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
 %\newcommand{\stronginductionconclusion}[4]{Therefore, since \ptrue{#1}, and for all $n\geq #1$ #2, [,$ \forall #1 \leq $ \ptrue{#3}$ ] \implies $ \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
 
 %% Diff Eq
-\newcommand{\ddp}[2]{\ensuremath{\dfrac{\partial#1}{\partial#2}}} % partial derv
-\newcommand{\ddf}[2]{\ensuremath{\dfrac{{d}#1}{{d}#2}}}
-\newcommand{\dydx}{\ensuremath{\ddf{y}{x}}}
-\newcommand{\dydt}{\ensuremath{\ddf{y}{t}}}
-\newcommand{\wrt}[1]{\text{with respect to} $#1$}
-\newcommand{\diffeq}{\text{differential equation}}
-\newcommand{\derv}[1]{\ensuremath{\cdot d#1}}
-\newcommand{\du}{\derv{u}}
-\newcommand{\dx}{\derv{x}}
-\newcommand{\dy}{\derv{y}}
-\newcommand{\dt}{\derv{t}}
-\newcommand{\dv}{\derv{v}}
-\newcommand{\dtau}{\derv{\tau}}
-\newcommand{\domega}{\derv{\omega}}
+\newcommand*{\ddp}[2]{\ensuremath{\dfrac{\partial#1}{\partial#2}}} % partial derv
+\newcommand*{\ddf}[2]{\ensuremath{\dfrac{{d}#1}{{d}#2}}}
+\newcommand*{\dydx}{\ensuremath{\ddf{y}{x}}}
+\newcommand*{\dydt}{\ensuremath{\ddf{y}{t}}}
+\newcommand*{\wrt}[1]{\text{with respect to} $#1$}
+\newcommand*{\diffeq}{\text{differential equation}}
+\newcommand*{\derv}[1]{\ensuremath{\cdot d#1}}
+\newcommand*{\du}{\derv{u}}
+\newcommand*{\dx}{\derv{x}}
+\newcommand*{\dy}{\derv{y}}
+\newcommand*{\dt}{\derv{t}}
+\newcommand*{\dv}{\derv{v}}
+\newcommand*{\dtau}{\derv{\tau}}
+\newcommand*{\domega}{\derv{\omega}}
 
-\newcommand{\intinfty}{\int_{-\infty}^{\infty}}
-\newcommand{\intzeroinfty}{\int_{0}^{\infty}}
-\newcommand{\suminfty}[1]{\sum_{#1 = -\infty}^{\infty}}
-\newcommand{\sumzeroinfty}[1]{\sum_{#1 = 0}^{\infty}}
+\newcommand*{\intinfty}{\int_{-\infty}^{\infty}}
+\newcommand*{\intzeroinfty}{\int_{0}^{\infty}}
+\newcommand*{\suminfty}[1]{\sum_{#1 = -\infty}^{\infty}}
+\newcommand*{\sumzeroinfty}[1]{\sum_{#1 = 0}^{\infty}}
 
 \def\vv{\ensuremath{\vec{\bf v}}}
 \def\vva{\ensuremath{\vv_1}}
 \def\vvb{\ensuremath{\vv_2}}
 
 \usepackage[scr]{rsfso}
-\newcommand{\Laplacesymbol}{\mathscr{L}}
-\newcommand{\Laplace}[1]{\ensuremath{\Laplacesymbol\left\{#1\right\}}}
-\newcommand{\LaplaceInv}[1]{\ensuremath{\Laplacesymbol^{-1}\left\{#1\right\}}}
-\newcommand{\Lapl}[1]{\ensuremath{\Laplace{#1}}}
-\newcommand{\LaplInv}[1]{\ensuremath{\LaplaceInv{#1}}}
-\newcommand{\LaplaceInverse}[1]{\ensuremath{\LaplaceInv{#1}}}
+\newcommand*{\Laplacesymbol}{\mathscr{L}}
+\newcommand*{\Laplace}[1]{\ensuremath{\Laplacesymbol\left\{#1\right\}}}
+\newcommand*{\LaplaceInv}[1]{\ensuremath{\inverse{\Laplacesymbol}\left\{#1\right\}}}
+\newcommand*{\Lapl}[1]{\ensuremath{\Laplace{#1}}}
+\newcommand*{\LaplInv}[1]{\ensuremath{\LaplaceInv{#1}}}
+\newcommand*{\LaplaceInverse}[1]{\ensuremath{\LaplaceInv{#1}}}
+
+\newcommand*{\Fouriersymbol}{\mathcal{F}}
+\newcommand*{\FT}[1]{\ensuremath{\Fouriersymbol\left\{#1\right\}}}
+\newcommand*{\FTInv}[1]{\ensuremath{\inverse{\Fouriersymbol}\left\{#1\right\}}}
+\newcommand*{\FTarrow}[1]{\quad\xleftrightarrow{\text{ #1 }}\quad}
+
+\newcommand*{\CTFT}{\FTarrow{CTFT}}
+\newcommand*{\CTFS}{\FTarrow{CTFS, $\omega_0$}}
+
+\newcommand*{\DTFT}{\FTarrow{DTFT}}
+\newcommand*{\DTFS}{\FTarrow{DTFS, $\Omega_0$}}
 
 % 18-290 stuff
-\newcommand{\system}[1]{\ensuremath{\mathcal{H}\set{#1}}}
-\newcommand{\conv}{\ensuremath{\ast}}
+\newcommand*{\system}[1]{\ensuremath{\mathcal{H}\set{#1}}}
+\newcommand*{\conv}{\ensuremath{\ast}}
 
 \def\jomega{\ensuremath{j \omega}}
 \def\jw{\jomega}
-\def\Xjw{\ensuremath{X(\jomega)}}
-\def\Xjomega{\Xjw}
 
-\newcommand{\stepfn}[1]{\mathscr{U}\left(#1\right)}
+\def\jOmega{\ensuremath{j \Omega}}
+\def\jW{\jOmega}
+
+\makeatletter
+\newcommand{\Xjw}[1][\@nil]{
+	\def\tmp{#1}%
+   	\ifx\tmp\@nnil
+		\ensuremath{\ensuremath{X(\jomega)}}
+    \else
+		\ensuremath{\ensuremath{X_{#1}(\jomega)}}
+    \fi
+}
+
+\newcommand{\Yjw}[1][\@nil]{
+	\def\tmp{#1}%
+   	\ifx\tmp\@nnil
+		\ensuremath{\ensuremath{Y(\jomega)}}
+    \else
+		\ensuremath{\ensuremath{Y_{#1}(\jomega)}}
+    \fi
+}
+
+\newcommand{\Hjw}[1][\@nil]{
+	\def\tmp{#1}%
+   	\ifx\tmp\@nnil
+		\ensuremath{\ensuremath{H(\jomega)}}
+    \else
+		\ensuremath{\ensuremath{H_{#1}(\jomega)}}
+    \fi
+}
+\makeatother
+
+\def\Xjomega{\Xjw}
+\def\Yjomega{\Yjw}
+\def\Hjomega{\Hjw}
+
+\makeatletter
+\newcommand{\XejW}[1][\@nil]{
+	\def\tmp{#1}%
+   	\ifx\tmp\@nnil
+		\ensuremath{X(e^{\jOmega})}
+    \else
+		\ensuremath{X_{#1}(e^{\jOmega})}
+    \fi
+}
+
+\newcommand{\HejW}[1][\@nil]{
+	\def\tmp{#1}%
+   	\ifx\tmp\@nnil
+		\ensuremath{H(e^{\jOmega})}
+    \else
+		\ensuremath{H_{#1}(e^{\jOmega})}
+    \fi
+}
+
+\makeatother
+
+\def\XejOmega{\XejW}
+
+\newcommand*{\conj}[1]{\ensuremath{{#1}^{\ast}}}
+\newcommand*{\conjugate}[1]{\conj{#1}}
+
+\newcommand*{\sinc}{\mathrm{sinc}}
+
+\newcommand*{\stepfn}[1]{\mathscr{U}\left(#1\right)}
 
 \newcommand{\mnote}[1]{\normalmarginpar \marginpar{\tiny #1}}
 \newcommand{\junk}[1]{}
@@ -234,8 +307,8 @@
 }
 
 %% ECE Stuffs
-\newcommand{\xor}{\ensuremath{\oplus}}
-\newcommand{\enot}[1]{\ensuremath{\overline{#1\strut}}}
+\newcommand*{\xor}{\ensuremath{\oplus}}
+\newcommand*{\enot}[1]{\ensuremath{\overline{#1\strut}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BOLD ALIGN
@@ -302,17 +375,17 @@
 \makeatother
 
 %% Probability
-\newcommand{\prob}[1]{\ensuremath{P\left(#1\right)}}
-\newcommand{\given}{\plainsetst}
-\newcommand{\tallgiven}{\setst}
-\newcommand{\otherwise}{0 & \text{otherwise}}
+\newcommand*{\prob}[1]{\ensuremath{P\left(#1\right)}}
+\newcommand*{\given}{\plainsetst}
+\newcommand*{\tallgiven}{\setst}
+\newcommand*{\otherwise}{0 & \text{otherwise}}
 
 %% Computer Vision
 %%% Matrices stuff and formatting
 \def\dash{\text{ --- }}
 
-\newcommand{\transpose}[1]{\ensuremath{{#1}^{\top}}}
-\newcommand{\trans}[1]{\transpose{#1}}
+\newcommand*{\transpose}[1]{\ensuremath{{#1}^{\top}}}
+\newcommand*{\trans}[1]{\transpose{#1}}
 
 \def\vO{{\bf 0}}
 \def\zerovec{\ensuremath{\vec{\vO}}}
@@ -364,19 +437,19 @@
 \def\hh{\ensuremath{\bf \hat{h}}}
 \def\hs{\ensuremath{\bf \hat{s}}}
 
-\newcommand{\F}[1]{\ensuremath{\mathcal{F}\left\{#1\right\}}} % fourier transform
-\newcommand{\norm}[1]{\ensuremath{\left\lVert#1\right\rVert}}
+\newcommand*{\F}[1]{\ensuremath{\mathcal{F}\left\{#1\right\}}} % fourier transform
+\newcommand*{\norm}[1]{\ensuremath{\left\lVert#1\right\rVert}}
 
 \renewcommand{\Re}[1]{\ensuremath{\operatorname{Re}\left\{#1\right\}}}
 \renewcommand{\Im}[1]{\ensuremath{\operatorname{Im}\left\{#1\right\}}}
 
 % For equation counters
-\newcommand{\stepeqn}{\stepcounter{equation}}
-\newcommand{\stepequation}{\stepeqn}
-\newcommand{\tageqn}{\tag{\theequation}}
-\newcommand{\tagequation}{\tageqn}
-\newcommand{\steptageqn}{\stepeqn\tageqn}
-\newcommand{\steptagequation}{\steptageqn}
+\newcommand*{\stepeqn}{\stepcounter{equation}}
+\newcommand*{\stepequation}{\stepeqn}
+\newcommand*{\tageqn}{\tag{\theequation}}
+\newcommand*{\tagequation}{\tageqn}
+\newcommand*{\steptageqn}{\stepeqn\tageqn}
+\newcommand*{\steptagequation}{\steptageqn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Heading Information
@@ -410,21 +483,21 @@
 \newcounter{questioncounter}
 
 % For skipping questions
-\newcommand{\skipquestion}{\stepcounter{questioncounter}}
+\newcommand*{\skipquestion}{\stepcounter{questioncounter}}
 
 % Problem by default; Use \renewcommand to change to something like "Question" or "Task"
-\newcommand{\questiontype}{Problem} 
+\newcommand*{\questiontype}{Problem} 
 \newcommand{\questionhdr}[2][]{\vspace{0.7em} \hrule\vspace{0.5em}
 	\noindent{\bf \questiontype\ #2: #1} \vspace{0.5em}
 	\hrule}
 
 % For resuming counter for question part
 \newcounter{questionpartcounter}
-\newcommand{\setquestioncount}[1]{\setcounter{questioncounter}{#1}}
-\newcommand{\setquestionpartcount}[1]{\setcounter{questionpartcounter}{#1}}
-\newcommand{\resumequestionpart}{\setcounter{enumi}{\value{questionpartcounter}}}
+\newcommand*{\setquestioncount}[1]{\setcounter{questioncounter}{#1}}
+\newcommand*{\setquestionpartcount}[1]{\setcounter{questionpartcounter}{#1}}
+\newcommand*{\resumequestionpart}{\setcounter{enumi}{\value{questionpartcounter}}}
 
-\newcommand{\questionparttype}{\alph*} % \alph*, \roman*, \arabic* 
+\newcommand*{\questionparttype}{\alph*} % \alph*, \roman*, \arabic* 
 
 \newenvironment{questionnobreak}[1][]{
 	\refstepcounter{questioncounter}
