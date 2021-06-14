@@ -27,6 +27,8 @@ alias unbind-esc='setxkbmap -option'
 
 #Yay update
 alias yayay="yay -Syu --noconfirm && firefox-home-reset && cleanup"
+alias listupdate="pacman -Qu | awk '{ print \$1 }'"
+alias list-update=listupdate
 
 #Save windows and poweroff
 alias poweroff="lwsm save; poweroff"
@@ -69,4 +71,6 @@ alias cups="sudo systemctl restart cups.service"
 # School stuff
 alias robohw="goto robohw; code ./code; xdg-open ./writeup/*.tex; firefox hw*.pdf"
 alias robolab="goto robolab; code ./code; firefox Lab*.pdf"
-alias 290hw="goto 290hw; code ./code; xdg-open ./writeup/*.tex; firefox hw*.pdf"
+alias 290hw="goto 290hw; xdg-open ./*.tex; firefox hw*.pdf"
+
+alias bumblebee="sudo systemctl enable --now bumblebeed"

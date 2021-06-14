@@ -145,9 +145,9 @@ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig
 source /etc/profile.d/vte.sh
 
 #Python Virtual Environment
-PATH="/home/sam/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# PATH="/home/sam/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 export RUBY_PATH="/root/.gem/ruby/2.7.0/bin"
 export PATH="$RUBY_PATH:$PATH"
@@ -323,6 +323,10 @@ goto(){
 		cd `cat .active_code_dir`;
 	elif [[ "$1" == "radar" || "$1" == "cvradar" ]]; then
 		cd "/home/sam/CMU/Research/CMU CV Radar";
+	elif [[ "$1" == "radarsim" ]]; then
+		cd "/home/sam/CMU/Research/CMU CV Radar/simulation/fmcwsim";
+	elif [[ "$1" == "radarraw" || "$1" == "rawradar" || "$1" == "radardata" ]]; then
+		cd "/home/sam/CMU/Research/CMU CV Radar/rawdata";
 	elif [[ "$1" == "surf" ]]; then
 		cd "/home/sam/CMU/Research/CMU CV Radar/SURFProposalRadar";
 		git pull;
@@ -377,12 +381,22 @@ goto(){
 		goto 220
 		cd homework
 		cd `cat .active_hw_dir`
+	elif [[ "$1" == "hri" || "$1" == "HRI" ]]; then
+		cd "/home/sam/CMU/Study/16467 HRI"
+	elif [[ "$1" == "hricode" ]]; then
+		goto hri
+		cd code/teleop
 	else
 		cd "$1" || cd ~/"$1";
 	fi
 }
 
 export -f goto
+
+robolablink(){
+    goto robolab;
+    firefox `cat ./website_link.txt`
+}
 
 # Sync 240 folder with Github (because ECE servers no Internet connection)
 240sync(){

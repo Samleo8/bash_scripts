@@ -197,6 +197,10 @@
 \newcommand*{\dv}{\derv{v}}
 \newcommand*{\dtau}{\derv{\tau}}
 \newcommand*{\domega}{\derv{\omega}}
+\newcommand*{\dOmega}{\derv{\Omega}}
+\newcommand*{\dw}{\domega}
+\newcommand*{\dW}{\dOmega}
+
 
 \newcommand*{\intinfty}{\int_{-\infty}^{\infty}}
 \newcommand*{\intzeroinfty}{\int_{0}^{\infty}}
@@ -229,6 +233,7 @@
 % 18-290 stuff
 \newcommand*{\system}[1]{\ensuremath{\mathcal{H}\set{#1}}}
 \newcommand*{\conv}{\ensuremath{\ast}}
+\newcommand*{\circconv}{\ensuremath{\circledast}}
 
 \def\jomega{\ensuremath{j \omega}}
 \def\jw{\jomega}
@@ -279,6 +284,15 @@
     \fi
 }
 
+\newcommand{\YejW}[1][\@nil]{
+	\def\tmp{#1}%
+   	\ifx\tmp\@nnil
+		\ensuremath{Y(e^{\jOmega})}
+    \else
+		\ensuremath{Y_{#1}(e^{\jOmega})}
+    \fi
+}
+
 \newcommand{\HejW}[1][\@nil]{
 	\def\tmp{#1}%
    	\ifx\tmp\@nnil
@@ -291,6 +305,8 @@
 \makeatother
 
 \def\XejOmega{\XejW}
+\def\YejOmega{\YejW}
+\def\HejOmega{\HejW}
 
 \newcommand*{\conj}[1]{\ensuremath{{#1}^{\ast}}}
 \newcommand*{\conjugate}[1]{\conj{#1}}
@@ -305,6 +321,13 @@
 \newenvironment{sol}{
 	\textbf{Solution:}
 }
+
+\def\ws{\ensuremath{\omega_s}}
+\def\wm{\ensuremath{\omega_m}}
+\def\wc{\ensuremath{\omega_c}}
+\def\wo{\ensuremath{\omega_0}}
+\def\wl{\ensuremath{\omega_\ell}}
+\def\wh{\ensuremath{\omega_h}}
 
 %% ECE Stuffs
 \newcommand*{\xor}{\ensuremath{\oplus}}
