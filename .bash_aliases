@@ -26,7 +26,7 @@ alias bind-esc='setxkbmap -option caps:escape'
 alias unbind-esc='setxkbmap -option'
 
 #Yay update
-alias yayay="yay -Syu --noconfirm && firefox-home-reset && cleanup"
+alias yayay="yay -Syu --noconfirm && firefox-home-reset" # && cleanup"
 alias listupdate="pacman -Qu | awk '{ print \$1 }'"
 alias list-update=listupdate
 
@@ -72,5 +72,6 @@ alias cups="sudo systemctl restart cups.service"
 alias robohw="goto robohw; code ./code; xdg-open ./writeup/*.tex; firefox hw*.pdf"
 alias robolab="goto robolab; code ./code; firefox Lab*.pdf"
 alias 290hw="goto 290hw; xdg-open ./*.tex; firefox hw*.pdf"
+alias doxy="doxygen && gitpush 'Update doxygen documentation'"
 
 alias bumblebee="sudo systemctl enable --now bumblebeed"

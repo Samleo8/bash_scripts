@@ -4,8 +4,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-      *) return;;
+*i*) ;;
+*) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -32,12 +32,12 @@ shopt -s checkwinsize
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+	debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -46,42 +46,42 @@ esac
 #force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
+	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+		# We have color support; assume it's compliant with Ecma-48
+		# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+		# a case would tend to support setf rather than setaf.)
+		color_prompt=yes
+	else
+		color_prompt=
+	fi
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
+xterm* | rxvt*)
+	PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+	;;
+*) ;;
+
 esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto'
+	#alias dir='dir --color=auto'
+	#alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
@@ -102,22 +102,22 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+	. ~/.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
 fi
 
 # Path settings
-# PATH=${PATH:+:${PATH}}$ 
+# PATH=${PATH:+:${PATH}}$
 
 export CUDA_HOME=/opt/cuda
 export CUDA_PATH=$CUDA_HOME:$CUDA_HOME/bin
@@ -167,14 +167,14 @@ gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/k
 
 ###=====================SHORTCUT FUNCTIONS=====================###
 #cd and then ls
-cdls(){
+cdls() {
 	cd "$1" && l -a
 }
 
 alias cdl=cdls
 
 #Git
-gitpush(){
+gitpush() {
 	git add .
 	git commit -m "$1"
 	git push
@@ -182,11 +182,11 @@ gitpush(){
 
 export -f gitpush
 
-gitadd(){
+gitadd() {
 	TOADD="${@:1:$#-1}"
-        TOCOMMIT="${!#}" # get last element
+	TOCOMMIT="${!#}" # get last element
 
-	git add $TOADD;
+	git add $TOADD
 	git commit -m "$TOCOMMIT"
 }
 
@@ -195,34 +195,34 @@ export -f gitadd
 #Process handling
 alias showproc=htop
 
-findproc(){
+findproc() {
 	ps -e | grep -i "$1"
 }
 
-killproc(){
-	kill `ps -e -o pid,cmd | grep -i '$1' | grep -Po '^[0-9]+|^.*?\K[0-9]+'`
+killproc() {
+	kill $(ps -e -o pid,cmd | grep -i '$1' | grep -Po '^[0-9]+|^.*?\K[0-9]+')
 }
 
 #Echo functions with fancy colours
-echo_colour(){
+echo_colour() {
 	echo -e "$(tput setaf $2)$1$(tput sgr0)"
 }
 
 alias echo_color=echo_colour
 
-echo_err(){
+echo_err() {
 	echo_colour "$1" 1 #red
 }
 
-echo_ok(){
+echo_ok() {
 	echo_colour "$1" 82 #green
 }
 
-echo_orange(){
+echo_orange() {
 	echo_colour "$1" 172
 }
 
-echo_blue(){
+echo_blue() {
 	echo_colour "$1" 81
 }
 
@@ -234,33 +234,33 @@ export -f echo_blue
 
 # Extractor
 # # usage: ex <file>
-ex(){
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1     ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
+ex() {
+	if [ -f $1 ]; then
+		case $1 in
+		*.tar.bz2) tar xjf $1 ;;
+		*.tar.gz) tar xzf $1 ;;
+		*.bz2) bunzip2 $1 ;;
+		*.rar) unrar x $1 ;;
+		*.gz) gunzip $1 ;;
+		*.tar) tar xf $1 ;;
+		*.tbz2) tar xjf $1 ;;
+		*.tgz) tar xzf $1 ;;
+		*.zip) unzip $1 ;;
+		*.Z) uncompress $1 ;;
+		*.7z) 7z x $1 ;;
+		*) echo "'$1' cannot be extracted via ex()" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
 }
 
 alias extract=ex
 
 #OpenCV compile
-compilecv(){
+compilecv() {
 	echo "Compiling $1.cpp..."
-	g++ "$1.cpp" -o "$1" `pkg-config --cflags --libs opencv` && {
+	g++ "$1.cpp" -o "$1" $(pkg-config --cflags --libs opencv) && {
 		echo "$1.cpp succesfully compiled as ./$1"
 	} || {
 
@@ -271,7 +271,7 @@ compilecv(){
 export -f compilecv
 
 #Java Compile and Run
-javar(){
+javar() {
 	echo "Compiling $1.java..."
 	javac Hello.java && {
 		echo "Compilation Successful! Running $1"
@@ -282,7 +282,7 @@ javar(){
 }
 
 # C compile and run
-compilec(){
+compilec() {
 	# In case wanna add flags
 	FLAGS="-g"
 	# FLAGS="-Wall -g"
@@ -302,44 +302,47 @@ alias ccompile=compilec
 alias gcccompile=compilec
 
 #Special goto function (cd to special directories)
-goto(){
+goto() {
 	if [[ -z "$1" ]]; then
-		cd ./;
+		cd ./
 	elif [[ "$1" == "cmu" ]]; then
-		cd ~/CMU;
+		cd ~/CMU
 	elif [[ "$1" == "study" ]]; then
-		cd ~/CMU/Study;
+		cd ~/CMU/Study
 	elif [[ "$1" == "cmuresearch" ]]; then
-		cd ~/CMU/Research/;
+		cd ~/CMU/Research/
 	elif [[ "$1" == "cv" ]]; then
-		cd "/home/sam/CVPlayground";
+		cd "/home/sam/CVPlayground"
 	elif [[ "$1" == "cvcode" ]]; then
-		cd "/home/sam/CVPlayground";
-		cd `cat .active_code_dir`;
+		cd "/home/sam/CVPlayground"
+		cd $(cat .active_code_dir)
 	elif [[ "$1" == "learnable" || "$1" == "3dpose" ]]; then
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch"
 	elif [[ "$1" == "klt" ]]; then
-		cd "/home/sam/CVPlayground/KLTCpp";
-		cd `cat .active_code_dir`;
+		cd "/home/sam/CVPlayground/KLTCpp"
+		cd $(cat .active_code_dir)
 	elif [[ "$1" == "radar" || "$1" == "cvradar" ]]; then
-		cd "/home/sam/CMU/Research/CMU CV Radar";
+		cd "/home/sam/CMU/Research/CMU CV Radar"
+	elif [[ "$1" == "TOF" || "$1" == "tof" ]]; then
+		cd "/home/sam/CMU/Research/CMU CV Radar/TOF"
 	elif [[ "$1" == "radarsim" ]]; then
-		cd "/home/sam/CMU/Research/CMU CV Radar/simulation/fmcwsim";
+		cd "/home/sam/CMU/Research/CMU CV Radar/simulation"
 	elif [[ "$1" == "radarraw" || "$1" == "rawradar" || "$1" == "radardata" ]]; then
-		cd "/home/sam/CMU/Research/CMU CV Radar/rawdata";
+		cd "/home/sam/CMU/Research/CMU CV Radar/rawdata"
+		git pull
 	elif [[ "$1" == "surf" ]]; then
-		cd "/home/sam/CMU/Research/CMU CV Radar/SURFProposalRadar";
-		git pull;
+		cd "/home/sam/CMU/Research/CMU CV Radar/SURFProposalRadar"
+		git pull
 	elif [[ "$1" == "dso" || "$1" == "pharao" ]]; then
-		cd "/home/sam/CMU/Research/Radar Odometry";
+		cd "/home/sam/CMU/Research/Radar Odometry"
 	elif [[ "$1" == "sisyphus"* ]]; then
-		cd ~/Documents/MobileApps/SisyphusSheep;
+		cd ~/Documents/MobileApps/SisyphusSheep
 	elif [[ "$1" == "telegram" ]]; then
-		cd ~/Documents/Telegram\ Bots/;
+		cd ~/Documents/Telegram\ Bots/
 	elif [[ "$1" == "biblequizzle" || "$1" == "quizzle" ]]; then
-		cd ~/Documents/Telegram\ Bots/BibleQuizzle;
+		cd ~/Documents/Telegram\ Bots/BibleQuizzle
 	elif [[ "$1" == "quizzlediscord" ]]; then
-		cd ~/Documents/Discord\ Bots/BibleQuizzleDiscord;
+		cd ~/Documents/Discord\ Bots/BibleQuizzleDiscord
 	elif [[ "$1" == "unreal" || "$1" == "ut" || "$1" == "ut2004" ]]; then
 		cd ~/Downloads/ut2004
 		./runGame
@@ -357,54 +360,60 @@ goto(){
 		goto robo
 		cd labs
 		git pull
-		cd `cat .active_lab_dir`
+		cd $(cat .active_lab_dir)
 	elif [[ "$1" == "robolabcode" ]]; then
-		goto robolab 
+		goto robolab
 		cd code
 	elif [[ "$1" == "robohw" ]]; then
 		goto robo
 		cd homework
-		cd `cat .active_hw_dir`
-	elif [[ "$1" == "290" || "$1" == "18290" ]]; then
-		cd "/home/sam/CMU/Study/18290"
+		cd $(cat .active_hw_dir)
+	elif [[ "$1" == "226" || "$1" == "36226" || "$1" == "prob" ]]; then
+		cd "/home/sam/CMU/Study/36226"
+	elif [[ "$1" == "226hw" || "$1" == "36226hw" || "$1" == "probhw" ]]; then
+		cd "/home/sam/CMU/Study/36226"
+		cd $(cat .active_hw_dir)
+		open *.tex
+		firefox homework*.pdf
 	elif [[ "$1" == "290hw" ]]; then
 		goto 290
 		cd homework
-		cd `cat .active_hw_dir`
+		cd $(cat .active_hw_dir)
 	elif [[ "$1" == "220" || "$1" == "18220" ]]; then
 		cd "/home/sam/CMU/Study/18220"
 	elif [[ "$1" == "220lab" ]]; then
 		goto 220
 		cd labs
-		cd `cat .active_lab_dir`
+		cd $(cat .active_lab_dir)
 	elif [[ "$1" == "220hw" ]]; then
 		goto 220
 		cd homework
-		cd `cat .active_hw_dir`
+		cd $(cat .active_hw_dir)
 	elif [[ "$1" == "hri" || "$1" == "HRI" ]]; then
 		cd "/home/sam/CMU/Study/16467 HRI"
 	elif [[ "$1" == "hricode" ]]; then
 		goto hri
 		cd code/teleop
 	else
-		cd "$1" || cd ~/"$1";
+		cd "$1" || cd ~/"$1"
 	fi
 }
 
 export -f goto
 
-robolablink(){
-    goto robolab;
-    firefox `cat ./website_link.txt`
+robolablink() {
+	goto robolab
+	firefox $(cat ./website_link.txt)
 }
 
 # Sync 240 folder with Github (because ECE servers no Internet connection)
-240sync(){
+240sync() {
 	if [[ ! -z "$1" ]]; then
-		goto 240; cd labs
+		goto 240
+		cd labs
 		gitpush "$1"
 		echo -e "Synced shared lab side\n"
-		
+
 		goto 240
 		git add ./labs
 		git commit -m"Update labs $1"
@@ -425,55 +434,55 @@ robolablink(){
 }
 
 # Update all instances of sammath
-updatesammath(){
+updatesammath() {
 	MSG=${1:-("Update sammath")}
 
-	find ~/CMU/Study -inum 3300840 -print0 | 
-	while IFS= read -r -d '' file; do
-		DIR=$(dirname "$file")
-		cd "$DIR"
-		LOCALFILE=$(basename "$file")
+	find ~/CMU/Study -inum 3300840 -print0 |
+		while IFS= read -r -d '' file; do
+			DIR=$(dirname "$file")
+			cd "$DIR"
+			LOCALFILE=$(basename "$file")
 
-		echo $DIR
-		git add $LOCALFILE
-		git commit -m "$MSG"
-		git push
-		echo -e "Done.\n"
-	done
+			echo $DIR
+			git add $LOCALFILE
+			git commit -m "$MSG"
+			git push
+			echo -e "Done.\n"
+		done
 }
 
 # Update BibleQuizzle leaderboard
-updatequizzle(){
+updatequizzle() {
 	MSG=${1:-("Update leaderboard")}
 
 	goto quizzle
-	
-	gedit leaderboard.json && \
-	git add leaderboard.json && \
-	git commit -m "$MSG" && \
-	git push
+
+	gedit leaderboard.json &&
+		git add leaderboard.json &&
+		git commit -m "$MSG" &&
+		git push
 }
 
 # Update BibleQuizzle leaderboard
-updatequizzlediscord(){
+updatequizzlediscord() {
 	MSG=${1:-("Update leaderboard")}
 
 	goto quizzlediscord
-	
-	gedit leaderboard.json && \
-	git add leaderboard.json && \
-	git commit -m "$MSG" && \
-	git push
+
+	gedit leaderboard.json &&
+		git add leaderboard.json &&
+		git commit -m "$MSG" &&
+		git push
 }
 
 # Research stuff
-harptensor(){
-	if [ -z "$1" ]; then 
+harptensor() {
+	if [ -z "$1" ]; then
 		TENSORBOARD_PORT=6006
-	else 
+	else
 		TENSORBOARD_PORT=$1
 	fi
-	
+
 	ssh -NfL $TENSORBOARD_PORT:localhost:$TENSORBOARD_PORT bigfoot
 	firefox localhost:$TENSORBOARD_PORT
 }
@@ -481,15 +490,15 @@ harptensor(){
 export -f harptensor
 
 # Save scripts in bash_scripts folder
-savescripts(){
+savescripts() {
 	FOLDER_DIR=/home/sam/bash_scripts/
 
-	if (( $# < 2 )); then
+	if (($# < 2)); then
 		echo "USAGE: savescripts <scripts_to_save ..> <commit_message>"
 		return
 	fi
 
-	MESSAGE=${@:$#} # last parameter 
+	MESSAGE=${@:$#}  # last parameter
 	FILES=${*%${!#}} # all parameters except the last
 
 	cp $FILES $FOLDER_DIR
@@ -499,7 +508,7 @@ savescripts(){
 }
 
 # Split PDFs into individual pages
-splitpdf(){
+splitpdf() {
 	if [[ -z "$1" ]]; then
 		echo "USAGE: splitpdf <file.pdf>"
 		echo "NOTE: Creates new folder called <file>"
@@ -513,20 +522,20 @@ splitpdf(){
 }
 
 # Create blank page
-createBlankPDF(){
+createBlankPDF() {
 	numberOfPages=${1:-1}
-	echo '\documentclass{article}' > blank.tex
-	echo '\usepackage{pdfpages}' >> blank.tex
-	echo '\begin{document}' >> blank.tex
-	for((i=1;i<=$numberOfPages;i++)); do 
+	echo '\documentclass{article}' >blank.tex
+	echo '\usepackage{pdfpages}' >>blank.tex
+	echo '\begin{document}' >>blank.tex
+	for ((i = 1; i <= $numberOfPages; i++)); do
 		echo '\newpage\null\thispagestyle{empty}\newpage'
-	done >> blank.tex
-	echo '\end{document}' >> blank.tex
+	done >>blank.tex
+	echo '\end{document}' >>blank.tex
 
 	: | pdflatex -halt-on-error blank.tex | grep '^!.*' -A200 --color=always
 
 	# Keep only the pdf
-	rm blank.{tex,out,log,aux,bbl,blg,dvi,toc,synctex.gz} > /dev/null 2>&1
+	rm blank.{tex,out,log,aux,bbl,blg,dvi,toc,synctex.gz} >/dev/null 2>&1
 
 	echo "blank.pdf created with $numberOfPages blank page(s)"
 }
@@ -534,7 +543,7 @@ createBlankPDF(){
 export -f createBlankPDF
 
 # PDF TO BOOKLET
-pdf2book(){
+pdf2book() {
 	USAGE_STR="Usage: pdf2book <filename[.pdf]> [-c:crop] [-l:US letter size] [-h:help]"
 	CROP_OPT=""
 	FILE_SUFFIX="booklet"
@@ -542,20 +551,20 @@ pdf2book(){
 
 	while getopts ":hcl" opt; do
 		case $opt in
-			c)
-				CROP_OPT="--trim '1cm 1cm 1cm 1cm' --clip 'true'"
-				FILE_SUFFIX="cropped-$FILE_SUFFIX"
+		c)
+			CROP_OPT="--trim '1cm 1cm 1cm 1cm' --clip 'true'"
+			FILE_SUFFIX="cropped-$FILE_SUFFIX"
 			;;
-			l)
-				PAPER_TYPE="letter"
-				FILE_SUFFIX="$FILE_SUFFIX-letter"
+		l)
+			PAPER_TYPE="letter"
+			FILE_SUFFIX="$FILE_SUFFIX-letter"
 			;;
-			\?)
-				echo "Invalid option: -$OPTARG" >&2
+		\?)
+			echo "Invalid option: -$OPTARG" >&2
 			;&
-			h)
-				echo $USAGE_STR
-				return
+		h)
+			echo $USAGE_STR
+			return
 			;;
 		esac
 	done
@@ -577,7 +586,7 @@ pdf2book(){
 	echo -e "Converting '$FILE.pdf' of $PAGES page(s)...\n"
 
 	CMD="pdfjam --booklet 'true' --signature $PAGES --landscape --suffix '$FILE_SUFFIX' --paper '$PAPER_TYPE' $CROP_OPT --quiet -- '$FILE.pdf'"
-	
+
 	echo -e "$ $CMD\n"
 	eval $CMD
 
@@ -588,7 +597,7 @@ alias pdf2booklet=pdf2book
 export -f pdf2book
 
 # PDF TO JPG
-pdf2jpg(){
+pdf2jpg() {
 	if [[ -z "$1" ]]; then
 		echo "USAGE: pdf2jpg <file.pdf>"
 		return
@@ -597,7 +606,7 @@ pdf2jpg(){
 	PDF=$1
 
 	echo "Processing $PDF"
-	DIR=`basename "$1" .pdf`
+	DIR=$(basename "$1" .pdf)
 
 	mkdir "$DIR"
 
@@ -607,11 +616,11 @@ pdf2jpg(){
 
 	echo '  Converting pages to JPEG files...'
 	for i in "$DIR"/*.pdf; do
-		convert -colorspace RGB -interlace none -density 300x300 -quality 100 "$i" "$DIR"/`basename "$i" .pdf`.jpg
+		convert -colorspace RGB -interlace none -density 300x300 -quality 100 "$i" "$DIR"/$(basename "$i" .pdf).jpg
 	done
 
 	rm "$DIR/*.pdf"
-	rm "$DIR/*.txt"	
+	rm "$DIR/*.txt"
 
 	echo 'All done'
 }
@@ -619,8 +628,8 @@ pdf2jpg(){
 alias pdf2img=pdf2jpg
 export -f pdf2jpg
 
-img2pdf(){
-	if (( $# < 2 )); then
+img2pdf() {
+	if (($# < 2)); then
 		echo "USAGE: img2pdf <images ..> <output>"
 		return
 	fi
@@ -638,20 +647,21 @@ img2pdf(){
 export -f img2pdf
 
 # Compress video using ffmpeg
-compress-video(){
-	if [ -z $2 ]; then 
-		COMPRESS_RATE=24;
+compress-video() {
+	if [ -z $2 ]; then
+		COMPRESS_RATE=24
 	else
-		COMPRESS_RATE=$2;
+		COMPRESS_RATE=$2
 	fi
-	
+
 	FILENAME=$1
 	if [ -f "$FILENAME" ]; then
 		FILENAME="${FILENAME%.*}"
-	elif [ -f "$FILENAME.mp4" ]; then 
+	elif [ -f "$FILENAME.mp4" ]; then
 		FILENAME="$1"
 	else
-		echo "File $FILENAME does not exist"
+		echo "ERROR: File $FILENAME does not exist"
+		echo "USAGE: $ compress-video <video-name.mp4> [compress-rate (def: 32)]"
 		return 1
 	fi
 
@@ -660,7 +670,25 @@ compress-video(){
 
 export -f compress-video
 
-sermon-dl(){
+# Convert video to gif file.
+# Usage: mp4togif video_file (scale) (fps)
+mp4togif() {
+	FILENAME=$1
+	if [ -f "$FILENAME" ]; then
+		FILENAME="${FILENAME%.*}"
+	elif [ -f "$FILENAME.mp4" ]; then
+		FILENAME="$1"
+	else
+		echo "File $FILENAME does not exist"
+		echo "USAGE: $ mp4togif <video_file> (scale) (fps)"
+		return 1
+	fi
+
+	ffmpeg -y -i "${FILENAME}.mp4" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen
+	ffmpeg -i "${FILENAME}.mp4" -i "${FILENAME}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${FILENAME}".gif
+}
+
+sermon-dl() {
 	COMPRESS_RATE=${2:-32}
 
 	cd ~/Videos
@@ -673,50 +701,50 @@ sermon-dl(){
 }
 
 # Programming handin function
-sshshark(){
-    if [ -z $1 ]; then
-        SHARK_URL=$ANDREW_SHARK
-	else 
+sshshark() {
+	if [ -z $1 ]; then
+		SHARK_URL=$ANDREW_SHARK
+	else
 		SHARK_URL="scleong@$1shark.ics.cs.cmu.edu"
-    fi
+	fi
 
-    sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $SHARK_URL;
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $SHARK_URL
 }
 
-122lab(){
-	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX '/afs/andrew/course/15/122/bin/122lab';
-	exit;
+122lab() {
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX '/afs/andrew/course/15/122/bin/122lab'
+	exit
 }
 
-handin(){
+handin() {
 	FOLDER_NAME=${PWD##*/}
 	BASE_DIRECTORY="~/private/18213"
 	COPY_TO="$ANDREW_LINUX:$BASE_DIRECTORY/$FOLDER_NAME"
 
-	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
+	gpg -d -q ~/.ssh/.andrewpwd.gpg >.fifo_temp
 
 	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY' && mkdir -p '$FOLDER_NAME
 
-	tar -czvf handin.tar ${@:2} && \
-	sshpass -f .fifo_temp scp ./handin.tar $COPY_TO && \
-	sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'/'$FOLDER_NAME' && tar -xzvf handin.tgz && yes yes | /afs/andrew/course/15/213/bin/handin '$@' && echo "Complete"'
+	tar -czvf handin.tar ${@:2} &&
+		sshpass -f .fifo_temp scp ./handin.tar $COPY_TO &&
+		sshpass -f .fifo_temp ssh $ANDREW_LINUX 'cd '$BASE_DIRECTORY'/'$FOLDER_NAME' && tar -xzvf handin.tgz && yes yes | /afs/andrew/course/15/213/bin/handin '$@' && echo "Complete"'
 
 	rm ./.fifo_temp
 	rm ./handin.tar
 }
 
-scptoandrew(){
+scptoandrew() {
 	COPY_TO="$ANDREW_LINUX:$2"
 
-	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
+	gpg -d -q ~/.ssh/.andrewpwd.gpg >.fifo_temp
 	sshpass -f .fifo_temp scp $1 $COPY_TO
 	rm ./.fifo_temp
 }
 
-scpfromandrew(){
+scpfromandrew() {
 	COPY_FROM="$ANDREW_LINUX:$1"
 
-	gpg -d -q ~/.ssh/.andrewpwd.gpg > .fifo_temp
+	gpg -d -q ~/.ssh/.andrewpwd.gpg >.fifo_temp
 	sshpass -f .fifo_temp scp $COPY_FROM $2
 	rm ./.fifo_temp
 }
@@ -739,13 +767,13 @@ export PATH=$PATH:${ALTERAPATH}/quartus/bin
 export PATH=$PATH:${ALTERAPATH}/nios2eds/bin
 
 # Nvidia Fixes
-graphicx(){
+graphicx() {
 	sudo xgraphic $1
 	nvidia-fix
 }
 
 # MatLab cmd
-matcmd(){
+matcmd() {
 	# "functionname(argument1, argument2, argumentN);exit"
 	if [[ -z "$1" ]]; then
 		echo "USAGE: matcmd <functionname> [argument1 [argument2 ... [argumentN]]"
@@ -756,8 +784,7 @@ matcmd(){
 	PREPEND=""
 	APPEND=""
 	i=0
-	for ARG in "$@"
-	do	
+	for ARG in "$@"; do
 		if [[ $i == 0 ]]; then
 			PREPEND=""
 			APPEND="("
@@ -767,7 +794,7 @@ matcmd(){
 		else
 			PREPEND=", "
 		fi
-					
+
 		MAT_STR="$MAT_STR$PREPEND$ARG$APPEND"
 
 		((i++))
@@ -782,7 +809,7 @@ matcmd(){
 alias matfn=matcmd
 alias matlabcmd="matlab -nodesktop"
 
-sshrobot(){
+sshrobot() {
 	HOST=$1
 	PASSWORD=$2
 
@@ -794,3 +821,8 @@ sshrobot(){
 	HOST="pi@172.26.229.$HOST"
 	sshpass -p $PASSWORD ssh $HOST
 }
+
+export VOXEL_SDK_PATH=/usr/local #This is the default installation path
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$VOXEL_SDK_PATH/lib
+export PYTHONPATH=$VOXEL_SDK_PATH/lib/python2.7:$PYTHONPATH
+export PATH=$VOXEL_SDK_PATH/bin:$PATH

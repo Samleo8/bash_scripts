@@ -397,11 +397,20 @@
 }
 \makeatother
 
-%% Probability
+%% Probability and Stats
 \newcommand*{\prob}[1]{\ensuremath{P\left(#1\right)}}
 \newcommand*{\given}{\plainsetst}
 \newcommand*{\tallgiven}{\setst}
 \newcommand*{\otherwise}{0 & \text{otherwise}}
+\newcommand*{\iid}{\ensuremath{\stackrel{\text{\tiny iid}}}
+
+\newcommand*{\htheta}{\ensuremath{\hat{\theta}}}
+\newcommand*{\thetahat}{\htheta}
+\newcommand*{\sumn}[1][i]{\ensuremath{\sum^{n}_{#1=1}}}
+\newcommand*{\prodn}[1][i]{\ensuremath{\prod^{n}_{#1=1}}}
+\newcommand*{\dsumn}[1][i]{\ensuremath{\displaystyle\sumn[#1]}}
+\newcommand*{\dprodn}[1][i]{\ensuremath{\displaystyle\prodn[#1]}}
+\newcommand*{\nlist}[1]{\ensuremath{{#1}_{1}, \dots, {#1}_{n}}}
 
 %% Computer Vision
 %%% Matrices stuff and formatting
