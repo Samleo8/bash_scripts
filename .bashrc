@@ -149,17 +149,18 @@ source /etc/profile.d/vte.sh
 # eval "$(pyenv init -)"
 # eval "$(pyenv virtualenv-init -)"
 
-export RUBY_PATH="/root/.gem/ruby/2.7.0/bin"
+export RUBY_PATH="/home/sam/.gem/ruby/3.0.0/bin"
+export GEM_PATH=$RUBY_PATH
 export PATH="$RUBY_PATH:$PATH"
 
 ###=====================KEYBOARD SETTINGS=====================###
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
+# gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
 
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Control><Alt>Left', '<Control><Alt>Up', '<Primary><Alt>Left']"
+# gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control><Alt>Left', '<Control><Alt>Up', '<Primary><Alt>Left']"
 
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Control><Shift><Alt>Right', '<Control><Shift><Alt>Down', '<Primary><Shift><Alt>Right']"
+# gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "['<Control><Shift><Alt>Right', '<Control><Shift><Alt>Down', '<Primary><Shift><Alt>Right']"
 
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Control><Alt>Right', '<Control><Alt>Down', '<Primary><Alt>Right']"
+# gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control><Alt>Right', '<Control><Alt>Down', '<Primary><Alt>Right']"
 
 gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ next-tab '<Primary>Tab'
 
@@ -354,57 +355,58 @@ goto() {
 		cd ~/Documents/Github\ Website
 	elif [[ "$1" == "resume" ]]; then
 		cd "/home/sam/Documents/Github Website/resumecv"
-	elif [[ "$1" == "robo" || "$1" == "robotics" || "$1" == "robot" || "$1" == "16311" ]]; then
-		cd "/home/sam/CMU/Study/16311 Intro to Robotics"
-	elif [[ "$1" == "robolab" ]]; then
-		goto robo
+	elif [[ "$1" == "iv" || "$1" == "IV" || "$1" == "ivcf" || "$1" == "IVCF" ]]; then
+		cd "/home/sam/CMU/IVCF"
+	elif [[ "$1" == "ivwebsite" || "$1" == "ivweb" ]]; then
+		cd "/home/sam/CMU/IVCF/website"
+	elif [[ "$1" == "robo" || "$1" == "rkd" || "$1" == "16384" || "$1" == "kinematics" || "$1" == "kine" ]]; then
+		cd "/home/sam/CMU/Study/16384 RKD"
+	elif [[ "$1" == "rkdlab" || "$1" == "robolab" || "$1" == "kinematicslab" || "$1" == "kinelab" ]]; then
+		goto rkdhw
+	elif [[ "$1" == "rkdhw" || "$1" == "robohw" || "$1" == "kinematicshw" || "$1" == "kinehw" ]]; then
+		goto rkd
+		cd homework
+		cd $(cat .active_hw_dir)
+	elif [[ "$1" == "370" || "$1" == "controls" || "$1" == "control" ]]; then
+		cd "/home/sam/CMU/Study/18370 Controls"
+	elif [[ "$1" == "370hw" || "$1" == "controlshw" || "$1" == "controlhw" ]]; then
+		goto controls
+		cd homework
+		cd $(cat .active_hw_dir)
+	elif [[ "$1" == "344" || "$1" == "18344" || "$1" == "hsi" || "$1" == "HSI" ]]; then
+		cd "/home/sam/CMU/Study/18344 HSI"
+	elif [[ "$1" == "344lab" || "$1" == "18344lab" || "$1" == "hsilab" ]]; then
+		goto hsi
 		cd labs
+		cd $(cat .active_hw_dir)
 		git pull
-		cd $(cat .active_lab_dir)
-	elif [[ "$1" == "robolabcode" ]]; then
-		goto robolab
-		cd code
-	elif [[ "$1" == "robohw" ]]; then
-		goto robo
-		cd homework
-		cd $(cat .active_hw_dir)
-	elif [[ "$1" == "226" || "$1" == "36226" || "$1" == "prob" ]]; then
-		cd "/home/sam/CMU/Study/36226"
-	elif [[ "$1" == "226hw" || "$1" == "36226hw" || "$1" == "probhw" ]]; then
-		cd "/home/sam/CMU/Study/36226"
-		cd $(cat .active_hw_dir)
-		open *.tex
-		firefox homework*.pdf
-	elif [[ "$1" == "290hw" ]]; then
-		goto 290
-		cd homework
-		cd $(cat .active_hw_dir)
-	elif [[ "$1" == "220" || "$1" == "18220" ]]; then
-		cd "/home/sam/CMU/Study/18220"
-	elif [[ "$1" == "220lab" ]]; then
-		goto 220
+	elif [[ "$1" == "344hw" || "$1" == "18344hw" || "$1" == "hsihw" ]]; then
+		goto hsilab
+	elif [[ "$1" == "349" || "$1" == "18349" || "$1" == "embedded" || "$1" == "embed" ]]; then
+		cd "/home/sam/CMU/Study/18349 Embedded"
+	elif [[ "$1" == "349lab" || "$1" == "embeddedlab" || "$1" == "embedlab" ]]; then
+		goto 349
 		cd labs
 		cd $(cat .active_lab_dir)
-	elif [[ "$1" == "220hw" ]]; then
-		goto 220
+		git update
+	elif [[ "$1" == "349hw" || "$1" == "embeddedhw" || "$1" == "embedhw" ]]; then
+		goto 349
 		cd homework
 		cd $(cat .active_hw_dir)
-	elif [[ "$1" == "hri" || "$1" == "HRI" ]]; then
-		cd "/home/sam/CMU/Study/16467 HRI"
-	elif [[ "$1" == "hricode" ]]; then
-		goto hri
-		cd code/teleop
+	elif [[ "$1" == "scifi" ]]; then
+		cd "/home/sam/CMU/Study/SciFi"
+	elif [[ "$1" == "scifihw" ]]; then
+		goto scifi
+		cd homework
+		cd $(cat .active_hw_dir)
+	elif [[ "$1" == "ta" ]]; then
+		cd "/home/sam/CMU/16385 TA"
 	else
 		cd "$1" || cd ~/"$1"
 	fi
 }
 
 export -f goto
-
-robolablink() {
-	goto robolab
-	firefox $(cat ./website_link.txt)
-}
 
 # Sync 240 folder with Github (because ECE servers no Internet connection)
 240sync() {
@@ -431,6 +433,15 @@ robolablink() {
 
 	echo "Syncing labs..."
 	goto 240 && cd labs && git pull && cd - && echo "Success!" || echo "Failure!"
+}
+
+# Open embedded lab stuff
+embedrun(){
+	goto embedlab
+	gnome-terminal -- bash -c "./linux_ocd; bash"
+	gnome-terminal -- bash -c "minicom; bash"
+
+	make flash
 }
 
 # Update all instances of sammath
@@ -711,6 +722,16 @@ sshshark() {
 	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $SHARK_URL
 }
 
+sshece() {
+	if [ -z $1 ]; then
+		ECE_URL=$ECE_SERVER
+	else
+		ECE_URL="scleong@ece$1.ece.local.cmu.edu"
+	fi
+
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ECE_URL
+}
+
 122lab() {
 	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_LINUX '/afs/andrew/course/15/122/bin/122lab'
 	exit
@@ -736,17 +757,29 @@ handin() {
 scptoandrew() {
 	COPY_TO="$ANDREW_LINUX:$2"
 
-	gpg -d -q ~/.ssh/.andrewpwd.gpg >.fifo_temp
-	sshpass -f .fifo_temp scp $1 $COPY_TO
-	rm ./.fifo_temp
+	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $1 $COPY_TO
 }
 
 scpfromandrew() {
 	COPY_FROM="$ANDREW_LINUX:$1"
 
-	gpg -d -q ~/.ssh/.andrewpwd.gpg >.fifo_temp
-	sshpass -f .fifo_temp scp $COPY_FROM $2
-	rm ./.fifo_temp
+	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $COPY_FROM $2
+}
+
+export -f scptoandrew
+export -f scpfromandrew
+
+
+scptoece() {
+	COPY_TO="$ECE_SERVER:$2"
+
+	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $1 $COPY_TO
+}
+
+scpfromece() {
+	COPY_FROM="$ECE_SERVER:$1"
+
+	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $COPY_FROM $2
 }
 
 export -f scptoandrew

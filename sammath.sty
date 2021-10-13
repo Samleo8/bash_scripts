@@ -183,6 +183,8 @@
 %\newcommand{\stronginductionconclusion}[4]{Therefore, since \ptrue{#1}, and for all $n\geq #1$ #2, [,$ \forall #1 \leq $ \ptrue{#3}$ ] \implies $ \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
 
 %% Diff Eq
+\newcommand*{\pif}[1]{\ensuremath{\frac{\pi}{#1}}}
+\newcommand*{\dpif}[1]{\ensuremath{\displaystyle\pif{#1}}}
 \newcommand*{\ddp}[2]{\ensuremath{\dfrac{\partial#1}{\partial#2}}} % partial derv
 \newcommand*{\ddf}[2]{\ensuremath{\dfrac{{d}#1}{{d}#2}}}
 \newcommand*{\dydx}{\ensuremath{\ddf{y}{x}}}
@@ -212,7 +214,7 @@
 \def\vvb{\ensuremath{\vv_2}}
 
 \usepackage[scr]{rsfso}
-\newcommand*{\Laplacesymbol}{\mathscr{L}}
+\newcommand*{\Laplacesymbol}{\ensuremath{\mathscr{L}}}
 \newcommand*{\Laplace}[1]{\ensuremath{\Laplacesymbol\left\{#1\right\}}}
 \newcommand*{\LaplaceInv}[1]{\ensuremath{\inverse{\Laplacesymbol}\left\{#1\right\}}}
 \newcommand*{\Lapl}[1]{\ensuremath{\Laplace{#1}}}
@@ -223,6 +225,9 @@
 \newcommand*{\FT}[1]{\ensuremath{\Fouriersymbol\left\{#1\right\}}}
 \newcommand*{\FTInv}[1]{\ensuremath{\inverse{\Fouriersymbol}\left\{#1\right\}}}
 \newcommand*{\FTarrow}[1]{\quad\xleftrightarrow{\text{ #1 }}\quad}
+
+\newcommand*{\LaplaceArrow}{\FTarrow{\Laplacesymbol}}
+\newcommand*{\LaplArrow}{\LaplaceArrow}
 
 \newcommand*{\CTFT}{\FTarrow{CTFT}}
 \newcommand*{\CTFS}{\FTarrow{CTFS, $\omega_0$}}
@@ -333,6 +338,20 @@
 \newcommand*{\xor}{\ensuremath{\oplus}}
 \newcommand*{\enot}[1]{\ensuremath{\overline{#1\strut}}}
 
+%% Robotics Stuffs
+\newcommand*{\Lagrange}{\ensuremath{\mathcal{L}}}
+\newcommand*{\dotx}{\ensuremath{\dot{x}}}
+\newcommand*{\doty}{\ensuremath{\dot{y}}}
+\newcommand*{\dotq}{\ensuremath{\dot{q}}}
+\newcommand*{\dottheta}{\ensuremath{\dot{\theta}}}
+
+\newcommand*{\dotth}{\dottheta}
+\newcommand*{\thdot}{\dottheta}
+\newcommand*{\thetadot}{\dottheta}
+\newcommand*{\xdot}{\dotx}
+\newcommand*{\ydot}{\doty}
+\newcommand*{\qdot}{\dotq}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BOLD ALIGN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -402,22 +421,38 @@
 \newcommand*{\given}{\plainsetst}
 \newcommand*{\tallgiven}{\setst}
 \newcommand*{\otherwise}{0 & \text{otherwise}}
-\newcommand*{\iid}{\ensuremath{\stackrel{\text{\tiny iid}}}
+\newcommand*{\iid}{\ensuremath{\stackrel{\text{\tiny iid}}{\sim}}}
+\newcommand*{\expected}[1]{E\left[#1\right]}
+\newcommand*{\variance}[1]{Var\left[#1\right]}
+\newcommand*{\ybar}{\ensuremath{\bar{y}}}
+\newcommand*{\Ybar}{\ensuremath{\enot{Y}}}
+\newcommand*{\bary}{\ybar}
+\newcommand*{\barY}{\Ybar}
 
+\newcommand*{\dth}{\ensuremath{\dot\theta}}
 \newcommand*{\htheta}{\ensuremath{\hat{\theta}}}
 \newcommand*{\thetahat}{\htheta}
 \newcommand*{\sumn}[1][i]{\ensuremath{\sum^{n}_{#1=1}}}
 \newcommand*{\prodn}[1][i]{\ensuremath{\prod^{n}_{#1=1}}}
 \newcommand*{\dsumn}[1][i]{\ensuremath{\displaystyle\sumn[#1]}}
 \newcommand*{\dprodn}[1][i]{\ensuremath{\displaystyle\prodn[#1]}}
-\newcommand*{\nlist}[1]{\ensuremath{{#1}_{1}, \dots, {#1}_{n}}}
+\newcommand*{\nlist}[2][n]{\ensuremath{{#2}_{1}, \dots, {#2}_{#1}}}
 
 %% Computer Vision
 %%% Matrices stuff and formatting
 \def\dash{\text{ --- }}
+\newcommand{\rank}{\ensuremath{\mathrm{rank}}}
 
 \newcommand*{\transpose}[1]{\ensuremath{{#1}^{\top}}}
 \newcommand*{\trans}[1]{\transpose{#1}}
+
+\newcommand{\bmat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
+\newcommand{\bbmat}[1]{\begingroup \boldmath \bmat{#1} \endgroup}
+
+\newcommand{\transbmat}[1]{\trans{\bmat{#1}}}
+\newcommand{\inversebmat}[1]{\inverse{\bmat{#1}}}
+\newcommand{\transbbmat}[1]{\trans{\bbmat{#1}}}
+\newcommand{\inversebbmat}[1]{\inverse{\bbmat{#1}}}
 
 \def\vO{{\bf 0}}
 \def\zerovec{\ensuremath{\vec{\vO}}}
@@ -438,11 +473,14 @@
 \def\vm{{\bf m}}
 \def\vc{{\bf c}}
 \def\vb{{\bf b}}
+\def\vd{{\bf d}}
+\def\vq{{\bf q}}
 \def\vX{{\bf X}}
 \def\mH{{\bf H}}
 \def\mA{{\bf A}}
 \def\mM{{\bf M}}
 \def\mR{{\bf R}}
+\def\mT{{\bf T}}
 \def\mE{{\bf E}}
 \def\mF{{\bf F}}
 
