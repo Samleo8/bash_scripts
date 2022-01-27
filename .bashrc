@@ -357,48 +357,20 @@ goto() {
 		cd "/home/sam/Documents/Github Website/resumecv"
 	elif [[ "$1" == "iv" || "$1" == "IV" || "$1" == "ivcf" || "$1" == "IVCF" ]]; then
 		cd "/home/sam/CMU/IVCF"
+	elif [[ "$1" == "alpha" ]]; then
+		cd "/home/sam/CMU/IVCF/Alpha"
+	elif [[ "$1" == "ivlyrics" ]]; then
+		cd "/home/sam/CMU/IVCF/LG/lyrics"
 	elif [[ "$1" == "ivwebsite" || "$1" == "ivweb" ]]; then
 		cd "/home/sam/CMU/IVCF/website"
-	elif [[ "$1" == "robo" || "$1" == "rkd" || "$1" == "16384" || "$1" == "kinematics" || "$1" == "kine" ]]; then
-		cd "/home/sam/CMU/Study/16384 RKD"
-	elif [[ "$1" == "rkdlab" || "$1" == "robolab" || "$1" == "kinematicslab" || "$1" == "kinelab" ]]; then
-		goto rkdhw
-	elif [[ "$1" == "rkdhw" || "$1" == "robohw" || "$1" == "kinematicshw" || "$1" == "kinehw" ]]; then
-		goto rkd
-		cd homework
-		cd $(cat .active_hw_dir)
-	elif [[ "$1" == "370" || "$1" == "controls" || "$1" == "control" ]]; then
-		cd "/home/sam/CMU/Study/18370 Controls"
-	elif [[ "$1" == "370hw" || "$1" == "controlshw" || "$1" == "controlhw" ]]; then
-		goto controls
-		cd homework
-		cd $(cat .active_hw_dir)
-	elif [[ "$1" == "344" || "$1" == "18344" || "$1" == "hsi" || "$1" == "HSI" ]]; then
-		cd "/home/sam/CMU/Study/18344 HSI"
-	elif [[ "$1" == "344lab" || "$1" == "18344lab" || "$1" == "hsilab" ]]; then
-		goto hsi
-		cd labs
-		cd $(cat .active_hw_dir)
-		git pull
-	elif [[ "$1" == "344hw" || "$1" == "18344hw" || "$1" == "hsihw" ]]; then
-		goto hsilab
-	elif [[ "$1" == "349" || "$1" == "18349" || "$1" == "embedded" || "$1" == "embed" ]]; then
-		cd "/home/sam/CMU/Study/18349 Embedded"
-	elif [[ "$1" == "349lab" || "$1" == "embeddedlab" || "$1" == "embedlab" ]]; then
-		goto 349
-		cd labs
-		cd $(cat .active_lab_dir)
-		git update
-	elif [[ "$1" == "349hw" || "$1" == "embeddedhw" || "$1" == "embedhw" ]]; then
-		goto 349
-		cd homework
-		cd $(cat .active_hw_dir)
-	elif [[ "$1" == "scifi" ]]; then
-		cd "/home/sam/CMU/Study/SciFi"
-	elif [[ "$1" == "scifihw" ]]; then
-		goto scifi
-		cd homework
-		cd $(cat .active_hw_dir)
+	elif [[ "$1" == "psych" || "$1" == "childdev" ]]; then
+		cd "/home/sam/CMU/Study/85221 Principles of Child Development"
+	elif [[ "$1" == "slam" || "$1" == "16833" ]]; then
+		cd "/home/sam/CMU/Study/16833 SLAM"
+	elif [[ "$1" == "robot" || "$1" == "mobile" || "$1" == "16761" ]]; then
+		cd "/home/sam/CMU/Study/16761 Mobile Robots"
+	elif [[ "$1" == "capstone" || "$1" == "18500" ]]; then
+		cd "/home/sam/CMU/Study/18500 Capstone"
 	elif [[ "$1" == "ta" ]]; then
 		cd "/home/sam/CMU/16385 TA"
 	else
@@ -441,7 +413,7 @@ embedrun(){
 	gnome-terminal -- bash -c "./linux_ocd; bash"
 	gnome-terminal -- bash -c "minicom; bash"
 
-	make flash
+	make flash $@
 }
 
 # Update all instances of sammath
@@ -630,8 +602,8 @@ pdf2jpg() {
 		convert -colorspace RGB -interlace none -density 300x300 -quality 100 "$i" "$DIR"/$(basename "$i" .pdf).jpg
 	done
 
-	rm "$DIR/*.pdf"
-	rm "$DIR/*.txt"
+	rm "$DIR"/*.pdf
+	rm "$DIR"/*.txt
 
 	echo 'All done'
 }
