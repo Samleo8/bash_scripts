@@ -117,19 +117,17 @@ if ! shopt -oq posix; then
 fi
 
 # Path settings
-# PATH=${PATH:+:${PATH}}$
-
 export CUDA_HOME=/opt/cuda
 export CUDA_PATH=$CUDA_HOME:$CUDA_HOME/bin
 
 export ANDROID_HOME=/home/sam/Android/Sdk
 export JAVA_HOME=/usr/bin/java
 
-export LD_LIBRARY_PATH=$CUDA_HOME/lib64 # :${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$CUDA_HOME/lib64
 export CUDA_VISIBLE_DEVICES=0
 
 export WEBOTS_HOME=/usr/local/webots
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${WEBOTS_HOME}/lib/controller
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${WEBOTS_HOME}/lib/controller
 
 export ANDROID_PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
 
@@ -140,14 +138,9 @@ PATH="$NODE_PATH:$PATH:$EIGEN_INCLUDE_DIRS:$CUDA_PATH"
 
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig
 
-#export PYTHONPATH=${PYTHONPATH}:/usr/local/python
+export PYTHONPATH=${PYTHONPATH}:/usr/local/python
 
 source /etc/profile.d/vte.sh
-
-#Python Virtual Environment
-# PATH="/home/sam/.pyenv/bin:$PATH"
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
 
 export RUBY_PATH="/home/sam/.gem/ruby/3.0.0/bin"
 export GEM_PATH=$RUBY_PATH
@@ -367,10 +360,42 @@ goto() {
 		cd "/home/sam/CMU/Study/85221 Principles of Child Development"
 	elif [[ "$1" == "slam" || "$1" == "16833" ]]; then
 		cd "/home/sam/CMU/Study/16833 SLAM"
-	elif [[ "$1" == "robot" || "$1" == "mobile" || "$1" == "16761" ]]; then
-		cd "/home/sam/CMU/Study/16761 Mobile Robots"
+		git pull
+	elif [[ "$1" == "slamhw" ]]; then
+		goto slam
+		cd homework
+		cd `cat .active_hw_dir`
+	elif [[ "$1" == "slamcode" ]]; then
+		goto slamhw
+		code code
+	elif [[ "$1" == "slamproj" || "$1" == "slamproject" ]]; then
+		goto slam
+		cd project
+		cd `cat .active_proj_dir`
+		git pull
+		code .
+	elif [[ "$1" == "robohw" || "$1" == "mobilehw" ]]; then
+		goto mobile
+		cd homework
+		cd writeup
+		cd `cat .active_hw_dir`
 	elif [[ "$1" == "capstone" || "$1" == "18500" ]]; then
 		cd "/home/sam/CMU/Study/18500 Capstone"
+		git update
+	elif [[ "$1" == "capstonecv" || "$1" == "capcv" ]]; then
+		goto capstone
+		cd cv && code .
+	elif [[ "$1" == "capcvapp" ]]; then
+		goto capstone
+		cd cv/app && code .
+	elif [[ "$1" == "capstonefront" || "$1" == "capfront" ]]; then
+		goto capstone
+		cd frontend && code .
+	elif [[ "$1" == "capstoneback" || "$1" == "capback" ]]; then
+		goto capstone
+		cd backend && code .
+	elif [[ "$1" == "robo" || "$1" == "robot" || "$1" == "mobile" || "$1" == "16761" ]]; then
+		cd "/home/sam/CMU/Study/16761 Mobile Robots"
 	elif [[ "$1" == "ta" ]]; then
 		cd "/home/sam/CMU/16385 TA"
 	else
@@ -667,20 +692,13 @@ mp4togif() {
 		return 1
 	fi
 
-	ffmpeg -y -i "${FILENAME}.mp4" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen
-	ffmpeg -i "${FILENAME}.mp4" -i "${FILENAME}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${FILENAME}".gif
-}
+	SCALE=${2:-320}
+	FPS=${3:-10}
 
-sermon-dl() {
-	COMPRESS_RATE=${2:-32}
+	ffmpeg -i ${FILENAME}.mp4 -vf "fps=$FPS,scale=$SCALE:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 ${FILENAME}.gif
 
-	cd ~/Videos
-
-	youtube-dl-mp4 -f http-360p -o BRMCsermon.mp4 "$1"
-	compress-video BRMCsermon.mp4 $COMPRESS_RATE
-	zip BRMCsermon-compressed.zip BRMCsermon-compressed.mp4 && rm BRMCsermon*.mp4
-
-	cd -
+	# ffmpeg -y -i "${FILENAME}.mp4" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen
+	# ffmpeg -i "${FILENAME}.mp4" -i "${FILENAME}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${FILENAME}".gif
 }
 
 # Programming handin function
@@ -763,13 +781,13 @@ export SDKMAN_DIR="/home/sam/.sdkman"
 
 # Quartus Paths
 # TODO: Remove quartus eventually
-export ALTERAPATH="/home/sam/intelFPGA_lite/20.1"
-export ALTERAOCLSDKROOT="${ALTERAPATH}/hld"
-export QUARTUS_ROOTDIR=${ALTERAPATH}/quartus
-export QUARTUS_ROOTDIR_OVERRIDE="$QUARTUS_ROOTDIR"
-export QSYS_ROOTDIR="${ALTERAPATH}/quartus/sopc_builder/bin"
-export PATH=$PATH:${ALTERAPATH}/quartus/bin
-export PATH=$PATH:${ALTERAPATH}/nios2eds/bin
+# export ALTERAPATH="/home/sam/intelFPGA_lite/20.1"
+# export ALTERAOCLSDKROOT="${ALTERAPATH}/hld"
+# export QUARTUS_ROOTDIR=${ALTERAPATH}/quartus
+# export QUARTUS_ROOTDIR_OVERRIDE="$QUARTUS_ROOTDIR"
+# export QSYS_ROOTDIR="${ALTERAPATH}/quartus/sopc_builder/bin"
+# export PATH=$PATH:${ALTERAPATH}/quartus/bin
+# export PATH=$PATH:${ALTERAPATH}/nios2eds/bin
 
 # Nvidia Fixes
 graphicx() {
@@ -827,7 +845,16 @@ sshrobot() {
 	sshpass -p $PASSWORD ssh $HOST
 }
 
-export VOXEL_SDK_PATH=/usr/local #This is the default installation path
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$VOXEL_SDK_PATH/lib
-export PYTHONPATH=$VOXEL_SDK_PATH/lib/python2.7:$PYTHONPATH
-export PATH=$VOXEL_SDK_PATH/bin:$PATH
+# PyTorch
+# export TORCH_INSTALL_PREFIX=`python -c 'import torch;print(torch.utils.cmake_prefix_path)'`
+export TORCH_HOME=/home/sam/Downloads/libtorch
+export TORCH_INSTALL_PREFIX=$TORCH_HOME
+export TORCHRT_ROOT=/home/sam/.pyenv/versions/3.9.2/envs/capstone/lib/python3.9/site-packages/torch_tensorrt
+
+export PATH=$PATH:$TORCHRT_ROOT/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$TORCH_HOME/lib
+
+# Python Virtual Environment
+PATH="/home/sam/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"

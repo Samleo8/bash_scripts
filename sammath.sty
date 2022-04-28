@@ -159,6 +159,8 @@
 %% Functions 
 \newcommand{\id}[2]{\text{id}_{#1}(#2)}
 \newcommand*{\inverse}[1]{\ensuremath{#1^{-1}}}
+\newcommand*{\inversep}[1]{\ensuremath{\left(#1\right)^{-1}}}
+\newcommand*{\inverseb}[1]{\ensuremath{\left[#1\right]^{-1}}}
 \newcommand*{\composite}{\ensuremath{\circ}}
 
 %% Divisibility and GCD Stuff
@@ -208,6 +210,10 @@
 \newcommand*{\intzeroinfty}{\int_{0}^{\infty}}
 \newcommand*{\suminfty}[1]{\sum_{#1 = -\infty}^{\infty}}
 \newcommand*{\sumzeroinfty}[1]{\sum_{#1 = 0}^{\infty}}
+
+\newcommand{\bunderline}[2][4]{\underline{#2\mkern-#1mu}\mkern#1mu }
+\newcommand*{\uv}[1]{\bunderline{\ensuremath{#1}}}
+\newcommand*{\uvec}[1]{\uv{#1}}
 
 \def\vv{\ensuremath{\vec{\bf v}}}
 \def\vva{\ensuremath{\vv_1}}
@@ -444,8 +450,8 @@
 \newcommand*{\tallgiven}{\setst}
 \newcommand*{\otherwise}{0 & \text{otherwise}}
 \newcommand*{\iid}{\ensuremath{\stackrel{\text{\tiny iid}}{\sim}}}
-\newcommand*{\expected}[1]{E\left[#1\right]}
-\newcommand*{\variance}[1]{Var\left[#1\right]}
+\newcommand*{\expected}[1]{\ensuremath{\mathbb{E}\left[#1\right]}}
+\newcommand*{\variance}[1]{\text{Var}\left[#1\right]}
 \newcommand*{\ybar}{\ensuremath{\bar{y}}}
 \newcommand*{\Ybar}{\ensuremath{\enot{Y}}}
 \newcommand*{\bary}{\ybar}
@@ -465,7 +471,8 @@
 \def\dash{\text{ --- }}
 \newcommand{\rank}{\ensuremath{\mathrm{rank}}}
 
-\newcommand*{\transpose}[1]{\ensuremath{{#1}^{\top}}}
+\newcommand*{\transsymb}{\ensuremath{\top}}
+\newcommand*{\transpose}[1]{\ensuremath{{#1}^{\transsymb}}}
 \newcommand*{\trans}[1]{\transpose{#1}}
 
 \newcommand{\bmat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
@@ -623,3 +630,28 @@
 }
 
 \newcommand{\proofspace}{ \medskip ~\\ }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Subsubsubsection
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{titlesec}
+\titleclass{\subsubsubsection}{straight}[\subsection]
+
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+
+\titleformat{\subsubsubsection}
+{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\def\toclevel@subsubsubsection{4}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
