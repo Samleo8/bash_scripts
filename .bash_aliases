@@ -26,7 +26,7 @@ alias bind-esc='setxkbmap -option caps:escape'
 alias unbind-esc='setxkbmap -option'
 
 #Yay update
-alias yayay="yay -Syu --noconfirm && firefox-home-reset" # && cleanup"
+alias yayay="yay -Syu --noconfirm" # && firefox-home-reset" && cleanup"
 alias listupdate="pacman -Qu | awk '{ print \$1 }'"
 alias list-update=listupdate
 
@@ -54,10 +54,10 @@ alias shark="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK"
 alias shark2="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK_2"
 
 export ECE_SERVER=scleong@ece007.ece.local.cmu.edu
-alias sshece="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X -C $ECE_SERVER"
 
 alias cleanup="yay -Sc --noconfirm; sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
-alias activatevol="pyenv activate vol"; alias pyactivate=activatevol
+alias activatevol="pyenv activate vol"
+alias pyactivate=activatevol
 
 # Quartus Stuff
 alias fixjtag="killall jtagd; jtagd; jtagconfig"
@@ -68,10 +68,18 @@ alias gpureload="sudo rmmod nvidia_uvm ; sudo modprobe nvidia_uvm"
 
 alias cups="sudo systemctl restart cups.service"
 
+alias bumblebee="sudo systemctl enable --now bumblebeed"
+
 # School stuff
-alias robohw="goto robohw; code ./code; xdg-open ./writeup/*.tex; firefox hw*.pdf"
-alias robolab="goto robolab; code ./code; firefox Lab*.pdf"
-alias 290hw="goto 290hw; xdg-open ./*.tex; firefox hw*.pdf"
 alias doxy="doxygen && gitpush 'Update doxygen documentation'"
 
-alias bumblebee="sudo systemctl enable --now bumblebeed"
+alias slamhw="goto slamhw && code code"
+alias slamcode=slamhw
+
+alias mobilehw="goto mobilehw; firefox HW_22*.pdf; open *.tex"
+alias robohw=mobilehw
+
+# alias mobilecode="goto mobile; cd homework; eclipse ."
+# alias robocode=mobilecode
+
+alias ivweb="goto ivweb; code ."
