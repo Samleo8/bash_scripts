@@ -137,6 +137,7 @@
 \newcommand*{\notimpliedby}{\ensuremath{\centernot \impliedby}}
 \newcommand*{\forwarddirection}{($ \implies $)\qquad}
 \newcommand*{\reversedirection}{($ \impliedby $)\qquad}
+\newcommand{\vecln}{\\[0.75ex]}
 \newcommand{\fracln}{\\[1.5ex]}
 
 \newcommand*{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
@@ -444,6 +445,10 @@
 }
 \makeatother
 
+%% Argmax and argmin
+\DeclareMathOperator*{\argmin}{argmin}   % Jan Hlavacek
+\DeclareMathOperator*{\argmax}{argmax}   % Jan Hlavacek
+
 %% Probability and Stats
 \newcommand*{\prob}[1]{\ensuremath{P\left(#1\right)}}
 \newcommand*{\given}{\plainsetst}
@@ -460,6 +465,11 @@
 \newcommand*{\dth}{\ensuremath{\dot\theta}}
 \newcommand*{\htheta}{\ensuremath{\hat{\theta}}}
 \newcommand*{\thetahat}{\htheta}
+\newcommand*{\valpha}{\ensuremath{\boldsymbol{\alpha}}}
+\newcommand*{\vbeta}{\ensuremath{\boldsymbol{\beta}}}
+\newcommand*{\vhbeta}{\ensuremath{\boldsymbol{\hat{\beta}}}}
+\newcommand*{\vbetahat}{\vhbeta}
+
 \newcommand*{\sumn}[1][i]{\ensuremath{\sum^{n}_{#1=1}}}
 \newcommand*{\prodn}[1][i]{\ensuremath{\prod^{n}_{#1=1}}}
 \newcommand*{\dsumn}[1][i]{\ensuremath{\displaystyle\sumn[#1]}}
@@ -470,6 +480,8 @@
 %%% Matrices stuff and formatting
 \def\dash{\text{ --- }}
 \newcommand{\rank}{\ensuremath{\mathrm{rank}}}
+\newcommand{\col}{\ensuremath{\mathrm{col}}}
+\newcommand{\trace}{\ensuremath{\mathrm{trace}}}
 
 \newcommand*{\transsymb}{\ensuremath{\top}}
 \newcommand*{\transpose}[1]{\ensuremath{{#1}^{\transsymb}}}
@@ -487,6 +499,7 @@
 \def\zerovec{\ensuremath{\vec{\vO}}}
 
 \def\vp{{\bf p}}
+\def\vu{{\bf u}}
 \def\vx{{\bf x}}
 \def\vxa{\ensuremath{\vx_\mathbf{1}}}
 \def\vxb{\ensuremath{\vx_\mathbf{2}}}
@@ -498,6 +511,9 @@
 \def\veb{{\ve_\mathbf{2}}}
 \def\vh{{\bf h}}
 \def\vs{{\bf s}}
+\def\vz{{\bf z}}
+\def\vw{{\bf w}}
+\def\vmu{\ensuremath{\boldsymbol{\mu}}}
 
 \def\vm{{\bf m}}
 \def\vc{{\bf c}}

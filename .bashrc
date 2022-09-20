@@ -147,13 +147,17 @@ export GEM_PATH=$RUBY_PATH
 export PATH="$RUBY_PATH:$PATH"
 
 ###=====================KEYBOARD SETTINGS=====================###
-# gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
 
-# gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control><Alt>Left', '<Control><Alt>Up', '<Primary><Alt>Left']"
+# gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Shift><Alt>Left', '<Control><Shift><Alt>Up', '<Primary><Shift><Alt>Left']"
 
-# gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "['<Control><Shift><Alt>Right', '<Control><Shift><Alt>Down', '<Primary><Shift><Alt>Right']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Control><Alt>Left', '<Control><Alt>Up', '<Primary><Alt>Left']"
 
-# gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control><Alt>Right', '<Control><Alt>Down', '<Primary><Alt>Right']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "['<Control><Shift><Alt>Right', '<Control><Shift><Alt>Down', '<Primary><Shift><Alt>Right']"
+
+# gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Control><Shift><Alt>Right', '<Control><Shift><Alt>Down', '<Primary><Shift><Alt>Right']"
+
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Control><Alt>Right', '<Control><Alt>Down', '<Primary><Alt>Right']"
 
 gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ next-tab '<Primary>Tab'
 
@@ -299,108 +303,129 @@ alias gcccompile=compilec
 goto() {
 	if [[ -z "$1" ]]; then
 		cd ./
-	elif [[ "$1" == "cmu" ]]; then
+	fi
+
+	case $1 in
+	"cmu")
 		cd ~/CMU
-	elif [[ "$1" == "study" ]]; then
+		;;
+	"study")
 		cd ~/CMU/Study
-	elif [[ "$1" == "cmuresearch" ]]; then
+		;;
+	"cmuresearch")
 		cd ~/CMU/Research/
-	elif [[ "$1" == "cv" ]]; then
+		;;
+	"cv")
 		cd "/home/sam/CVPlayground"
-	elif [[ "$1" == "cvcode" ]]; then
+		;;
+	"cvcode")
 		cd "/home/sam/CVPlayground"
 		cd $(cat .active_code_dir)
-	elif [[ "$1" == "learnable" || "$1" == "3dpose" ]]; then
+		;;
+	"learnable" | "3dpose")
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch"
-	elif [[ "$1" == "klt" ]]; then
+		;;
+	"klt")
 		cd "/home/sam/CVPlayground/KLTCpp"
 		cd $(cat .active_code_dir)
-	elif [[ "$1" == "radar" || "$1" == "cvradar" ]]; then
-		cd "/home/sam/CMU/Research/CMU CV Radar"
-	elif [[ "$1" == "TOF" || "$1" == "tof" ]]; then
+		;;
+	"radar" | "sar")
+		goto dso
+		cd DSOPulseChirpSim
+		git pull
+		;;
+	"odom" | "cfear")
+		goto dso
+		cd "3D Radar Odometry/CFEAR"
+		git pull
+		;;
+	"TOF" | "tof")
 		cd "/home/sam/CMU/Research/CMU CV Radar/TOF"
-	elif [[ "$1" == "radarsim" ]]; then
+		;;
+	"radarsim")
 		cd "/home/sam/CMU/Research/CMU CV Radar/simulation"
-	elif [[ "$1" == "radarraw" || "$1" == "rawradar" || "$1" == "radardata" ]]; then
+		;;
+	"radarraw" | "rawradar" | "radardata")
 		cd "/home/sam/CMU/Research/CMU CV Radar/rawdata"
 		git pull
-	elif [[ "$1" == "surf" ]]; then
+		;;
+	"surf")
 		cd "/home/sam/CMU/Research/CMU CV Radar/SURFProposalRadar"
 		git pull
-	elif [[ "$1" == "dso" || "$1" == "pharao" ]]; then
-		cd "/home/sam/CMU/Research/Radar Odometry"
-	elif [[ "$1" == "sisyphus"* ]]; then
+		;;
+	"dso")
+		cd "/home/sam/DSO"
+		;;
+	"sisyphus")
 		cd ~/Documents/MobileApps/SisyphusSheep
-	elif [[ "$1" == "telegram" ]]; then
+		;;
+	"telegram")
 		cd ~/Documents/Telegram\ Bots/
-	elif [[ "$1" == "biblequizzle" || "$1" == "quizzle" ]]; then
+		;;
+	"biblequizzle" | "quizzle")
 		cd ~/Documents/Telegram\ Bots/BibleQuizzle
-	elif [[ "$1" == "quizzlediscord" ]]; then
+		;;
+	"quizzlediscord")
 		cd ~/Documents/Discord\ Bots/BibleQuizzleDiscord
-	elif [[ "$1" == "unreal" || "$1" == "ut" || "$1" == "ut2004" ]]; then
+		;;
+	"unreal" | "ut" | "ut2004")
 		cd ~/Downloads/ut2004
 		./runGame
 		cd -
-	elif [[ "$1" == "pinball" ]]; then
+		;;
+	"pinball")
 		cd ~/Downloads/pinball
 		wine pinball.exe
-	elif [[ "$1" == "website" || "$1" == "github" ]]; then
+		;;
+	"website" | "github")
 		cd ~/Documents/Github\ Website
-	elif [[ "$1" == "resume" ]]; then
+		;;
+	"resume")
 		cd "/home/sam/Documents/Github Website/resumecv"
-	elif [[ "$1" == "iv" || "$1" == "IV" || "$1" == "ivcf" || "$1" == "IVCF" ]]; then
+		;;
+	"iv" | "IV" | "ivcf" | "IVCF")
 		cd "/home/sam/CMU/IVCF"
-	elif [[ "$1" == "alpha" ]]; then
+		;;
+	"alpha")
 		cd "/home/sam/CMU/IVCF/Alpha"
-	elif [[ "$1" == "ivlyrics" ]]; then
+		;;
+	"ivlyrics")
 		cd "/home/sam/CMU/IVCF/LG/lyrics"
-	elif [[ "$1" == "ivwebsite" || "$1" == "ivweb" ]]; then
+		;;
+	"ivwebsite" | "ivweb")
 		cd "/home/sam/CMU/IVCF/website"
-	elif [[ "$1" == "psych" || "$1" == "childdev" ]]; then
-		cd "/home/sam/CMU/Study/85221 Principles of Child Development"
-	elif [[ "$1" == "slam" || "$1" == "16833" ]]; then
-		cd "/home/sam/CMU/Study/16833 SLAM"
-		git pull
-	elif [[ "$1" == "slamhw" ]]; then
-		goto slam
+		;;
+	"linear" | "systems" | "18771" | "controls")
+		cd "/home/sam/CMU/Study/18771 Linear Systems"
+		;;
+	"ml" | "18661" | "661")
+		cd "/home/sam/CMU/Study/18661 ML"
+		;;
+	"mlhw" | "18661hw" | "661hw")
+		goto ml
 		cd homework
-		cd `cat .active_hw_dir`
-	elif [[ "$1" == "slamcode" ]]; then
-		goto slamhw
-		code code
-	elif [[ "$1" == "slamproj" || "$1" == "slamproject" ]]; then
-		goto slam
-		cd project
-		cd `cat .active_proj_dir`
-		git pull
-		code .
-	elif [[ "$1" == "robohw" || "$1" == "mobilehw" ]]; then
-		goto mobile
-		cd homework
-		cd writeup
-		cd `cat .active_hw_dir`
-	elif [[ "$1" == "capstone" || "$1" == "18500" ]]; then
-		cd "/home/sam/CMU/Study/18500 Capstone"
-		git update
-	elif [[ "$1" == "capstonecv" || "$1" == "capcv" ]]; then
-		goto capstone
-		cd cv && code .
-	elif [[ "$1" == "capcvapp" ]]; then
-		goto capstone
-		cd cv/app && code .
-	elif [[ "$1" == "capstonefront" || "$1" == "capfront" ]]; then
-		goto capstone
-		cd frontend && code .
-	elif [[ "$1" == "capstoneback" || "$1" == "capback" ]]; then
-		goto capstone
-		cd backend && code .
-	elif [[ "$1" == "robo" || "$1" == "robot" || "$1" == "mobile" || "$1" == "16761" ]]; then
-		cd "/home/sam/CMU/Study/16761 Mobile Robots"
-	elif [[ "$1" == "ta" ]]; then
+		cd $(cat .active_hw_dir)
+		;;
+	"mlcode")
+		goto mlhw
+		cd code
+		;;
+	"software" | "embedded" | "embed" | "18642" | "642")
+		cd "/home/sam/CMU/Study/18642 Embedded Software"
+		;;
+	"turtle" | "642code" | "18642code" | "642proj" | "18642proj" | "embedcode")
+		cd "/home/sam/CMU/Study/18642 Embedded Software/project/CMU18642Proj"
+		;;
+	"robo" | "cv" | "robot" | "vision" | "visual" | "16824")
+		cd "/home/sam/CMU/Study/16824 Visual Learning"
+		;;
+	"ta")
 		cd "/home/sam/CMU/16385 TA"
-	else
+		;;
+	*)
 		cd "$1" || cd ~/"$1"
-	fi
+		;;
+	esac
 }
 
 export -f goto
@@ -433,7 +458,7 @@ export -f goto
 }
 
 # Open embedded lab stuff
-embedrun(){
+embedrun() {
 	goto embedlab
 	gnome-terminal -- bash -c "./linux_ocd; bash"
 	gnome-terminal -- bash -c "minicom; bash"
@@ -747,29 +772,28 @@ handin() {
 scptoandrew() {
 	COPY_TO="$ANDREW_LINUX:$2"
 
-	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $1 $COPY_TO
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) scp $1 $COPY_TO
 }
 
 scpfromandrew() {
 	COPY_FROM="$ANDREW_LINUX:$1"
 
-	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $COPY_FROM $2
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) scp $COPY_FROM $2
 }
 
 export -f scptoandrew
 export -f scpfromandrew
 
-
 scptoece() {
 	COPY_TO="$ECE_SERVER:$2"
 
-	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $1 $COPY_TO
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) scp $1 $COPY_TO
 }
 
 scpfromece() {
 	COPY_FROM="$ECE_SERVER:$1"
 
-	sshpass -p `gpg -d -q ~/.ssh/.andrewpwd.gpg` scp $COPY_FROM $2
+	sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) scp $COPY_FROM $2
 }
 
 export -f scptoandrew
