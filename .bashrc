@@ -123,7 +123,7 @@ export CUDA_PATH=$CUDA_HOME:$CUDA_HOME/bin
 export ANDROID_HOME=/home/sam/Android/Sdk
 export JAVA_HOME=/usr/bin/java
 
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$CUDA_HOME/lib64
+export LD_LIBRARY_PATH=CUDA_HOME/lib64:${LD_LIBRARY_PATH}
 export CUDA_VISIBLE_DEVICES=0
 
 export WEBOTS_HOME=/usr/local/webots
@@ -299,7 +299,7 @@ export -f compilec
 alias ccompile=compilec
 alias gcccompile=compilec
 
-#Special goto function (cd to special directories)
+# Special goto function (cd to special directories)
 goto() {
 	if [[ -z "$1" ]]; then
 		cd ./
@@ -314,13 +314,6 @@ goto() {
 		;;
 	"cmuresearch")
 		cd ~/CMU/Research/
-		;;
-	"cv")
-		cd "/home/sam/CVPlayground"
-		;;
-	"cvcode")
-		cd "/home/sam/CVPlayground"
-		cd $(cat .active_code_dir)
 		;;
 	"learnable" | "3dpose")
 		cd "/home/sam/CMU/Research/3D Pose HARP/Code/learnable-triangulation-pytorch"
@@ -414,10 +407,19 @@ goto() {
 		cd "/home/sam/CMU/Study/18642 Embedded Software"
 		;;
 	"turtle" | "642code" | "18642code" | "642proj" | "18642proj" | "embedcode")
-		cd "/home/sam/CMU/Study/18642 Embedded Software/project/CMU18642Proj"
+		cd "/home/sam/CMU/Study/18642 Embedded Software/project/CMU18642Proj/student"
 		;;
-	"robo" | "cv" | "robot" | "vision" | "visual" | "16824")
+	"vl" | "robo" | "cv" | "robot" | "vision" | "visual" | "16824")
 		cd "/home/sam/CMU/Study/16824 Visual Learning"
+		;;
+	"vlhw" | "robohw" | "cvhw" | "robothw" | "visionhw" | "visualhw" | "16824hw")
+		goto visual
+		cd homework
+		cd $(cat .active_code_dir)
+		;;
+	"vlcode" | "robocode" | "cvcode" | "robotcode" | "visioncode" | "visualcode" | "16824code")
+		goto visualhw
+		cd code
 		;;
 	"ta")
 		cd "/home/sam/CMU/16385 TA"
@@ -871,14 +873,19 @@ sshrobot() {
 
 # PyTorch
 # export TORCH_INSTALL_PREFIX=`python -c 'import torch;print(torch.utils.cmake_prefix_path)'`
-export TORCH_HOME=/home/sam/Downloads/libtorch
-export TORCH_INSTALL_PREFIX=$TORCH_HOME
-export TORCHRT_ROOT=/home/sam/.pyenv/versions/3.9.2/envs/capstone/lib/python3.9/site-packages/torch_tensorrt
+# export TORCH_HOME=/home/sam/Downloads/libtorch
+# export TORCH_INSTALL_PREFIX=$TORCH_HOME
+# export TORCHRT_ROOT=/home/sam/.pyenv/versions/3.9.2/envs/capstone/lib/python3.9/site-packages/torch_tensorrt
 
 export PATH=$PATH:$TORCHRT_ROOT/bin
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$TORCH_HOME/lib
+# export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$TORCH_HOME/lib
 
 # Python Virtual Environment
 PATH="/home/sam/.pyenv/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
+
+# Google Cloud
+export CLOUDSDK_CORE_PROJECT=universal-chain-362420
+export CLOUDSDK_COMPUTE_REGION=us-east1
+export CLOUDSDK_COMPUTE_ZONE=us-east1-b

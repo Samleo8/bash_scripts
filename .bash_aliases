@@ -73,13 +73,10 @@ alias bumblebee="sudo systemctl enable --now bumblebeed"
 # School stuff
 alias doxy="doxygen && gitpush 'Update doxygen documentation'"
 
-alias slamhw="goto slamhw && code code"
-alias slamcode=slamhw
+# alias mobilehw="goto mobilehw; firefox HW_22*.pdf; open *.tex"
+# alias robohw=mobilehw
 
-alias mobilehw="goto mobilehw; firefox HW_22*.pdf; open *.tex"
-alias robohw=mobilehw
-
-# alias mobilecode="goto mobile; cd homework; eclipse ."
-# alias robocode=mobilecode
+alias 642code="goto turtle; code ."
+alias vlcode="goto vl; code ."
 
 alias ivweb="goto ivweb; code ."
