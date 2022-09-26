@@ -1,5 +1,8 @@
 #!/bin/sh
 
+git config --global user.name "Samuel Leong"
+git config --global user.email "samleocw@gmail.com"
+
 git config --global alias.subinit '!git pull && git submodule update --init --recursive'
 git config --global alias.update '!git pull && git submodule update --remote --recursive --merge'
 git config --global alias.unstage 'reset HEAD --'
