@@ -87,7 +87,8 @@ alias gcp="gcloud compute"
 alias gcpstart="gcp instances start $GCP_MAIN_INSTANCE"
 alias gcpstop="gcp instances stop $GCP_MAIN_INSTANCE"
 alias sshgcp="gcp ssh --zone us-east1-c --project universal-chain-362420 $GCP_MAIN_INSTANCE"
+alias gcpssh=sshgcp
 
-gscp(){
+gscp() {
     gcloud compute scp --project universal-chain-362420 $1 $GCP_MAIN_INSTANCE:$2
 }
