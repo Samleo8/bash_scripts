@@ -77,6 +77,17 @@ alias doxy="doxygen && gitpush 'Update doxygen documentation'"
 # alias robohw=mobilehw
 
 alias 642code="goto turtle; code ."
-alias vlcode="goto vl; code ."
+alias vlcode="goto vlcode; code ."
 
 alias ivweb="goto ivweb; code ."
+
+# GCP stuff
+export GCP_MAIN_INSTANCE=vl-gpu-single
+alias gcp="gcloud compute"
+alias gcpstart="gcp instances start $GCP_MAIN_INSTANCE"
+alias gcpstop="gcp instances stop $GCP_MAIN_INSTANCE"
+alias sshgcp="gcp ssh --zone us-east1-c --project universal-chain-362420 $GCP_MAIN_INSTANCE"
+
+gscp(){
+    gcloud compute scp --project universal-chain-362420 $1 $GCP_MAIN_INSTANCE:$2
+}
