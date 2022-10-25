@@ -123,11 +123,11 @@ export CUDA_PATH=$CUDA_HOME:$CUDA_HOME/bin
 export ANDROID_HOME=/home/sam/Android/Sdk
 export JAVA_HOME=/usr/bin/java
 
-export LD_LIBRARY_PATH=CUDA_HOME/lib64:${LD_LIBRARY_PATH}
-export CUDA_VISIBLE_DEVICES=0
+export LD_LIBRARY_PATH=$CUDA_HOME/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+# export CUDA_VISIBLE_DEVICES=0
 
 export WEBOTS_HOME=/usr/local/webots
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${WEBOTS_HOME}/lib/controller
+export LD_LIBRARY_PATH=${WEBOTS_HOME}/lib/controller${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 export ANDROID_PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME:${PATH}:$JAVA_HOME
 
@@ -139,6 +139,7 @@ PATH="$NODE_PATH:$PATH:$EIGEN_INCLUDE_DIRS:$CUDA_PATH"
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig
 
 export PYTHONPATH=${PYTHONPATH}:/usr/local/python
+export PYTHON_SITE_PKG=/home/sam/.local/lib/python3.10/site-packages
 
 source /etc/profile.d/vte.sh
 
@@ -885,7 +886,68 @@ PATH="/home/sam/.pyenv/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
-# Google Cloud
+# Google Cloud (GCP) Stuff
 export CLOUDSDK_CORE_PROJECT=universal-chain-362420
-export CLOUDSDK_COMPUTE_REGION=us-east1
-export CLOUDSDK_COMPUTE_ZONE=us-east1-b
+
+export GCP_MAIN_INSTANCE=vl-gpu-single
+export GCP_MAIN_ZONE=us-east1-c
+
+export GCP_POWER_INSTANCE=vl-gpu-single-power
+export GCP_POWER_ZONE=us-central1-f
+
+export GCP_MAIN="--zone $GCP_MAIN_ZONE --project universal-chain-362420 $GCP_MAIN_INSTANCE"
+export GCP_POWER="--zone $GCP_POWER_ZONE --project universal-chain-362420 $GCP_POWER_INSTANCE"
+
+alias gcp="gcloud compute"
+
+alias gcpstart="gcp instances start $GCP_MAIN && sleep 10s && gcpssh"
+alias gcpstop="gcp instances stop $GCP_MAIN"
+alias gcpstart2="gcp instances start $GCP_POWER && sleep 10s && gcpssh"
+alias gcpstop2="gcp instances stop $GCP_POWER"
+
+alias sshgcp="gcp ssh $GCP_MAIN"
+alias sshgcp2="gcp ssh $GCP_POWER"
+alias sshgcppwr=sshgcp2
+
+alias gcpssh=sshgcp
+alias gcpssh2=sshgcp2
+alias gcpsshpower=sshgcppwr
+
+gscpto() {
+    if [[ -z $3 ]]; then
+        gscpto $1 $2 main
+    fi
+
+    case $3 in
+    main)
+        gcloud compute scp --zone $GCP_MAIN_ZONE--project universal-chain-362420 --recurse $1 $GCP_MAIN_INSTANCE:$2
+        ;;
+    power)
+        gcloud compute scp --zone $GCP_POWER_ZONE --project universal-chain-362420 --recurse $1 $GCP_POWER_INSTANCE:$2
+        ;;
+    *)
+        gscpto $1 $2 main
+        ;;
+    esac
+}
+
+gscpfrom() {
+    if [[ -z $3 ]]; then
+        gscpfrom $1 $2 main
+    fi
+
+    case $3 in
+    main)
+        gcloud compute scp --zone $GCP_MAIN_ZONE--project universal-chain-362420 --recurse $GCP_MAIN_INSTANCE:$1 $2
+        ;;
+    power)
+        gcloud compute scp --zone $GCP_POWER_ZONE --project universal-chain-362420 --recurse $GCP_POWER_INSTANCE:$1 $2
+        ;;
+    *)
+        gscpfrom $1 $2 main
+        ;;
+    esac
+}
+
+export -f gscpto
+export -f gscpfrom
