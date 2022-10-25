@@ -930,7 +930,7 @@ gcpstart() {
 	local INSTANCE=''
 	getgcpinstance INSTANCE $1
 
-	gcp instances start $INSTANCE && sleep 10s && gcpssh
+	gcp instances start $INSTANCE && sleep 10s && gcp ssh $INSTANCE
 }
 
 gcpstop() {
