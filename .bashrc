@@ -895,58 +895,86 @@ export GCP_MAIN_ZONE=us-east1-c
 export GCP_POWER_INSTANCE=vl-gpu-single-power
 export GCP_POWER_ZONE=us-central1-f
 
-export GCP_MAIN="--zone $GCP_MAIN_ZONE --project universal-chain-362420 $GCP_MAIN_INSTANCE"
-export GCP_POWER="--zone $GCP_POWER_ZONE --project universal-chain-362420 $GCP_POWER_INSTANCE"
+export GCP_MAIN="--zone $GCP_MAIN_ZONE --project $CLOUDSDK_CORE_PROJECT $GCP_MAIN_INSTANCE"
+export GCP_POWER="--zone $GCP_POWER_ZONE --project $CLOUDSDK_CORE_PROJECT $GCP_POWER_INSTANCE"
 
 alias gcp="gcloud compute"
 
-alias gcpstart="gcp instances start $GCP_MAIN && sleep 10s && gcpssh"
-alias gcpstop="gcp instances stop $GCP_MAIN"
-alias gcpstart2="gcp instances start $GCP_POWER && sleep 10s && gcpssh"
-alias gcpstop2="gcp instances stop $GCP_POWER"
+getgcpinstance() {
+	if [[ -z "$1" ]]; then
+		echo "USAGE: getgcpinstance <variable> [instance_name]"
+		return
+	fi
 
-alias sshgcp="gcp ssh $GCP_MAIN"
-alias sshgcp2="gcp ssh $GCP_POWER"
-alias sshgcppwr=sshgcp2
+	INSTANCE=''
 
-alias gcpssh=sshgcp
-alias gcpssh2=sshgcp2
-alias gcpsshpower=sshgcppwr
+	case $2 in
+	"main" | "single")
+		INSTANCE=$GCP_MAIN
+		echo "[NOTE] Using $2 instance"
+		;;
+	"power")
+		INSTANCE=$GCP_POWER
+		echo "[NOTE] Using $2 instance"
+		;;
+	*)
+		INSTANCE=$GCP_MAIN
+		echo "[NOTE] Defaulting to main instance"
+		;;
+	esac
+
+	eval "$1='${INSTANCE}'"
+}
+
+gcpstart() {
+	local INSTANCE=''
+	getgcpinstance INSTANCE $1
+
+	gcp instances start $INSTANCE && sleep 10s && gcpssh
+}
+
+gcpstop() {
+	local INSTANCE=''
+	getgcpinstance INSTANCE $1
+
+	gcp instances stop $INSTANCE
+}
+
+gcpssh() {
+	local INSTANCE=''
+	getgcpinstance INSTANCE $1
+
+	gcp ssh $INSTANCE
+}
+
+alias sshgcp=gcpssh
 
 gscpto() {
-    if [[ -z $3 ]]; then
-        gscpto $1 $2 main
-    fi
-
-    case $3 in
-    main)
-        gcloud compute scp --zone $GCP_MAIN_ZONE--project universal-chain-362420 --recurse $1 $GCP_MAIN_INSTANCE:$2
-        ;;
-    power)
-        gcloud compute scp --zone $GCP_POWER_ZONE --project universal-chain-362420 --recurse $1 $GCP_POWER_INSTANCE:$2
-        ;;
-    *)
-        gscpto $1 $2 main
-        ;;
-    esac
+	case $3 in
+	"main")
+		gcloud compute scp --zone $GCP_MAIN_ZONE--project $CLOUDSDK_CORE_PROJECT --recurse $1 $GCP_MAIN_INSTANCE:$2
+		;;
+	"power")
+		gcloud compute scp --zone $GCP_POWER_ZONE --project $CLOUDSDK_CORE_PROJECT --recurse $1 $GCP_POWER_INSTANCE:$2
+		;;
+	*)
+		gscpto $1 $2 main
+		;;
+	esac
 }
 
 gscpfrom() {
-    if [[ -z $3 ]]; then
-        gscpfrom $1 $2 main
-    fi
-
-    case $3 in
-    main)
-        gcloud compute scp --zone $GCP_MAIN_ZONE--project universal-chain-362420 --recurse $GCP_MAIN_INSTANCE:$1 $2
-        ;;
-    power)
-        gcloud compute scp --zone $GCP_POWER_ZONE --project universal-chain-362420 --recurse $GCP_POWER_INSTANCE:$1 $2
-        ;;
-    *)
-        gscpfrom $1 $2 main
-        ;;
-    esac
+	case $3 in
+	main)
+		gcloud compute scp --zone $GCP_MAIN_ZONE--project universal-chain-362420 --recurse $GCP_MAIN_INSTANCE:$1 $2
+		;;
+	power)
+		gcloud compute scp --zone $GCP_POWER_ZONE --project universal-chain-362420 --recurse $GCP_POWER_INSTANCE:$1 $2
+		;;
+	*)
+		gscpfrom $1 $2 main
+		;;
+	esac
 }
 
 export -f gscpto
