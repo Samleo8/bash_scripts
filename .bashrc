@@ -979,5 +979,7 @@ gscpfrom() {
 	esac
 }
 
+export -f gcpscpto
+export -f gcpscpfrom
 export -f gcpstart
 export -f gcpstop
