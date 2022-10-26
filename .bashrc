@@ -949,6 +949,8 @@ gcpssh() {
 
 alias sshgcp=gcpssh
 
+alias gcpls="gcp instances list"
+
 gscpto() {
 	case $3 in
 	"main")
@@ -965,17 +967,17 @@ gscpto() {
 
 gscpfrom() {
 	case $3 in
-	main)
-		gcloud compute scp --zone $GCP_MAIN_ZONE--project universal-chain-362420 --recurse $GCP_MAIN_INSTANCE:$1 $2
+	"main")
+		gcloud compute scp --zone ${GCP_MAIN_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse ${GCP_MAIN_INSTANCE}:"$1" "$2"
 		;;
-	power)
-		gcloud compute scp --zone $GCP_POWER_ZONE --project universal-chain-362420 --recurse $GCP_POWER_INSTANCE:$1 $2
+	"power")
+		gcloud compute scp --zone ${GCP_POWER_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse ${GCP_POWER_INSTANCE}:"$1" "$2"
 		;;
 	*)
-		gscpfrom $1 $2 main
+		gscpfrom $1 $2 "main"
 		;;
 	esac
 }
 
-export -f gscpto
-export -f gscpfrom
+export -f gcpstart
+export -f gcpstop
