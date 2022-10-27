@@ -954,13 +954,13 @@ alias gcpls="gcp instances list"
 gscpto() {
 	case $3 in
 	"main")
-		gcloud compute scp --zone $GCP_MAIN_ZONE--project $CLOUDSDK_CORE_PROJECT --recurse $1 $GCP_MAIN_INSTANCE:$2
+		gcloud compute scp --zone ${GCP_MAIN_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse "$1" ${GCP_MAIN_INSTANCE}:"$2"
 		;;
 	"power")
-		gcloud compute scp --zone $GCP_POWER_ZONE --project $CLOUDSDK_CORE_PROJECT --recurse $1 $GCP_POWER_INSTANCE:$2
+		gcloud compute scp --zone ${GCP_POWER_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse "$1" ${GCP_POWER_INSTANCE}:"$2"
 		;;
 	*)
-		gscpto $1 $2 main
+		gscpto "$1" "$2" "main"
 		;;
 	esac
 }
@@ -974,7 +974,7 @@ gscpfrom() {
 		gcloud compute scp --zone ${GCP_POWER_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse ${GCP_POWER_INSTANCE}:"$1" "$2"
 		;;
 	*)
-		gscpfrom $1 $2 "main"
+		gscpfrom "$1" "$2" "main"
 		;;
 	esac
 }
