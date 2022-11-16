@@ -233,7 +233,7 @@ export -f echo_blue
 
 # Extractor
 # # usage: ex <file>
-ex() {
+ex_single() {
 	if [ -f $1 ]; then
 		case $1 in
 		*.tar.bz2) tar xjf $1 ;;
@@ -254,7 +254,14 @@ ex() {
 	fi
 }
 
+ex() {
+	for file in $@; do
+		ex_single $file
+	done
+}
+
 alias extract=ex
+alias exall=ex
 
 #OpenCV compile
 compilecv() {
@@ -421,6 +428,11 @@ goto() {
 	"vlcode" | "robocode" | "cvcode" | "robotcode" | "visioncode" | "visualcode" | "16824code")
 		goto visualhw
 		cd code
+		;;
+	"vlproj")
+		goto vl
+		cd project
+		git update
 		;;
 	"ta")
 		cd "/home/sam/CMU/16385 TA"
@@ -944,7 +956,18 @@ gcpssh() {
 	local INSTANCE=''
 	getgcpinstance INSTANCE $1
 
-	gcp ssh $INSTANCE
+	shift
+	gcp ssh $INSTANCE $@
+}
+
+gcpvisdom() {
+	PORT=${2:-9000}
+
+	gcpssh $1 -- -NfL $PORT:localhost:$PORT
+
+	echo "Port forwarding via $PORT with PID $!"
+	echo "You may eventually kill the process using the following command:"
+	echo 'kill -9 `ss -lnp | grep 9000 | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+"`'
 }
 
 alias sshgcp=gcpssh
