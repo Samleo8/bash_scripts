@@ -965,9 +965,18 @@ gcpvisdom() {
 
 	gcpssh $1 -- -NfL $PORT:localhost:$PORT
 
-	echo "Port forwarding via $PORT with PID $!"
-	echo "You may eventually kill the process using the following command:"
-	echo 'kill -9 `ss -lnp | grep 9000 | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+"`'
+	GCP_VISDOM_PID=$(ss -lnp | grep $PORT | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
+	echo "Port forwarding via ${PORT} with PID ${GCP_VISDOM_PID}"
+	echo "You may eventually kill the process using 'killgcpvisdom ${PORT}'"
+	# echo 'kill -9 `ss -lnp | grep '$PORT' | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+"`'
+}
+
+killgcpvisdom() {
+	PORT=${1:-9000}
+	GCP_VISDOM_PID=$(ss -lnp | grep ${PORT} | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
+	kill -9 ${GCP_VISDOM_PID}
+
+	echo "Killed port forwarding via ${PORT} with PID ${GCP_VISDOM_PID}"
 }
 
 alias sshgcp=gcpssh
