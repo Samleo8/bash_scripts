@@ -974,6 +974,12 @@ gcpvisdom() {
 killgcpvisdom() {
 	PORT=${1:-9000}
 	GCP_VISDOM_PID=$(ss -lnp | grep ${PORT} | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
+
+	if [[ -z "$GCP_VISDOM_PID" ]]; then
+		echo "No port forwarding process found for port ${PORT}"
+		return
+	fi
+
 	kill -9 ${GCP_VISDOM_PID}
 
 	echo "Killed port forwarding via ${PORT} with PID ${GCP_VISDOM_PID}"
