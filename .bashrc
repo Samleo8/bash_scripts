@@ -415,7 +415,7 @@ goto() {
 		cd "/home/sam/CMU/Study/18642 Embedded Software"
 		;;
 	"turtle" | "642code" | "18642code" | "642proj" | "18642proj" | "embedcode")
-		cd "/home/sam/CMU/Study/18642 Embedded Software/project/CMU18642Proj/student"
+		cd "/home/sam/CMU/Study/18642 Embedded Software/project/CMU18642Proj/monitors"
 		;;
 	"vl" | "robo" | "cv" | "robot" | "vision" | "visual" | "16824")
 		cd "/home/sam/CMU/Study/16824 Visual Learning"
@@ -426,13 +426,21 @@ goto() {
 		cd $(cat .active_code_dir)
 		;;
 	"vlcode" | "robocode" | "cvcode" | "robotcode" | "visioncode" | "visualcode" | "16824code")
-		goto visualhw
+		goto srf
 		cd code
 		;;
 	"vlproj")
 		goto vl
 		cd project
 		git update
+		;;
+	"vlbarf" | "barf")
+		goto vlproj
+		cd bundle-adjusting-NeRF
+		;;
+	"vlstereo" | "srf" | "stereo" | "sarf")
+		goto vlproj
+		cd stereo-nerf
 		;;
 	"ta")
 		cd "/home/sam/CMU/16385 TA"
@@ -899,125 +907,8 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
 # Google Cloud (GCP) Stuff
-export CLOUDSDK_CORE_PROJECT=universal-chain-362420
+# All commands in ~/.bash_gcp, instead of adding them here directly.
+if [ -f ~/.bash_gcp ]; then
+	. ~/.bash_gcp
+fi
 
-export GCP_MAIN_INSTANCE=vl-gpu-single
-export GCP_MAIN_ZONE=us-east1-c
-
-export GCP_POWER_INSTANCE=vl-gpu-single-power
-export GCP_POWER_ZONE=us-central1-f
-
-export GCP_MAIN="--zone $GCP_MAIN_ZONE --project $CLOUDSDK_CORE_PROJECT $GCP_MAIN_INSTANCE"
-export GCP_POWER="--zone $GCP_POWER_ZONE --project $CLOUDSDK_CORE_PROJECT $GCP_POWER_INSTANCE"
-
-alias gcp="gcloud compute"
-
-getgcpinstance() {
-	if [[ -z "$1" ]]; then
-		echo "USAGE: getgcpinstance <variable> [instance_name]"
-		return
-	fi
-
-	INSTANCE=''
-
-	case $2 in
-	"main" | "single")
-		INSTANCE=$GCP_MAIN
-		echo "[NOTE] Using $2 instance"
-		;;
-	"power")
-		INSTANCE=$GCP_POWER
-		echo "[NOTE] Using $2 instance"
-		;;
-	*)
-		INSTANCE=$GCP_MAIN
-		echo "[NOTE] Defaulting to main instance"
-		;;
-	esac
-
-	eval "$1='${INSTANCE}'"
-}
-
-gcpstart() {
-	local INSTANCE=''
-	getgcpinstance INSTANCE $1
-
-	gcp instances start $INSTANCE && sleep 10s && gcp ssh $INSTANCE
-}
-
-gcpstop() {
-	local INSTANCE=''
-	getgcpinstance INSTANCE $1
-
-	gcp instances stop $INSTANCE
-}
-
-gcpssh() {
-	local INSTANCE=''
-	getgcpinstance INSTANCE $1
-
-	shift
-	gcp ssh $INSTANCE $@
-}
-
-gcpvisdom() {
-	PORT=${2:-9000}
-
-	gcpssh $1 -- -NfL $PORT:localhost:$PORT
-
-	GCP_VISDOM_PID=$(ss -lnp | grep $PORT | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
-	echo "Port forwarding via ${PORT} with PID ${GCP_VISDOM_PID}"
-	echo "You may eventually kill the process using 'killgcpvisdom ${PORT}'"
-	# echo 'kill -9 `ss -lnp | grep '$PORT' | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+"`'
-}
-
-killgcpvisdom() {
-	PORT=${1:-9000}
-	GCP_VISDOM_PID=$(ss -lnp | grep ${PORT} | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
-
-	if [[ -z "$GCP_VISDOM_PID" ]]; then
-		echo "No port forwarding process found for port ${PORT}"
-		return
-	fi
-
-	kill -9 ${GCP_VISDOM_PID}
-
-	echo "Killed port forwarding via ${PORT} with PID ${GCP_VISDOM_PID}"
-}
-
-alias sshgcp=gcpssh
-
-alias gcpls="gcp instances list"
-
-gscpto() {
-	case $3 in
-	"main")
-		gcloud compute scp --zone ${GCP_MAIN_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse "$1" ${GCP_MAIN_INSTANCE}:"$2"
-		;;
-	"power")
-		gcloud compute scp --zone ${GCP_POWER_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse "$1" ${GCP_POWER_INSTANCE}:"$2"
-		;;
-	*)
-		gscpto "$1" "$2" "main"
-		;;
-	esac
-}
-
-gscpfrom() {
-	case $3 in
-	"main")
-		gcloud compute scp --zone ${GCP_MAIN_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse ${GCP_MAIN_INSTANCE}:"$1" "$2"
-		;;
-	"power")
-		gcloud compute scp --zone ${GCP_POWER_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse ${GCP_POWER_INSTANCE}:"$1" "$2"
-		;;
-	*)
-		gscpfrom "$1" "$2" "main"
-		;;
-	esac
-}
-
-export -f gscpto
-export -f gscpfrom
-export -f gcpstart
-export -f gcpstop

@@ -1,0 +1,155 @@
+# ~/.bash_gcp: executed under ~/.bashrc(1) for gcp-related shortcuts
+
+# CORE PROJECT
+export CLOUDSDK_CORE_PROJECT=universal-chain-362420
+
+# VARIOUS INSTANCES
+export GCP_MAIN_INSTANCE=vl-gpu-single
+export GCP_MAIN_ZONE=us-east1-c
+
+export GCP_POWER_INSTANCE=instance-1
+export GCP_POWER_ZONE=us-central1-f
+
+export GCP_MAIN="--zone $GCP_MAIN_ZONE --project $CLOUDSDK_CORE_PROJECT $GCP_MAIN_INSTANCE"
+export GCP_POWER="--zone $GCP_POWER_ZONE --project $CLOUDSDK_CORE_PROJECT $GCP_POWER_INSTANCE"
+
+# SHORTCUTS FOR GETTING INSTANCES
+alias gcp="gcloud compute"
+
+getgcpinstance() {
+    if [[ -z "$1" ]]; then
+        echo "USAGE: getgcpinstance <variable> [instance_name]"
+        return
+    fi
+
+    INSTANCE=''
+
+    case $2 in
+    "main" | "single")
+        INSTANCE=$GCP_MAIN
+        echo "[NOTE] Using $2 instance"
+        ;;
+    "power")
+        INSTANCE=$GCP_POWER
+        echo "[NOTE] Using $2 instance"
+        ;;
+    *)
+        INSTANCE=$GCP_POWER
+        echo "[NOTE] Defaulting to power instance"
+        ;;
+    esac
+
+    eval "$1='${INSTANCE}'"
+}
+
+# STARTING, ACCESSING AND STOPPING INSTANCES
+gcpstart() {
+    local INSTANCE=''
+    getgcpinstance INSTANCE $1
+
+    gcp instances start $INSTANCE && sleep 10s && gcp ssh $INSTANCE
+}
+
+gcpstop() {
+    local INSTANCE=''
+    getgcpinstance INSTANCE $1
+
+    gcp instances stop $INSTANCE
+}
+
+gcpssh() {
+    local INSTANCE=''
+    getgcpinstance INSTANCE $1
+
+    shift
+    gcp ssh $INSTANCE $@
+}
+
+alias sshgcp=gcpssh
+alias gcpls="gcp instances list"
+
+# TRANSFERRING FILES
+gscpto() {
+    case $3 in
+    "main")
+        gcloud compute scp --zone ${GCP_MAIN_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse "$1" ${GCP_MAIN_INSTANCE}:"$2"
+        ;;
+    "power")
+        gcloud compute scp --zone ${GCP_POWER_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse "$1" ${GCP_POWER_INSTANCE}:"$2"
+        ;;
+    *)
+        gscpto "$1" "$2" "power"
+        ;;
+    esac
+}
+
+gscpfrom() {
+    case $3 in
+    "main")
+        gcloud compute scp --zone ${GCP_MAIN_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse ${GCP_MAIN_INSTANCE}:"$1" "$2"
+        ;;
+    "power")
+        gcloud compute scp --zone ${GCP_POWER_ZONE} --project ${CLOUDSDK_CORE_PROJECT} --recurse ${GCP_POWER_INSTANCE}:"$1" "$2"
+        ;;
+    *)
+        gscpfrom "$1" "$2" "power"
+        ;;
+    esac
+}
+
+# NOTE: Export for use in other scripts
+export -f gscpto
+export -f gscpfrom
+export -f gcpstart
+export -f gcpstop
+
+# PORT FORWARDING (Tensorboard, Visdom etc.)
+gcpfwd() {
+    PORT=${2:-9000}
+
+    gcpssh $1 -- -NfL $PORT:localhost:$PORT
+
+    GCP_PORT_FWD_PID=$(ss -lnp | grep $PORT | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
+    echo "Port forwarding via ${PORT} with PID ${GCP_PORT_FWD_PID}"
+    echo "You may eventually kill the process using 'killgcpfwd ${PORT}'"
+}
+
+alias gcpportfwd=gcpfwd
+
+gcpvisdom() {
+    gcpfwd $1 9000
+}
+
+alias gcpvis=gcpvisdom
+
+gcptensorboard() {
+    gcpfwd $1 6006
+}
+
+alias gcptb=gcptensorboard
+alias gcptensor=gcptensorboard
+
+# KILLING PORT FORWARDING
+killgcpfwd() {
+    PORT=${1:-9000}
+    GCP_PORT_FWD_PID=$(ss -lnp | grep ${PORT} | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
+
+    if [[ -z "$GCP_PORT_FWD_PID" ]]; then
+        echo "No port forwarding process found for port ${PORT}"
+        return
+    fi
+
+    kill -9 ${GCP_PORT_FWD_PID}
+
+    echo "Killed port forwarding via ${PORT} with PID ${GCP_PORT_FWD_PID}"
+}
+
+alias killgcpportfwd=killgcpfwd
+
+killgcpvisdom() {
+    killgcpfwd 9000
+}
+
+killgcptensorboard() {
+    killgcpfwd 6006
+}
