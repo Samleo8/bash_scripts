@@ -117,13 +117,15 @@ gcpfwd() {
 alias gcpportfwd=gcpfwd
 
 gcpvisdom() {
-    gcpfwd $1 9000
+    INSTANCE_NAME=${1:-power}
+    gcpfwd $INSTANCE_NAME 9000
 }
 
 alias gcpvis=gcpvisdom
 
 gcptensorboard() {
-    gcpfwd $1 6006
+    INSTANCE_NAME=${1:-power}
+    gcpfwd $INSTANCE_NAME 6006
 }
 
 alias gcptb=gcptensorboard
