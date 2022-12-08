@@ -1,0 +1,173 @@
+# ~/.bash_aws: executed under ~/.bashrc(1) for aws-related shortcuts
+
+# VARIOUS INSTANCES
+export AWS_MAIN_INSTANCE=i-026043fc2c068782a
+export AWS_MAIN_REGION=us-east-2
+export AWS_MAIN_INSTANCE_NAME="VLProj"
+export AWS_MAIN_SSH_KEY="/home/sam/CMU/Study/16824 Visual Learning/aws-1.pem"
+
+# export AWS_POWER_INSTANCE=instance-1
+# export AWS_POWER_REGION=us-central1-f
+
+export AWS_MAIN="--region $AWS_MAIN_REGION --instance-ids $AWS_MAIN_INSTANCE"
+export AWS_MAIN_SSH="-i $AWS_MAIN_SSH_KEY ec2-user@$AWS_MAIN_INSTANCE_NAME"
+# export AWS_POWER="--zone $AWS_POWER_REGION --project $CLOUDSDK_CORE_PROJECT $AWS_POWER_INSTANCE"
+
+# SHORTCUTS FOR GETTING INSTANCES
+alias awss="aws ec2"
+
+getawsinstance() {
+    if [[ -z "$1" ]]; then
+        echo "USAGE: getawsinstance <variable> [instance_name]"
+        return
+    fi
+
+    INSTANCE=''
+
+    case $2 in
+    "main" | "single")
+        INSTANCE=$AWS_MAIN
+        echo "[NOTE] Using $2 instance"
+        ;;
+    "power")
+        INSTANCE=$AWS_POWER
+        echo "[NOTE] Using $2 instance"
+        ;;
+    *)
+        INSTANCE=$AWS_MAIN
+        echo "[NOTE] Defaulting to main instance"
+        ;;
+    esac
+
+    eval "$1='${INSTANCE}'"
+}
+
+getawssshinfo() {
+    if [[ -z "$1" ]]; then
+        echo "USAGE: getawssshinfo <variable> [instance_name]"
+        return
+    fi
+
+    INSTANCE=''
+
+    case $2 in
+    "main" | "single")
+        INSTANCE=$AWS_MAIN_SSH
+        echo "[NOTE] Using $2 instance"
+        ;;
+    "power")
+        INSTANCE=$AWS_POWER_SSH
+        echo "[NOTE] Using $2 instance"
+        ;;
+    *)
+        INSTANCE=$AWS_MAIN_SSH
+        echo "[NOTE] Defaulting to main instance"
+        ;;
+    esac
+
+    eval "$1='${INSTANCE}'"
+}
+
+# STARTING, ACCESSING AND STOPPING INSTANCES
+awsstart() {
+    local INSTANCE=''
+    getawsinstance INSTANCE $1
+
+    awss start-instances $INSTANCE && sleep 10s && awsssh $INSTANCE
+}
+
+awsstop() {
+    local INSTANCE=''
+    getawsinstance INSTANCE $1
+
+    awss stop-instances $INSTANCE
+}
+
+
+# SSH and SCP stuff
+awsssh() {
+    local INSTANCE=''
+    getawssshinfo INSTANCE $1
+
+    shift
+    aws ssh $INSTANCE $@
+}
+
+alias sshaws=awsssh
+alias awsls="aws describe-instances"
+
+# TRANSFERRING FILES
+awsscpto() {
+    local INSTANCE=''
+    getawssshinfo INSTANCE $3
+
+    scp "${INSTANCE}:$1" $2
+}
+
+awsscpfrom() {
+    local INSTANCE=''
+    getawssshinfo INSTANCE $3
+
+    scp $1 "${INSTANCE}:$2"
+}
+
+# NOTE: Export for use in other scripts
+export -f gscpto
+export -f gscpfrom
+export -f awsstart
+export -f awsstop
+
+# PORT FORWARDING (Tensorboard, Visdom etc.)
+awsfwd() {
+    PORT=${2:-9000}
+
+    awsssh $1 -- -NfL $PORT:localhost:$PORT
+
+    AWS_PORT_FWD_PID=$(ss -lnp | grep $PORT | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
+    echo "Port forwarding via ${PORT} with PID ${AWS_PORT_FWD_PID}"
+    echo "You may eventually kill the process using 'killawsfwd ${PORT}'"
+}
+
+alias awsportfwd=awsfwd
+
+awsvisdom() {
+    INSTANCE_NAME=${1:-main}
+    awsfwd $INSTANCE_NAME 9000
+}
+
+alias awsvis=awsvisdom
+
+awstensorboard() {
+    INSTANCE_NAME=${1:-main}
+    awsfwd $INSTANCE_NAME 6006
+}
+
+alias awstb=awstensorboard
+alias awstensor=awstensorboard
+
+# KILLING PORT FORWARDING
+killawsfwd() {
+    PORT=${1:-9000}
+    AWS_PORT_FWD_PID=$(ss -lnp | grep ${PORT} | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
+
+    if [[ -z "$AWS_PORT_FWD_PID" ]]; then
+        echo "No port forwarding process found for port ${PORT}"
+        return
+    fi
+
+    kill -9 ${AWS_PORT_FWD_PID}
+
+    echo "Killed port forwarding via ${PORT} with PID ${AWS_PORT_FWD_PID}"
+}
+
+alias killawsportfwd=killawsfwd
+
+killawsvisdom() {
+    killawsfwd 9000
+}
+
+killawstensorboard() {
+    killawsfwd 6006
+}
+
+alias killawstensor=killawstensorboard
