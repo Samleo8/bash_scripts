@@ -90,7 +90,7 @@ awsssh() {
     getawssshinfo INSTANCE $1
 
     shift
-    aws ssh $INSTANCE $@
+    ssh $INSTANCE $@
 }
 
 alias sshaws=awsssh
@@ -101,14 +101,14 @@ awsscpto() {
     local INSTANCE=''
     getawssshinfo INSTANCE $3
 
-    scp "${INSTANCE}:$1" $2
+    scp -r "${INSTANCE}:$1" $2
 }
 
 awsscpfrom() {
     local INSTANCE=''
     getawssshinfo INSTANCE $3
 
-    scp $1 "${INSTANCE}:$2"
+    scp -r $1 "${INSTANCE}:$2"
 }
 
 # NOTE: Export for use in other scripts
