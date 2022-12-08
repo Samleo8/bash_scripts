@@ -9,8 +9,8 @@ export AWS_MAIN_SSH_KEY="/home/sam/CMU/Study/16824 Visual Learning/aws-1.pem"
 # export AWS_POWER_INSTANCE=instance-1
 # export AWS_POWER_REGION=us-central1-f
 
-export AWS_MAIN="--region $AWS_MAIN_REGION --instance-ids $AWS_MAIN_INSTANCE"
-export AWS_MAIN_SSH="-i $AWS_MAIN_SSH_KEY ec2-user@$AWS_MAIN_INSTANCE_NAME"
+export AWS_MAIN="--region ${AWS_MAIN_REGION} --instance-ids ${AWS_MAIN_INSTANCE}"
+export AWS_MAIN_SSH="-i ${AWS_MAIN_SSH_KEY} ec2-user@${AWS_MAIN_INSTANCE_NAME}"
 # export AWS_POWER="--zone $AWS_POWER_REGION --project $CLOUDSDK_CORE_PROJECT $AWS_POWER_INSTANCE"
 
 # SHORTCUTS FOR GETTING INSTANCES
