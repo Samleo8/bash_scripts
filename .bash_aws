@@ -3,16 +3,13 @@
 # VARIOUS INSTANCES
 export AWS_MAIN_INSTANCE=i-026043fc2c068782a
 export AWS_MAIN_REGION=us-east-2
-export AWS_MAIN_INSTANCE_NAME="VLProj"
-export AWS_MAIN_SSH_KEY="/home/sam/CMU/Study/16824 Visual Learning/aws-1.pem"
+export AWS_MAIN_SSH_KEY=~/.ssh/aws-1.pem
 
 # export AWS_POWER_INSTANCE=instance-1
 # export AWS_POWER_REGION=us-central1-f
 
 export AWS_MAIN="--region ${AWS_MAIN_REGION} --instance-ids ${AWS_MAIN_INSTANCE}"
-export AWS_MAIN_SSH="-i ${AWS_MAIN_SSH_KEY} ec2-user@${AWS_MAIN_INSTANCE_NAME}"
-# export AWS_POWER="--zone $AWS_POWER_REGION --project $CLOUDSDK_CORE_PROJECT $AWS_POWER_INSTANCE"
-
+export AWS_MAIN_SSH="ec2-user@"
 # SHORTCUTS FOR GETTING INSTANCES
 alias awss="aws ec2"
 
@@ -49,21 +46,34 @@ getawssshinfo() {
     fi
 
     INSTANCE=''
+    INSTANCE_ID=''
 
     case $2 in
     "main" | "single")
         INSTANCE=$AWS_MAIN_SSH
+        INSTANCE_ID=$AWS_MAIN_INSTANCE
         echo "[NOTE] Using $2 instance"
         ;;
     "power")
         INSTANCE=$AWS_POWER_SSH
+        INSTANCE_ID=$AWS_POWER_INSTANCE
         echo "[NOTE] Using $2 instance"
         ;;
     *)
         INSTANCE=$AWS_MAIN_SSH
+        INSTANCE_ID=$AWS_MAIN_INSTANCE
         echo "[NOTE] Defaulting to main instance"
         ;;
     esac
+
+    INSTANCE_DNS_NAME=$(awsls --query 'Reservations[].Instances[].PublicDnsName' --output text --instance-ids $INSTANCE_ID)
+
+    if [[ -z "$INSTANCE_DNS_NAME" ]]; then
+        echo "ERROR: Could not get DNS name for instance $INSTANCE_ID"
+        exit 1
+    fi
+
+    INSTANCE="${INSTANCE}${INSTANCE_DNS_NAME}"
 
     eval "$1='${INSTANCE}'"
 }
@@ -73,7 +83,9 @@ awsstart() {
     local INSTANCE=''
     getawsinstance INSTANCE $1
 
-    awss start-instances $INSTANCE && sleep 10s && awsssh $INSTANCE
+    echo "Starting instance $INSTANCE"
+
+    awss start-instances ${INSTANCE} && sleep 10s && awsssh $1
 }
 
 awsstop() {
@@ -83,32 +95,31 @@ awsstop() {
     awss stop-instances $INSTANCE
 }
 
-
 # SSH and SCP stuff
 awsssh() {
     local INSTANCE=''
     getawssshinfo INSTANCE $1
 
     shift
-    ssh $INSTANCE $@
+    ssh -i ${AWS_MAIN_SSH_KEY} -o StrictHostKeyChecking=accept-new $INSTANCE $@
 }
 
 alias sshaws=awsssh
-alias awsls="aws describe-instances"
+alias awsls="awss describe-instances"
 
 # TRANSFERRING FILES
-awsscpto() {
-    local INSTANCE=''
-    getawssshinfo INSTANCE $3
-
-    scp -r "${INSTANCE}:$1" $2
-}
-
 awsscpfrom() {
     local INSTANCE=''
     getawssshinfo INSTANCE $3
 
-    scp -r $1 "${INSTANCE}:$2"
+    scp -i ${AWS_MAIN_SSH_KEY} -r "${INSTANCE}:/home/ec2-user/$1" "$2"
+}
+
+awsscpto() {
+    local INSTANCE=''
+    getawssshinfo INSTANCE $3
+
+    scp -i ${AWS_MAIN_SSH_KEY} -r "$1" ${INSTANCE}:"/home/ec2-user/$2"
 }
 
 # NOTE: Export for use in other scripts
@@ -121,7 +132,7 @@ export -f awsstop
 awsfwd() {
     PORT=${2:-9000}
 
-    awsssh $1 -- -NfL $PORT:localhost:$PORT
+    awsssh $1 -NfL $PORT:localhost:$PORT
 
     AWS_PORT_FWD_PID=$(ss -lnp | grep $PORT | grep -E -o "pid=.[0-9]+" | grep -E -o "[0-9]+")
     echo "Port forwarding via ${PORT} with PID ${AWS_PORT_FWD_PID}"
