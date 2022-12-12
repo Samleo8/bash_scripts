@@ -123,6 +123,8 @@ awsscpto() {
 }
 
 # NOTE: Export for use in other scripts
+export -f getawsinstance
+export -f getawssshinfo
 export -f awsscpto
 export -f awsscpfrom
 export -f awsstart
