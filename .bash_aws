@@ -123,8 +123,8 @@ awsscpto() {
 }
 
 # NOTE: Export for use in other scripts
-export -f gscpto
-export -f gscpfrom
+export -f awsscpto
+export -f awsscpfrom
 export -f awsstart
 export -f awsstop
 
