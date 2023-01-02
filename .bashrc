@@ -912,3 +912,9 @@ if [ -f ~/.bash_gcp ]; then
 	. ~/.bash_gcp
 fi
 
+# AWS Stuff	
+# All commands in ~/.bash_aws, instead of adding them here directly.
+if [ -f ~/.bash_aws ]; then
+	. ~/.bash_aws
+fi
+
