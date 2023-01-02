@@ -77,6 +77,8 @@ alias doxy="doxygen && gitpush 'Update doxygen documentation'"
 # alias robohw=mobilehw
 
 alias 642code="goto turtle; code ."
+alias turtlecode=642code
+
 alias vlcode="goto vlcode; code ."
 alias mlcode="goto mlcode; code ."
 

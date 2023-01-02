@@ -155,3 +155,5 @@ killgcpvisdom() {
 killgcptensorboard() {
     killgcpfwd 6006
 }
+
+alias killgcptensor=killgcptensorboard
