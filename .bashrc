@@ -399,10 +399,10 @@ goto() {
 	"linear" | "systems" | "18771" | "controls")
 		cd "/home/sam/CMU/Study/18771 Linear Systems"
 		;;
-	"ml" | "18661" | "661")
-		cd "/home/sam/CMU/Study/18661 ML"
+	"ml" | "18848" | "848" | "dl" | "embedded" | "embed")
+		cd "/home/sam/CMU/Study/18848 Embedded Deep Learning"
 		;;
-	"mlhw" | "18661hw" | "661hw")
+	"mlhw" | "dlhw" | "18848hw" | "848hw" | "embedhw" | "embeddedhw")
 		goto ml
 		cd homework
 		cd $(cat .active_hw_dir)
@@ -411,39 +411,16 @@ goto() {
 		goto mlhw
 		cd code
 		;;
-	"software" | "embedded" | "embed" | "18642" | "642")
-		cd "/home/sam/CMU/Study/18642 Embedded Software"
+	"safe" | "safety" | "16883" | "883" | "robo" | "robotics")
+		cd "/home/sam/CMU/Study/16883 Provably Safe Robotics"
 		;;
-	"turtle" | "642code" | "18642code" | "642proj" | "18642proj" | "embedcode")
-		cd "/home/sam/CMU/Study/18642 Embedded Software/project/CMU18642Proj/monitors"
+	"optim" | "optimization" | "optimisation" | "18660" | "660")
+		cd "/home/sam/CMU/Study/18660 Optimization"
 		;;
-	"vl" | "robo" | "cv" | "robot" | "vision" | "visual" | "16824")
-		cd "/home/sam/CMU/Study/16824 Visual Learning"
-		;;
-	"vlhw" | "robohw" | "cvhw" | "robothw" | "visionhw" | "visualhw" | "16824hw")
-		goto visual
+	"optimhw" | "optimizationhw" | "optimisationhw" | "18660hw" | "660hw")
+		goto optim
 		cd homework
-		cd $(cat .active_code_dir)
-		;;
-	"vlcode" | "robocode" | "cvcode" | "robotcode" | "visioncode" | "visualcode" | "16824code")
-		goto srf
-		cd code
-		;;
-	"vlproj")
-		goto vl
-		cd project
-		git update
-		;;
-	"vlbarf" | "barf")
-		goto vlproj
-		cd bundle-adjusting-NeRF
-		;;
-	"vlstereo" | "srf" | "stereo" | "sarf")
-		goto vlproj
-		cd stereo-nerf
-		;;
-	"ta")
-		cd "/home/sam/CMU/16385 TA"
+		cd $(cat .active_hw_dir)
 		;;
 	*)
 		cd "$1" || cd ~/"$1"
@@ -690,12 +667,12 @@ img2pdf() {
 		return
 	fi
 
-	IMAGES="${@:1:$#-1}"
+	IMAGES=${@:1:$#-1}
 	OUTPUT="${!#}" # get last element
 
 	echo "Combining $IMAGES into $OUTPUT..."
 
-	convert "$IMAGES" -quality 100 "$OUTPUT"
+	convert ${IMAGES} -quality 100 "$OUTPUT"
 
 	echo "Done!"
 }
@@ -748,6 +725,14 @@ mp4togif() {
 	# ffmpeg -y -i "${FILENAME}.mp4" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen
 	# ffmpeg -i "${FILENAME}.mp4" -i "${FILENAME}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${FILENAME}".gif
 }
+
+# Display all upgradable packages in a single line
+toinstall(){
+	yay -Qu | awk '{ print $1 }' ORS=' '
+	echo ""
+}
+
+alias upgradable=toinstall
 
 # Programming handin function
 sshshark() {
