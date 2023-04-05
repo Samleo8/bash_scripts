@@ -402,10 +402,14 @@ goto() {
 	"ml" | "18848" | "848" | "dl" | "embedded" | "embed")
 		cd "/home/sam/CMU/Study/18848 Embedded Deep Learning"
 		;;
+	"mlproj" | "18848proj" | "848proj" | "dlproj" | "embeddedproj" | "embedproj")
+		goto ml
+		cd project
+		;;
 	"mlhw" | "dlhw" | "18848hw" | "848hw" | "embedhw" | "embeddedhw")
 		goto ml
-		cd homework
-		cd $(cat .active_hw_dir)
+		cd assignments
+		# cd $(cat .active_hw_dir)
 		;;
 	"mlcode")
 		goto mlhw
@@ -728,7 +732,12 @@ mp4togif() {
 
 # Display all upgradable packages in a single line
 toinstall(){
-	yay -Qu | awk '{ print $1 }' ORS=' '
+	if [ -z "$1" ]; then
+		yay -Qu | awk '{ print $1 }' ORS=' '
+	else
+		yay -Qu | grep "$1" | awk '{ print $1 }' ORS=' '
+	fi
+
 	echo ""
 }
 

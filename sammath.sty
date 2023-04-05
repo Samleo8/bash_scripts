@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{amstext}
 \usepackage{amsmath}
+\usepackage{bbm}
 \usepackage{bm}
 \usepackage{centernot}
 \usepackage{mathtools}
@@ -79,7 +80,7 @@
 \newtheorem{definition}[theorem]{Definition}
 
 % Proof Environment
-\newcommand{\proofbox}{\hfill$\square$}
+\newcommand{\proofbox}{\hfill\ensuremath{\square}}
 \newenvironment{proof}{{ \bf Proof:  }}{\proofbox}
 
 \newenvironment{proofby}[1]{{\bf Proof (by #1):  }}{\proofbox}
@@ -103,8 +104,8 @@
 \newcommand*{\B}{\ensuremath{\mathbb B}}
 
 %% True False
-\newcommand*{\T}{$\checkmark$}
-% \newcommand*{\F}{$\times$}
+\newcommand*{\T}{\ensuremath{\checkmark}}
+% \newcommand*{\F}{\ensuremath{\times}}
 \newcommand*{\contradiction}{\Rightarrow\Leftarrow}
 
 %% Text Formatting
@@ -122,7 +123,7 @@
 \newcommand{\WTF}[1]{\littleheader{WTF}{#1}}
 \newcommand{\case}[2]{\littleheader{Case #1}{#2}}
 
-\newcommand{\venntitle}[1]{$\underline{#1}$ \\ \\}
+\newcommand{\venntitle}[1]{\ensuremath{\underline{#1}} \\ \\}
 
 \newcommand*{\quador}{\quad\text{or}\quad}
 \newcommand*{\quadand}{\quad\text{and}\quad}
@@ -135,8 +136,8 @@
 %% Other formating
 \newcommand*{\notimplies}{\ensuremath{\centernot \implies}}
 \newcommand*{\notimpliedby}{\ensuremath{\centernot \impliedby}}
-\newcommand*{\forwarddirection}{($ \implies $)\qquad}
-\newcommand*{\reversedirection}{($ \impliedby $)\qquad}
+\newcommand*{\forwarddirection}{(\ensuremath{ \implies })\qquad}
+\newcommand*{\reversedirection}{(\ensuremath{ \impliedby })\qquad}
 \newcommand{\vecln}{\\[0.75ex]}
 \newcommand{\fracln}{\\[1.5ex]}
 
@@ -180,9 +181,9 @@
 \newcommand*{\basecases}{\simpleheader{Base Cases}}
 \newcommand*{\inductivestep}{\simpleheader{Inductive Step}}
 \newcommand*{\inductivecase}{\inductivestep}
-\newcommand*{\propP}[1]{P$(#1)$}
+\newcommand*{\propP}[1]{P\ensuremath{(#1)}}
 \newcommand{\ptrue}[1]{\propP{#1} \text{is true}}
-\newcommand{\inductionconclusion}[3]{Therefore, since \ptrue{#1}, and #3, \ptrue{#2} $ \implies $ \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
+\newcommand{\inductionconclusion}[3]{Therefore, since \ptrue{#1}, and #3, \ptrue{#2} \ensuremath{\implies} \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
 %\newcommand{\stronginductionconclusion}[4]{Therefore, since \ptrue{#1}, and for all $n\geq #1$ #2, [,$ \forall #1 \leq $ \ptrue{#3}$ ] \implies $ \ptrue{#2+1}, by mathematical induction, the proposition \ptrue{#2} #3.}
 
 %% Diff Eq
@@ -192,7 +193,7 @@
 \newcommand*{\ddf}[2]{\ensuremath{\dfrac{{d}#1}{{d}#2}}}
 \newcommand*{\dydx}{\ensuremath{\ddf{y}{x}}}
 \newcommand*{\dydt}{\ensuremath{\ddf{y}{t}}}
-\newcommand*{\wrt}[1]{\text{with respect to} $#1$}
+\newcommand*{\wrt}[1]{\ensuremath{\text{with respect to }#1}}
 \newcommand*{\diffeq}{\text{differential equation}}
 \newcommand*{\derv}[1]{\ensuremath{\cdot d#1}}
 \newcommand*{\du}{\derv{u}}
@@ -237,10 +238,10 @@
 \newcommand*{\LaplArrow}{\LaplaceArrow}
 
 \newcommand*{\CTFT}{\FTarrow{CTFT}}
-\newcommand*{\CTFS}{\FTarrow{CTFS, $\omega_0$}}
+\newcommand*{\CTFS}{\FTarrow{CTFS, \ensuremath{\omega_0}}}
 
 \newcommand*{\DTFT}{\FTarrow{DTFT}}
-\newcommand*{\DTFS}{\FTarrow{DTFS, $\Omega_0$}}
+\newcommand*{\DTFS}{\FTarrow{DTFS, \ensuremath{\Omega_0}}}
 
 % 18-290 stuff
 \newcommand*{\system}[1]{\ensuremath{\mathcal{H}\set{#1}}}
@@ -449,6 +450,21 @@
 \DeclareMathOperator*{\argmin}{argmin}   % Jan Hlavacek
 \DeclareMathOperator*{\argmax}{argmax}   % Jan Hlavacek
 
+%% Optimisation
+\newcommand*{\domain}{\ensuremath{\mathrm{dom}}}
+\newcommand*{\dom}{\domain}
+\newcommand*{\curlylt}{\ensuremath{\prec}}
+\newcommand*{\curlyleq}{\ensuremath{\preceq}}
+\newcommand*{\curlygt}{\ensuremath{\succ}}
+\newcommand*{\curlygeq}{\ensuremath{\succeq}}
+\newcommand*{\indicator}{\ensuremath{\mathbbm{1}}}
+\newcommand*{\xstar}{\ensuremath{x^\ast}}
+\newcommand*{\lambdastar}{\ensuremath{\lambda^\ast}}
+\newcommand*{\nustar}{\ensuremath{\nu^\ast}}
+\newcommand*{\vxstar}{\ensuremath{\vx^\ast}}
+\newcommand*{\vlambdastar}{\ensuremath{\vlambda^\ast}}
+\newcommand*{\vnustar}{\ensuremath{\vnu^\ast}}
+
 %% Probability and Stats
 \newcommand*{\prob}[1]{\ensuremath{P\left(#1\right)}}
 \newcommand*{\given}{\plainsetst}
@@ -461,7 +477,7 @@
 \newcommand*{\Ybar}{\ensuremath{\enot{Y}}}
 \newcommand*{\bary}{\ybar}
 \newcommand*{\barY}{\Ybar}
-\newcommand*{\condind}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+\newcommand*{\condind}{\mathrel{\text{\scalebox{1.07}{\ensuremath{\perp\mkern-10mu\perp}}}}}
 \newcommand*{\condindep}{\condind}
 \newcommand*{\from}{\leftarrow}
 \newcommand*{\tofro}{\leftrightarrow}
@@ -491,6 +507,8 @@
 \newcommand*{\transsymb}{\ensuremath{\top}}
 \newcommand*{\transpose}[1]{\ensuremath{{#1}^{\transsymb}}}
 \newcommand*{\trans}[1]{\transpose{#1}}
+\newcommand*{\transp}[1]{\transpose{\left(#1\right)}}
+\newcommand*{\transb}[1]{\transpose{\left[#1\right]}}
 
 \newcommand{\bmat}[1]{\ensuremath{\begin{bmatrix}#1\end{bmatrix}}}
 \newcommand{\bbmat}[1]{\begingroup \boldmath \bmat{#1} \endgroup}
@@ -519,6 +537,8 @@
 \def\vz{{\bf z}}
 \def\vw{{\bf w}}
 \def\vmu{\ensuremath{\boldsymbol{\mu}}}
+\def\vlambda{\ensuremath{\boldsymbol{\lambda}}}
+\def\vnu{\ensuremath{\boldsymbol{\nu}}}
 
 \def\vm{{\bf m}}
 \def\vc{{\bf c}}

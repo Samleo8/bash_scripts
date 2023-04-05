@@ -56,6 +56,7 @@ alias shark2="sshpass -p $(gpg -d -q ~/.ssh/.andrewpwd.gpg) ssh -X $ANDREW_SHARK
 export ECE_SERVER=scleong@ece007.ece.local.cmu.edu
 
 alias cleanup="yay -Sc --noconfirm; sudo pacman -Sc --noconfirm; sudo find ~/ -type f -name .fifo_temp -exec rm {} \;"
+alias deepclean="paccache -rk 0; cleanup"
 alias activatevol="pyenv activate vol"
 alias pyactivate=activatevol
 
