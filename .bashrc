@@ -165,14 +165,14 @@ gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/k
 gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ prev-tab '<Primary><Shift>Tab'
 
 ###=====================SHORTCUT FUNCTIONS=====================###
-#cd and then ls
+# cd and then ls
 cdls() {
 	cd "$1" && l -a
 }
 
 alias cdl=cdls
 
-#Git
+# Git
 gitpush() {
 	git add .
 	git commit -m "$1"
@@ -191,7 +191,7 @@ gitadd() {
 
 export -f gitadd
 
-#Process handling
+# 2Process handling
 alias showproc=htop
 
 findproc() {
@@ -425,6 +425,10 @@ goto() {
 		goto optim
 		cd homework
 		cd $(cat .active_hw_dir)
+		;;
+	"optimproj")
+		goto optim
+		cd project/OptimizationFinalProj
 		;;
 	*)
 		cd "$1" || cd ~/"$1"
@@ -717,7 +721,7 @@ mp4togif() {
 		FILENAME="$1"
 	else
 		echo "File $FILENAME does not exist"
-		echo "USAGE: $ mp4togif <video_file> (scale) (fps)"
+		echo "USAGE: $ mp4togif <video_file> [scale [fps]]"
 		return 1
 	fi
 
@@ -728,6 +732,35 @@ mp4togif() {
 
 	# ffmpeg -y -i "${FILENAME}.mp4" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen
 	# ffmpeg -i "${FILENAME}.mp4" -i "${FILENAME}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${FILENAME}".gif
+}
+
+# MIDI to MP3
+midi2mp3() {
+	FILENAME=$1
+	if [ -f "$FILENAME" ]; then
+		FILENAME="${FILENAME%.*}"
+	elif [ -f "$FILENAME.midi" ]; then
+		FILENAME="$1"
+	else
+		echo "File $FILENAME does not exist"
+		echo "USAGE: $ midi2mp3 <midi_file>"
+		return 1
+	fi
+
+	fluidsynth -a alsa -T raw -F - /usr/share/sounds/sf2/FluidR3_GM.sf2 "$FILENAME.midi" | ffmpeg -y -f s32le -i - "$FILENAME.mp3"
+}
+
+export -f midi2mp3
+
+# Yay update
+yayay() {
+	yay -Syu --noconfirm $1 && cleanup && ~/set-login-background
+}
+
+# Deep clean pacman cache
+deepclean(){
+    paccache -rk ${1:-0}
+    cleanup
 }
 
 # Display all upgradable packages in a single line
